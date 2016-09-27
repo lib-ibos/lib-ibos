@@ -1,6 +1,6 @@
 {
   "name": "lib-ibos",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "ibos前端设计依赖的组件",
   "main": "lib/index.js",
   "scripts": {
@@ -10,9 +10,7 @@
   },
   "author": "codering",
   "license": "MIT",
-  "dependencies": {
-    
-  },
+  "dependencies": {},
   "devDependencies": {
     "antd": "^1.11.2",
     "babel-cli": "^6.14.0",

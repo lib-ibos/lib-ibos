@@ -1,5 +1,5 @@
-import Button from './Button'
+import Panel from './panel'
 
 export default {
-    Button
+    Panel
 }

@@ -3,8 +3,8 @@ import {Button as AntdButton} from 'antd'
 import {canRender} from'./share'
 
 function Button(props) {
-    const {diaplayName, ...otherProps} = props
-    return canRender(props) ? <AntdButton {...otherProps}>{diaplayName}</AntdButton> : null
+    const {displayName, ...otherProps} = props
+    return canRender(props) ? <AntdButton {...otherProps}>{displayName}</AntdButton> : null
 }
 
 export default Button

@@ -3,9 +3,9 @@ import {Button as AntdButton} from 'antd'
 import {checkSecurity} from'./share'
 
 function Button(props) {
-    const {displayName, security, ...otherProps} = props
+    const {children, displayName, security, ...otherProps} = props
     const {canAccess} = checkSecurity(props)
-    return canAccess ? <AntdButton {...otherProps}>{displayName}</AntdButton> : <noscript/>
+    return canAccess ? <AntdButton {...otherProps}>{displayName || children}</AntdButton> : <noscript/>
 }
 
 export default Button

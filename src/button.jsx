@@ -1,10 +1,11 @@
 import React from 'react'
 import {Button as AntdButton} from 'antd'
-import {canRender} from'./share'
+import {checkSecurity} from'./share'
 
 function Button(props) {
-    const {displayName, ...otherProps} = props
-    return canRender(props) ? <AntdButton {...otherProps}>{displayName}</AntdButton> : null
+    const {displayName, security, ...otherProps} = props
+    const {canAccess} = checkSecurity(props)
+    return canAccess ? <AntdButton {...otherProps}>{displayName}</AntdButton> : <noscript/>
 }
 
 export default Button

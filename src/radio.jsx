@@ -1,10 +1,11 @@
 import React from 'react'
 import {Radio as AntdRadio} from 'antd'
-import {canRender} from'./share'
+import {checkSecurity} from'./share'
 
 function Radio(props) {
-    const {displayName, ...otherProps} = props
-    return canRender(props) ? <AntdRadio {...otherProps}>{displayName}</AntdRadio> : null
+    const {displayName, security, ...otherProps} = props
+    const {canAccess} = checkSecurity(props)
+    return canAccess ? <AntdRadio {...otherProps}>{displayName}</AntdRadio> : <noscript/>
 }
 
 export default Radio

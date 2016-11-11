@@ -1,10 +1,11 @@
 import React from 'react'
 import {Form} from 'antd'
-import {canRender} from'./share'
+import {checkSecurity} from'./share'
 
 function FormItem(props){
-    const {children, ...otherProps} = props
-    return canRender(props) ? <Form.Item {...otherProps}>{children}</Form.Item> : null
+    const {children, security, ...otherProps} = props
+    const {canAccess} = checkSecurity(props)
+    return canAccess ? <Form.Item {...otherProps}>{children}</Form.Item> : <noscript/>
 }
 
 export default FormItem

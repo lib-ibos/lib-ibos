@@ -1,10 +1,11 @@
 import React from 'react'
 import {Checkbox as AntdCheckbox} from 'antd'
-import {canRender} from'./share'
+import {checkSecurity} from'./share'
 
 function Checkbox(props) {
-    const {displayName, ...otherProps} = props
-    return canRender(props) ? <AntdCheckbox {...otherProps}>{displayName}</AntdCheckbox> : null
+    const {displayName, security, ...otherProps} = props
+    const {canAccess} = checkSecurity(props)
+    return canAccess ? <AntdCheckbox {...otherProps}>{displayName}</AntdCheckbox> : <noscript/>
 }
 
 export default Checkbox

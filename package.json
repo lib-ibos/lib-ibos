@@ -4,7 +4,7 @@
   "description": "ibos前端设计依赖的组件",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --compilers js:babel-core/register --require ./test/setup.js",
     "build": "rimraf lib && babel src --out-dir lib",
     "pub": "npm run build && npm version patch"
   },
@@ -21,8 +21,13 @@
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "~6.5.0",
-    "react": "~0.14.8",
-    "react-dom": "~0.14.8",
+    "chai": "^3.5.0",
+    "enzyme": "^2.6.0",
+    "jsdom": "^9.8.3",
+    "mocha": "^3.1.2",
+    "react": "^0.14.8",
+    "react-addons-test-utils": "^0.14.8",
+    "react-dom": "^0.14.8",
     "rimraf": "^2.5.4"
   }
 }

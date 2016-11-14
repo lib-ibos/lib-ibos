@@ -63,9 +63,8 @@ class MultiColSelect extends Component {
         return div
     }
 
-    handleSelect(value){
-        // console.log(JSON.parse(value))
-        return JSON.parse(value)
+    handleSelect(value,option){
+        return option.props.selectValue
     }
 
     render() {
@@ -79,7 +78,7 @@ class MultiColSelect extends Component {
             return dropdownBodyData.map(function (val) {
                 const parentVal = val;
                 const  _item = dropdownHeadData.map((val,index)=> <p key={index}>{parentVal[val.key]}</p>);
-                return <Option key={val.value} value={val.value}>{_item}</Option>
+                return <Option key={val.code} selectValue={val} value={val.value}>{_item}</Option>
             })
         }
 

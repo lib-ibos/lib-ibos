@@ -63,6 +63,11 @@ class MultiColSelect extends Component {
         return div
     }
 
+    handleSelect(value){
+        // console.log(JSON.parse(value))
+        return JSON.parse(value)
+    }
+
     render() {
         const dropdownHeadData = this.state.optionList.head,
             dropdownBodyData = this.state.optionList.body;
@@ -87,6 +92,7 @@ class MultiColSelect extends Component {
                 dropdownMatchSelectWidth={false}
                 showSearch = {true}
                 filterOption ={false}
+                onSelect={this.handleSelect}
                 {...this.props}
             >
                 <Option key="head" disabled>{dropdownHeadElement}</Option>

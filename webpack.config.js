@@ -1,7 +1,8 @@
 
 const path = require('path');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
-var HtmlwebpackPlugin = require('html-webpack-plugin');
+const HtmlwebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 // let ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
     entry:  __dirname + "/src/index.js",//已多次提及的唯一入口文件
@@ -35,8 +36,10 @@ module.exports = {
         plugins: [
             new HtmlwebpackPlugin({
                 title: 'Webpack-demos',
-                filename:'/index.html'
+                filename:'/index.html',
+                alwaysWriteToDisk: true
             }),
+            new HtmlWebpackHarddiskPlugin(),
             new OpenBrowserPlugin({
                 url: 'http://localhost:8080'
             })

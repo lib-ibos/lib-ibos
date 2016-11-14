@@ -1,6 +1,6 @@
 import React from 'react'
 import {Checkbox as AntdCheckbox} from 'antd'
-import {checkSecurity} from'./share'
+import {checkSecurity} from'../../share'
 
 function Checkbox(props) {
     const {children, displayName, security, ...otherProps} = props

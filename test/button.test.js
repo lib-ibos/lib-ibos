@@ -2,7 +2,7 @@ import React from 'react';
 import { ReactWrapper, shallow, render } from 'enzyme';
 //import sinon from 'sinon';
 
-import Button from '../src/button';
+import Button from '../src/components/button/button';
 
 describe('<Button />', () => {
   it('renders <Button /> with normal', () => {

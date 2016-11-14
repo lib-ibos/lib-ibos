@@ -1,6 +1,6 @@
 import React from 'react'
 import {Form} from 'antd'
-import {checkSecurity} from'./share'
+import {checkSecurity} from'../../share'
 
 function FormItem(props){
     const {children, security, ...otherProps} = props

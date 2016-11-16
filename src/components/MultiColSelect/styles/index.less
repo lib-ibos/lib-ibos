@@ -1,19 +1,25 @@
 .o-dropdown-multi-col {
-  .ant-select-dropdown-menu{
     display: table;
     width: 100%;
-  }
-  .ant-select-dropdown-menu-item{
+
+  .ant-dropdown-menu-item{
     display: table-row;
   }
   p{
     display: table-cell;
-    padding:4px 12px;
+    padding:6px 12px;
 
     border-top:1px solid #eee;
   }
-  .ant-select-dropdown-menu-item-disabled {
+  .ant-dropdown-menu-item-disabled {
     background-color: #F5F5F5;
     color: #333;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
   }
+  
+  .ant-dropdown-menu-item-selected{
+    background-color: #eaf8fe;
+  }
+
 }

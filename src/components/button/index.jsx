@@ -1,6 +1,6 @@
 import React from 'react'
 import {Button as AntdButton} from 'antd'
-import {checkSecurity} from'../../share'
+import {checkSecurity} from'../share'
 
 function Button(props) {
     const {children, displayName, security, ...otherProps} = props

@@ -13,8 +13,8 @@
   "author": "codering",
   "license": "MIT",
   "dependencies": {
-    "rc-menu": "^5.0.3",
-    "rc-util": "^4.0.1"
+    "rc-menu": "~4.13.0",
+    "rc-util": "~3.3.0"
   },
   "devDependencies": {
     "antd": "^1.11.2",

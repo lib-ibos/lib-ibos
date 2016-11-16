@@ -1,6 +1,6 @@
 import React from 'react'
 import {Table as AntdTable} from 'antd'
-import {noop, checkSecurity} from '../../share'
+import {noop, checkSecurity} from '../share'
 
 function Table(props) {
     const {children, security, ...otherProps} = props

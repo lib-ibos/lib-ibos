@@ -1,11 +1,11 @@
 {
   "name": "lib-ibos",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "ibos前端设计依赖的组件",
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require ./test/setup.js",
-    "build": "rimraf lib && babel src --out-dir lib",
+    "build": "rimraf lib && babel src/components --out-dir lib",
     "mypatch": "npm run build && npm version patch",
     "serve": "webpack-dev-server --inline --hot",
     "webpack": "webpack"

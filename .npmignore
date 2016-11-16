@@ -1,3 +1,7 @@
 node_modules
 src
+doc
+public
+test
 npm-debug.log
+webpack.*

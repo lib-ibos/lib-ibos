@@ -4,3 +4,4 @@ doc
 public
 test
 npm-debug.log
+webpack.*

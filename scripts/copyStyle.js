@@ -20,10 +20,11 @@ function findFiles(startPath, filter, cb) {
         };
     };
 };
-var dirPath = "src/components";
-var len = dirPath.length
+
+var componentsPath = "src/components";
+var len = componentsPath.length
 var styleFiles = []
-findFiles('src/components', '.less', function(fileName){
+findFiles(componentsPath, '.less', function(fileName){
     styleFiles.push(fileName)
 });
 

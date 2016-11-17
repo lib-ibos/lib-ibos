@@ -21,7 +21,7 @@ function findFiles(startPath, filter, cb) {
     };
 };
 
-var componentsPath = "src/components";
+var componentsPath = "src/components", libPath='lib';
 var len = componentsPath.length
 var styleFiles = []
 findFiles(componentsPath, '.less', function(fileName){
@@ -30,7 +30,7 @@ findFiles(componentsPath, '.less', function(fileName){
 
 for (var i = 0; i < styleFiles.length; i++) {
     var source = styleFiles[i]
-    var target = 'lib' + source.substr(len)
+    var target = libPath + source.substr(len)
     fs.copySync(source, target)
     console.log(source + ' -> ' + target)
 }

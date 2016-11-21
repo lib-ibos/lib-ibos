@@ -17,7 +17,7 @@ class MultiColSelect extends Component {
             optionList: {},
             open:false,
             selectKeys:['-1'],
-            activeKeys:'-1',
+            activeKey:'0',
         }
     }
 
@@ -37,12 +37,13 @@ class MultiColSelect extends Component {
         if (props.disabled) {
             return;
         }
+        console.log(props.type,props.type == "textarea")
         const keyCode = event.keyCode;
         if (this.state.open && !this.getInputDOMNode()) {
             this.onInputKeyDown(event);
-        } else if (props.type != "textarea" && keyCode === KeyCode.ENTER || keyCode === KeyCode.DOWN) {
-            this.setOpenState(true);
-            event.preventDefault();
+        } else if (keyCode === KeyCode.ENTER || keyCode === KeyCode.DOWN) {
+            //如果是textarea 模式就不支持 向下键和enter键 弹出下拉框
+            props.type != "textarea" && this.setOpenState(true);
         }
     }
 
@@ -67,9 +68,8 @@ class MultiColSelect extends Component {
                 return;
             }else{
                 var _length = this.props.dataBody.length - 1;
-                var currentKey = +this.state.activeKey || _length;
+                var currentKey = +this.state.activeKey;
 
-                console.log(+this.state.activeKey ,_length,currentKey == _length)
                 if(keyCode === KeyCode.DOWN){
                     if(currentKey == _length ){
                         currentKey = 0;
@@ -118,7 +118,8 @@ class MultiColSelect extends Component {
     }
 
     handleChange=(e)=>{
-        this.props.onChange(e.target.value)
+        this.props.onChange(e.target.value);
+        this.props.dataBody.length > 0 && this.setOpenState(true)
     }
 
     handleSelect =(value) =>{
@@ -136,11 +137,13 @@ class MultiColSelect extends Component {
 
     render() {
         const {dataHeader,dataBody,type,rows,autosize,...props} = this.props;
+        const hasDataBody = dataBody && dataBody.length > 0;
         const dropdownHeadData = dataHeader,
-            dropdownBodyData = dataBody || "not found";
+            dropdownBodyData = hasDataBody ? dataBody : "not found";
+
         // 拼接下拉框header部分结构
         const dropdownHeadElement = dropdownHeadData && dropdownHeadData.map(val => <p key={val.dataIndex}>{val.title}</p>);
-        const dropdownBodyElement = typeof dropdownBodyData ==="string" ? <MenuItem className="no-data" disabled><p colSpan="2">{dropdownBodyData}</p><p></p></MenuItem> : bodyElement();
+        const dropdownBodyElement = !hasDataBody ? <MenuItem className="no-data" disabled><p colSpan="2">{dropdownBodyData}</p><p></p></MenuItem> : bodyElement();
         //下拉框body部分
         function bodyElement() {
             return dropdownBodyData.map(function (val,index) {
@@ -150,6 +153,8 @@ class MultiColSelect extends Component {
             })
         }
 
+        const dropdwonMaxHeight = props.dropdwonMaxRows * 32 +32;
+
 
         return (
             <Dropdown overlay={
@@ -158,13 +163,13 @@ class MultiColSelect extends Component {
                     className="o-dropdown-multi-col"
                     activeKey ={this.state.activeKey}
                     selectedKeys={this.state.selectKeys}
+                    style={{maxHeight:dropdwonMaxHeight}}
                 >
                     <MenuItem key="title" disabled>{dropdownHeadElement}</MenuItem>
                     {dropdownBodyElement}
                 </Menu>
             }
                       onClick ={()=>this.setOpenState(true)}
-                      onBlur ={()=>this.setOpenState(false)}
                       visible={this.state.open}
             >
 

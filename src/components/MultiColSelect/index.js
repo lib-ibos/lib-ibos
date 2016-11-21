@@ -8,7 +8,7 @@ import KeyCode from 'rc-util/lib/KeyCode';
 import './styles/index'
 
 //props selectKey 指定一个key的值填入input中
-class RichSelect extends Component {
+class MultiColSelect extends Component {
     constructor(props) {
         super(props)
 
@@ -40,7 +40,7 @@ class RichSelect extends Component {
         const keyCode = event.keyCode;
         if (this.state.open && !this.getInputDOMNode()) {
             this.onInputKeyDown(event);
-        } else if (keyCode === KeyCode.ENTER || keyCode === KeyCode.DOWN) {
+        } else if (props.type != "textarea" && keyCode === KeyCode.ENTER || keyCode === KeyCode.DOWN) {
             this.setOpenState(true);
             event.preventDefault();
         }
@@ -104,11 +104,10 @@ class RichSelect extends Component {
                 selectKeys:[String(currentKey)]
             })
             this.props.onChange(_obj[currentKey][_key])
+            this.props.onSelect && this.props.onSelect(_obj[_key]);
             event.preventDefault();
             event.stopPropagation();
-            // this.props.onCustomSelect && this.props.onCustomSelect(_obj[currentKey]);
         }
-
     }
 
     openIfHasChildren =()=> {
@@ -132,7 +131,7 @@ class RichSelect extends Component {
             selectKeys:[String(value.key)]
         })
         this.props.onChange(currentKey)
-    //that.props.onCustomSelect && that.props.onCustomSelect(_obj);
+        this.props.onSelect && this.props.onSelect(_obj);
 }
 
     render() {
@@ -183,4 +182,4 @@ class RichSelect extends Component {
     }
 }
 
-export default RichSelect;
+export default MultiColSelect;

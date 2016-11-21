@@ -1,6 +1,7 @@
 node_modules
 src
 doc
+scripts
 public
 test
 npm-debug.log

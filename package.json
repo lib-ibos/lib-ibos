@@ -1,11 +1,11 @@
 {
   "name": "lib-ibos",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "ibos前端设计依赖的组件",
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require ./test/setup.js",
-    "build": "rimraf lib && babel src/components --out-dir lib",
+    "build": "rimraf lib && babel src/components --out-dir lib && node scripts/copyStyle",
     "mypatch": "npm run build && npm version patch",
     "serve": "webpack-dev-server --inline --hot",
     "webpack": "webpack"
@@ -32,6 +32,7 @@
     "css-loader": "^0.25.0",
     "enzyme": "^2.6.0",
     "es3ify-loader": "^0.2.0",
+    "fs-extra": "^1.0.0",
     "html-webpack-harddisk-plugin": "0.0.2",
     "html-webpack-plugin": "^2.24.1",
     "jsdom": "^9.8.3",

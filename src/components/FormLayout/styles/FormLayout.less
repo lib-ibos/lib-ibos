@@ -43,12 +43,32 @@
   }
 }
 
-.o-form-item-label--8em{
+.o-form-item-label--6em{
+  .ant-form-item{
+    padding-left:8em;
+
+    &-label{
+      width:8em;
+    }
+  }
+}
+
+.o-form-item-label--7em{
   .ant-form-item{
     padding-left:9em;
 
     &-label{
       width:9em;
+    }
+  }
+}
+
+.o-form-item-label--8em{
+  .ant-form-item{
+    padding-left:10em;
+
+    &-label{
+      width:10em;
     }
   }
 }
@@ -120,32 +140,32 @@
     line-height: 1.2;
 
     .ant-form-item-label{
-        width: 1em;
+      width: 1em;
       text-align: left;
 
-        > label:after{
-          content: "";
-        }
+      > label:after{
+        content: "";
       }
     }
+  }
 
 
   .o-form-label--2em{
     padding-left:4em;
 
     .ant-form-item-label{
-        width:4em;
-      }
+      width:4em;
     }
+  }
 
 
   .o-form-label--3em{
     padding-left:5em;
 
     .ant-form-item-label{
-        width:5em;
-      }
+      width:5em;
     }
+  }
 
   .o-form-label--4em{
     padding-left:5em;
@@ -160,40 +180,40 @@
     padding-left:6em;
 
     .ant-form-item-label{
-        width:6em;
-      }
+      width:6em;
     }
+  }
 
 
   .o-form-label--6em{
-    padding-left:7em;
-
-    .ant-form-item-label{
-        width:7em;
-      }
-    }
-
-
-  .o-form-label--7em{
     padding-left:8em;
 
     .ant-form-item-label{
-        width:8em;
-      }
+      width:8em;
     }
+  }
 
 
-  .o-form-label--8em{
+  .o-form-label--7em{
     padding-left:9em;
 
     .ant-form-item-label{
-        width:9em;
-      }
+      width:9em;
     }
+  }
+
+
+  .o-form-label--8em{
+    padding-left:10em;
+
+    .ant-form-item-label{
+      width:10em;
+    }
+  }
 
 
   textarea.ant-input{
-    height: auto !important;
+    height: auto ;
   }
 }
 
@@ -213,6 +233,10 @@
   }
   .ant-select-selection--single{
     height: 22px;
+
+    .ant-select-selection-selected-value{
+      line-height: 22px;
+    }
   }
 }
 
@@ -230,6 +254,9 @@
   }
   .ant-select-selection--single{
     height: 28px;
+    .ant-select-selection-selected-value{
+      line-height: 28px;
+    }
   }
 }
 
@@ -247,10 +274,14 @@
   }
   .ant-select-selection--single{
     height: 32px;
+
+    .ant-select-selection-selected-value{
+      line-height: 32px;
+    }
   }
 }
 
-//
+// 临时存放
 .split-container{
   margin:4px auto;
   background-color: #f9f9f9;
@@ -261,8 +292,8 @@
 .hr{
   height: 0;
   overflow: hidden;
-  border:none;
-  border-top:1px solid #eee;
+  border:0;
+  border-top:1px solid #ddd;
   margin:12px auto;
 
   &--space{

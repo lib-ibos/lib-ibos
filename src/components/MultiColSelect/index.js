@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {render}  from 'react-dom';
+import ReactDOM,{render}  from 'react-dom';
 
 import { Dropdown,Input} from 'antd';
 // const MenuItem = Menu.Item;
@@ -21,9 +21,25 @@ class MultiColSelect extends Component {
         }
     }
 
+    static propTypes = {
+        dataBody: React.PropTypes.array,
+        dataHead:React.PropTypes.object,
+        dropdwonMaxRows:React.PropTypes.number
+
+    }
+
     static defaultProps ={
         selectKey:"value",
-        disabled:false
+        disabled:false,
+        scrollHeight:32
+    }
+
+    scrollTo =(index)=>{
+        const menu = ReactDOM.findDOMNode(this.refs.menu);
+        let maxHeight = (this.props.dropdwonMaxRows || 8) -1;
+        let scrollHeight = index > maxHeight ? (index - maxHeight)*this.props.scrollHeight : 0
+
+        menu.scrollTop = scrollHeight
     }
 
     setOpenState=(visible)=>{
@@ -32,12 +48,20 @@ class MultiColSelect extends Component {
         })
     }
 
+    setActiveState = (index)=>{
+        this.setState({
+            activeKey:String(index)
+        })
+
+        this.scrollTo(index)
+    }
+
     onKeyDown=(event) =>{
         const props = this.props;
         if (props.disabled) {
             return;
         }
-        console.log(props.type,props.type == "textarea")
+        // console.log(props.type,props.type == "textarea")
         const keyCode = event.keyCode;
         if (this.state.open && !this.getInputDOMNode()) {
             this.onInputKeyDown(event);
@@ -84,9 +108,7 @@ class MultiColSelect extends Component {
                     }
                 }
 
-                this.setState({
-                    activeKey:String(currentKey)
-                })
+                this.setActiveState(currentKey)
             }
         } else if (keyCode === KeyCode.ESC) {
             if (state.open) {
@@ -128,9 +150,9 @@ class MultiColSelect extends Component {
         let currentKey = _obj[_key]
         this.setState({
             open:false,
-            activeKey:String(value.key),
             selectKeys:[String(value.key)]
         })
+        this.setActiveState(value.key)
         this.props.onChange(currentKey)
         this.props.onSelect && this.props.onSelect(_obj);
 }
@@ -142,10 +164,15 @@ class MultiColSelect extends Component {
             dropdownBodyData = hasDataBody ? dataBody : "not found";
 
         // 拼接下拉框header部分结构
-        const dropdownHeadElement = dropdownHeadData && dropdownHeadData.map(val => <p key={val.dataIndex}>{val.title}</p>);
+        const dropdownHeadElement = dropdownHeadData ? <MenuItem key="title" disabled>{dropdownHeadData.map(val => <p key={val.dataIndex}>{val.title}</p>)}</MenuItem> : '';
         const dropdownBodyElement = !hasDataBody ? <MenuItem className="no-data" disabled><p colSpan="2">{dropdownBodyData}</p><p></p></MenuItem> : bodyElement();
         //下拉框body部分
         function bodyElement() {
+            const isArray = dropdownBodyData instanceof  Array;
+            if(!isArray ){
+                throw  new TypeError('MultiColSelect 组件的 dataBody 只接受 "Array" 格式的数据');
+            }
+
             return dropdownBodyData.map(function (val,index) {
                 const parentVal = val;
                 const  _item = dropdownHeadData.map((val,i)=> <p key={i}>{parentVal[val.dataIndex]}</p>);
@@ -153,19 +180,20 @@ class MultiColSelect extends Component {
             })
         }
 
-        const dropdwonMaxHeight = props.dropdwonMaxRows * 32 +32;
-
+        const dropdwonMaxHeight = (props.dropdwonMaxRows +1) * this.props.scrollHeight;
+        const dropdwonStyle = props.dropdwonMaxRows && {maxHeight:dropdwonMaxHeight}
 
         return (
             <Dropdown overlay={
                 <Menu
+                    ref="menu"
                     onSelect={this.handleSelect}
                     className="o-dropdown-multi-col"
                     activeKey ={this.state.activeKey}
                     selectedKeys={this.state.selectKeys}
-                    style={{maxHeight:dropdwonMaxHeight}}
+                    style={dropdwonStyle}
                 >
-                    <MenuItem key="title" disabled>{dropdownHeadElement}</MenuItem>
+                    {dropdownHeadElement}
                     {dropdownBodyElement}
                 </Menu>
             }
@@ -174,7 +202,6 @@ class MultiColSelect extends Component {
             >
 
                 <Input
-                    ref="input"
                     type={type}
                     value={props.value}
                     rows={rows}

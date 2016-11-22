@@ -2,6 +2,8 @@ var fs = require('fs-extra')
 
 var path = require('path')
 
+// console.log(process.argv)
+
 function findFiles(startPath, filter, cb) {
 
     if (!fs.existsSync(startPath)) {

@@ -3,18 +3,26 @@ import classnames from 'classnames';
 import {Form} from 'antd';
 const AntFormItem = Form.Item;
 
-import {checkSecurity} from'../share'
+import {checkSecurity, hasOwnProp} from'../share'
 
 class FormItem extends Component {
     static defaultProps={
         labelVertical:false
     }
     render() {
-        const {security, children, labelVertical,labelWidth,...props} = this.props
-        const {canAccess} = checkSecurity(this.props)
+        let {security, children, labelVertical,labelWidth,...props} = this.props
+        const {canAccess, readOnly} = checkSecurity(this.props)
+        // 检查是否可显示
         if (!canAccess) {
             return <noscript/>
         }
+        // 检查是否只读
+        if (readOnly) {
+            children = React.Children.map(children, c => {
+                return React.cloneElement(c, {disabled: true})
+            })
+        }
+
         const _style = props.label ? {} : {paddingLeft: 0}
         const _class = classnames(
             {"o-form-label--vertical":labelVertical},

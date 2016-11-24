@@ -6,7 +6,7 @@ class Checkbox extends Component {
 
     render() {
         const {children, displayName, security, ...otherProps} = this.props
-        const {canAccess} = checkSecurity(props)
+        const {canAccess} = checkSecurity(this.props)
         return canAccess ? <AntdCheckbox {...otherProps}>{displayName || children}</AntdCheckbox> : <noscript/>
     }
 }

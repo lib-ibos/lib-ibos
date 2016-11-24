@@ -25,12 +25,12 @@
 注： 本地git要先提交
 
 ```js
-    npm run mypatch
+    npm run patch
 ```
 
 ## 发布
-
+注： 同时发布到官方npm及github
 ```js
-    npm publish
+    npm run pub
 ```
 

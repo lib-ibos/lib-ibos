@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require ./test/setup.js",
     "build": "rimraf lib && babel src/components --out-dir lib && node scripts/copyStyle",
-    "mypatch": "npm run build && npm version patch",
+    "patch": "npm run build && npm version patch",
+    "pub": "npm publish && git push origin",
     "serve": "webpack-dev-server --inline --hot",
     "webpack": "webpack"
   },

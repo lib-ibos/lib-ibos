@@ -1,11 +1,14 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {Checkbox as AntdCheckbox} from 'antd'
 import {checkSecurity} from'../share'
 
-function Checkbox(props) {
-    const {children, displayName, security, ...otherProps} = props
-    const {canAccess} = checkSecurity(props)
-    return canAccess ? <AntdCheckbox {...otherProps}>{displayName || children}</AntdCheckbox> : <noscript/>
+class Checkbox extends Component {
+
+    render() {
+        const {children, displayName, security, ...otherProps} = this.props
+        const {canAccess} = checkSecurity(this.props)
+        return canAccess ? <AntdCheckbox {...otherProps}>{displayName || children}</AntdCheckbox> : <noscript/>
+    }
 }
 
 export default Checkbox

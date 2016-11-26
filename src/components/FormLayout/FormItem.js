@@ -26,8 +26,7 @@ class FormItem extends Component {
         const _style = label ? {} : {paddingLeft: 0}
         const _class = classnames(
             {"o-form-label--vertical":labelVertical},
-            {["o-form-label--"+labelWidth]:labelWidth},
-            {"o-form-label--none":(label == " ")}
+            {["o-form-label--"+labelWidth]:labelWidth}
         )
         const _label = label && label
 

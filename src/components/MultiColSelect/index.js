@@ -163,19 +163,11 @@ class MultiColSelect extends Component {
     }
 
 
-    handleMenuMouseEnter =()=>{
-        console.log("enter")
-        this.setState({
-            canMenuHide:false
-        })
+    handleClick =(e)=>{
+        this.props.onChange &&　this.props.onChange(e.target.value);
+        this.setOpenState(true)
     }
 
-    handleMenuMouseLeave =()=>{
-        console.log("leave")
-        this.setState({
-            canMenuHide:true
-        })
-    }
 
     render() {
         const {dataHeader,dataBody,type,rows,autosize,...props} = this.props;
@@ -222,7 +214,7 @@ class MultiColSelect extends Component {
                 </div>
             }
                       visible={this.state.open}
-                      onClick ={()=>this.setOpenState(true)}
+
             >
 
                 <Input
@@ -231,6 +223,7 @@ class MultiColSelect extends Component {
                     value={props.value}
                     rows={rows}
                     autosize={autosize}
+                    onClick ={this.handleClick}
                     onChange={this.handleChange}
                     onKeyDown={this.onKeyDown}
                     onBlur = {this.handleBlur}

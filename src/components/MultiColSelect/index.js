@@ -126,7 +126,7 @@ class MultiColSelect extends Component {
                 open:false,
                 selectKeys:[String(currentKey)]
             })
-            this.props.onChange(_obj[currentKey][_key])
+            this.props.onChange &&　this.props.onChange(_obj[currentKey][_key])
             this.props.onSelect && this.props.onSelect(_obj[_key]);
             event.preventDefault();
             event.stopPropagation();
@@ -141,7 +141,7 @@ class MultiColSelect extends Component {
     }
 
     handleChange=(e)=>{
-        this.props.onChange(e.target.value);
+        this.props.onChange &&　this.props.onChange(e.target.value);
         this.props.dataBody.length > 0 && this.setOpenState(true)
     }
 
@@ -154,7 +154,7 @@ class MultiColSelect extends Component {
             selectKeys:[String(value.key)]
         })
         this.setActiveState(value.key)
-        this.props.onChange(currentKey)
+        this.props.onChange &&　this.props.onChange(currentKey)
         this.props.onSelect && this.props.onSelect(_obj);
 }
 
@@ -162,10 +162,6 @@ class MultiColSelect extends Component {
         this.state.canMenuHide && this.setOpenState(false)
     }
 
-    handleMenuClick = (e) =>{
-        console.log(e,1);
-
-    }
 
     handleMenuMouseEnter =()=>{
         console.log("enter")

@@ -18,6 +18,7 @@ class MultiColSelect extends Component {
             open:false,
             selectKeys:['-1'],
             activeKey:'0',
+            canMenuHide:true
         }
     }
 
@@ -144,7 +145,7 @@ class MultiColSelect extends Component {
         this.props.dataBody.length > 0 && this.setOpenState(true)
     }
 
-    handleSelect =(value) =>{
+    onMenuSelect =(value) =>{
         let _key = this.props.selectKey;
         let _obj = this.props.dataBody[value.key]
         let currentKey = _obj[_key]
@@ -156,6 +157,29 @@ class MultiColSelect extends Component {
         this.props.onChange(currentKey)
         this.props.onSelect && this.props.onSelect(_obj);
 }
+
+    handleBlur = ()=>{
+        this.state.canMenuHide && this.setOpenState(false)
+    }
+
+    handleMenuClick = (e) =>{
+        console.log(e,1);
+
+    }
+
+    handleMenuMouseEnter =()=>{
+        console.log("enter")
+        this.setState({
+            canMenuHide:false
+        })
+    }
+
+    handleMenuMouseLeave =()=>{
+        console.log("leave")
+        this.setState({
+            canMenuHide:true
+        })
+    }
 
     render() {
         const {dataHeader,dataBody,type,rows,autosize,...props} = this.props;
@@ -185,29 +209,35 @@ class MultiColSelect extends Component {
 
         return (
             <Dropdown overlay={
-                <Menu
-                    ref="menu"
-                    onSelect={this.handleSelect}
+                <div
                     className="o-dropdown-multi-col"
+                    ref="menu"
+                    style={dropdwonStyle}
+                >
+                    <Menu
+                    onSelect={this.onMenuSelect}
                     activeKey ={this.state.activeKey}
                     selectedKeys={this.state.selectKeys}
-                    style={dropdwonStyle}
                 >
                     {dropdownHeadElement}
                     {dropdownBodyElement}
                 </Menu>
+
+                </div>
             }
-                      onClick ={()=>this.setOpenState(true)}
                       visible={this.state.open}
+                      onClick ={()=>this.setOpenState(true)}
             >
 
                 <Input
+                    ref="input"
                     type={type}
                     value={props.value}
                     rows={rows}
                     autosize={autosize}
                     onChange={this.handleChange}
                     onKeyDown={this.onKeyDown}
+                    onBlur = {this.handleBlur}
                 />
             </Dropdown>
         );

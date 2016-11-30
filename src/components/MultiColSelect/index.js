@@ -172,6 +172,20 @@ class MultiColSelect extends Component {
         this.setOpenState(true)
     }
 
+    handleMenuMouseEnter=()=>{
+        this.setState({
+            canMenuHide:false
+        })
+    }
+
+    handleMenuMouseLeave=()=>{
+        this.setState({
+            canMenuHide:true
+        })
+        let input = ReactDOM.findDOMNode(this.refs.input).children[0]
+        input.focus()
+    }
+
 
     render() {
         const {dataHeader,dataBody,type,rows,autosize,...props} = this.props;
@@ -181,9 +195,9 @@ class MultiColSelect extends Component {
 
         // 拼接下拉框header部分结构
         const dropdownHeadElement = dropdownHeadData ? <MenuItem key="title" disabled>{dropdownHeadData.map(val => <p key={val.dataIndex}>{val.title}</p>)}</MenuItem> : '';
-        const dropdownBodyElement = !hasDataBody ? <MenuItem className="no-data" disabled><p colSpan="2">{dropdownBodyData}</p><p></p></MenuItem> : bodyElement();
+        const dropdownBodyElement = !hasDataBody ? <MenuItem className="no-data" disabled><p colSpan="2">{dropdownBodyData}</p><p></p></MenuItem> : createBodyElement();
         //下拉框body部分
-        function bodyElement() {
+        function createBodyElement() {
             const isArray = dropdownBodyData instanceof  Array;
             if(!isArray ){
                 throw  new TypeError('MultiColSelect 组件的 dataBody 只接受 "Array" 格式的数据');
@@ -205,6 +219,8 @@ class MultiColSelect extends Component {
                     className="o-dropdown-multi-col"
                     ref="menu"
                     style={dropdwonStyle}
+                    onMouseEnter={this.handleMenuMouseEnter}
+                    onMouseLeave={this.handleMenuMouseLeave}
                 >
                     <Menu
                     onSelect={this.onMenuSelect}

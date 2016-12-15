@@ -4,7 +4,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import echarts from 'echarts/lib/echarts'
 
-// 引入柱状图
+// 柱状图
 import 'echarts/lib/chart/bar'
 // 折线图
 import 'echarts/lib/chart/line'
@@ -31,9 +31,8 @@ class Chart extends Component {
     }
 
     static propTypes = {
-        displayName: PropTypes.string,
-        xAxis: PropTypes.string.isRequired,
-        value: PropTypes.array.isRequired,
+        title: PropTypes.string,
+        dataSource: PropTypes.array.isRequired,
         
         notMerge: PropTypes.bool,
         lazyUpdate: PropTypes.bool,
@@ -93,7 +92,7 @@ class Chart extends Component {
     }
 
     getOption = () => {
-        const {displayName, xAxis, children, value: dataSource } = this.props
+        const {title, children, dataSource } = this.props
         let legendData = []
         let isPie = false
         const getValue = (item, prop) => {
@@ -103,66 +102,102 @@ class Chart extends Component {
             }
             console.warn(prop + ' 属性不存在了!')
         }
-        let xAxisData = dataSource.map(item => getValue(item, xAxis))
-        const series = React.Children.map(children, child => {
-            const {value: dataIndex, displayName, type} = child.props
-            legendData.push(displayName)
-            if (type === 'pie') {
-                isPie = true
+        
+        let hash = {
+            isPie: false,
+            xAxisProps: {},
+            serieProps: [],
+            XAxisHandle: function(props) {
+                this.xAxisProps = props
+            },
+            SerieHandle: function(props) {
+                this.serieProps.push(props) 
+            },
+            getLineOrBarOption: function() {
+                let legendData = []
+                let xAxisData = dataSource.map(item => getValue(item, this.xAxisProps.dataIndex))
+                const series = this.serieProps.map(props => {
+                    const {dataIndex, name, type} = props
+                    legendData.push(name)
+                    return {
+                        name,
+                        type,
+                        data: dataSource.map(item => getValue(item, dataIndex))
+                    }
+                })
                 return {
-                    name: displayName,
-                    type,
-                    radius: '50%',
-                    data: dataSource.map(item => ({value: getValue(item, dataIndex), name: getValue(item, xAxis)}))
+                    title: {
+                        text: title,
+                        x:'10%'
+                    },
+                    tooltip: {
+                        trigger: 'axis',       
+                        // axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        //     type : type === 'line' ? 'line' : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        // }
+                    },
+                    legend: {
+                        data: legendData
+                    },
+                    xAxis: {
+                        data: xAxisData
+                    },
+                    yAxis: {},
+                    series
+                }                
+            },
+            getPieOption: function(dataSource) {
+                let legendData = dataSource.map(item => getValue(item, this.xAxisProps.dataIndex))
+                const series = this.serieProps.map(props => {
+                    const {dataIndex, name, type} = props
+                    return {
+                        name,
+                        type,
+                        radius: '50%',
+                        data: dataSource.map(item => ({
+                            value: getValue(item, dataIndex), 
+                            name: getValue(item, this.xAxisProps.dataIndex)
+                        }))
+                    }
+                })
+                return {
+                    title: {
+                        text: title,
+                        x:'10%'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"      
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        right: 'right',
+                        data: legendData,
+                    },
+                    series                
+                }
+            },
+            getOption: function(dataSource) {
+                return this.isPie ? this.getPieOption(dataSource) : this.getLineOrBarOption(dataSource)
+            }
+        }
+        React.Children.forEach(children, child => {
+            const name = child.type.name
+            if (name === 'Serie') {
+                if (child.props.type ==='pie') {
+                    hash.isPie = true
+                } else if (hash.isPie) {
+                    throw new Error('暂不支持饼图与其他图混用')
                 }
             }
-            if (isPie) {
-                console.error('暂不支持饼图与其他图混用')
-            }
-            return {
-                name: displayName,
-                type,
-                data: dataSource.map(item => getValue(item, dataIndex))
-            }
+            hash[`${name}Handle`](child.props)
         })
-        if (isPie) {
-            return {
-                title: {
-                    text: displayName,
-                    x:'10%'
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"      
-                },
-                legend: {
-                    orient: 'vertical',
-                    right: 'right',
-                    data: xAxisData,
-                },
-                series                
-            }
+
+        if (!hash.xAxisProps.dataIndex) {
+            throw new Error("必须配置XAxis")
         }
-        return {
-            title: {
-                text: displayName,
-                x:'10%'
-            },
-            tooltip: {
-                trigger: 'axis',       
-                // axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                //     type : type === 'line' ? 'line' : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                // }
-            },
-            legend: {
-                data: legendData
-            },
-            xAxis: {
-                data: xAxisData
-            },
-            yAxis: {},
-            series
-        }
+        
+        return hash.getOption(dataSource)
     }
 
     render() {

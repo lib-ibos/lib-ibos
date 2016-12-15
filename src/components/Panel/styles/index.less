@@ -1,0 +1,54 @@
+@import "../../../styles/variable";
+
+.panel{
+  background: #fff;
+  margin-bottom:16px;
+
+  &__header{
+    padding-top:@panel-padding;
+    padding-bottom: 4px;
+    border-bottom:1px solid #eee;
+    margin-left:@panel-padding;
+    margin-right:@panel-padding;
+    margin-bottom:-4px;
+  }
+
+  &__title{
+    line-height:24px;
+    font-weight:700;
+  }
+
+  &__fn{
+    float: right;
+  }
+
+  &__body{
+    padding:@panel-padding;
+  }
+
+  &--transparent{
+    background: transparent;
+  }
+
+  &--no-header-bd{
+    .panel{
+      &__header{
+        margin-bottom: -18px;
+        border:transparent;
+      }
+    }
+  }
+
+  &--no-padding{
+    .panel{
+      &__header{
+        margin-left:0;
+        margin-right:0;
+      }
+      &__body{
+        padding-left:0;
+        padding-right:0;
+      }
+    }
+  }
+}

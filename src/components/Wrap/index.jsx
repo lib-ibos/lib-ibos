@@ -1,5 +1,5 @@
 import React from 'react'
 
-export default function Panel({children, ...props}) {
+export default function Wrap({children, ...props}) {
     return <div {...props}>{children}</div>
 }

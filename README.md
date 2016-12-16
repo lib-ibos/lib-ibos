@@ -29,8 +29,8 @@
 ```
 
 ## 发布
-注： 同时发布到官方npm及github
+注： 同时发布到官方npm
 ```js
-    npm run pub
+    npm publish
 ```
 

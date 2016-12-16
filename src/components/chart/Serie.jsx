@@ -9,7 +9,7 @@ Serie.defaultProps = {
 }
 
 Serie.propTypes = {
-    displayName: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    dataIndex: PropTypes.string.isRequired,
     type: PropTypes.string,
 }

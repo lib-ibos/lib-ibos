@@ -13,5 +13,8 @@ export default {
     Table,
     FormLayout,
     FormItem,
-    MultiColSelect
+    MultiColSelect,
+    Wrap,
+    Tabs,
+    Split
 }

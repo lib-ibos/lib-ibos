@@ -13,6 +13,7 @@
   "author": "codering",
   "license": "MIT",
   "dependencies": {
+    "echarts": "^3.3.2",
     "rc-menu": "~4.13.0",
     "rc-util": "~3.3.0"
   },

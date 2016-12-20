@@ -8,6 +8,7 @@
     noPadding
     noHeaderBorder
     fnInline
+    gray
 >
     children
 </Panel>
@@ -23,3 +24,4 @@ fn|右上角的操作区域|React.Element|-
 fnInline|跟在title后面|-|-
 style|panel自定义样式|Object|-
 bodyStyle|panel body自定义样式|Object|-
+gray|灰底色|-|-

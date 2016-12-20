@@ -3,8 +3,11 @@
 .panel{
   background: #fff;
   margin-bottom:16px;
+  &:last-child{
+    margin-bottom:0;
+  }
 
-  &__header{
+  &>&__header{
     padding-top:@panel-padding;
     padding-bottom: 4px;
     border-bottom:1px solid #eee;
@@ -15,14 +18,20 @@
 
   &__title{
     line-height:24px;
-    font-weight:700;
+    font-weight:bold;
+    display: inline-block;
   }
 
   &__fn{
     float: right;
+    &&--inline{
+      float: none;
+      display: inline-block;
+      padding-left:16px;
+    }
   }
 
-  &__body{
+  &>&__body{
     padding:@panel-padding;
   }
 
@@ -31,7 +40,7 @@
   }
 
   &--no-header-bd{
-    .panel{
+    &>.panel{
       &__header{
         margin-bottom: -18px;
         border:transparent;
@@ -40,7 +49,7 @@
   }
 
   &--no-padding{
-    .panel{
+    &>.panel{
       &__header{
         margin-left:0;
         margin-right:0;
@@ -51,4 +60,28 @@
       }
     }
   }
+
+  &--gray{
+    background: #f9f9f9;
+    border:1px solid #eee;
+    border-radius: 3px;
+  }
+
+  &--gray&--no-header-bd &__header{
+    padding-top: 12px;
+  }
+
+  & & &__header{
+    padding-top:0;
+  }
+
+  & &--gray >&__header{
+    padding-top:16px;
+  }
+
+  & &--gray&--no-header-bd > &__header{
+    padding-top:10px;
+  }
+
+
 }

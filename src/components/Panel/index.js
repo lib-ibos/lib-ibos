@@ -4,27 +4,35 @@ import classnames  from 'classnames';
 import './styles/';
 
 
-function Panel({isTransparent, noHeaderBorder,noPadding, title,children, ...props}) {
+function Panel({transparent,gray,fnInline,style,bodyStyle, noHeaderBorder,noPadding, title,children, ...props}) {
     const prifix = 'panel';
-    const _class = classnames(
+    let panelClass = classnames(
         prifix,
         {
-            [prifix+"--transparent"]: isTransparent,
+            [prifix+"--transparent"]: transparent,
             [prifix+"--no-header-bd"]: noHeaderBorder,
-            [prifix+"--no-padding"]:noPadding
+            [prifix+"--no-padding"]:noPadding,
+            [prifix+"--gray"]:gray
         }
     )
-    return <div className={_class}>
+    let fnClass = classnames(
+        'panel__fn',
+        {['panel__fn--inline']:fnInline
+
+    })
+
+    return <div className={panelClass} style={style}>
         {/*有标题才输出*/}
         {title &&
         <div className="panel__header">
-            {props.fn &&
-            <div className="panel__fn">{props.fn}</div>
-            }
+
             <div className="panel__title">{title}</div>
+            {props.fn &&
+            <div className={fnClass}>{props.fn}</div>
+            }
         </div>
         }
-        <div className="panel__body">
+        <div className="panel__body" style={bodyStyle}>
             {children}
         </div>
     </div>

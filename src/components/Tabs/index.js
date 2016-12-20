@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ReactDOM,{render}  from 'react-dom';
+import ReactDOM, {render}  from 'react-dom';
 import classnames  from 'classnames';
 // import RcTabs , { TabPane } from 'rc-tabs'
 // import TabContent from 'rc-tabs/lib/TabContent';
@@ -12,22 +12,28 @@ const TabPane = Tabs.TabPane
 import './styles/';
 
 
-class OTabs extends Component{
+class OTabs extends Component {
 
-    render(){
-        let {children,type,title,...props} = this.props;
-        let titlePane = title && <TabPane tab={title} disabled={true}  key="__ttile" ></TabPane>
-        title && children.unshift(titlePane)
+    static defaultProps = {
+        prefixCls: 'o-tabs',
+    }
+
+    render() {
+        let {prefixCls, children,nextCnt,  title,  ...props} = this.props;
+        let titlePane = !!title && <TabPane tab={title} disabled={true} key="__ttile"></TabPane>
+        let nextPane = !!nextCnt && <TabPane tab={<span className={prefixCls +'__next'}>{nextCnt}</span>} disabled={true} key="__fn"></TabPane>
+        !!title && children.unshift(titlePane)
+        !!nextCnt && children.push(nextPane)
 
         let classNames = classnames({
-            ['o-tabs']: !!title
+            [prefixCls]: !!title,
+            [prefixCls + '--small']: this.props.type == "card" && this.props.size == "small"
         })
         // console.log(children )
-        return(
+        return (
             <RcTabs
                 {...props}
                 className={classNames}
-                type={title? 'card' : type}
             >
                 {children}
             </RcTabs>

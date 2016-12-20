@@ -4,4 +4,5 @@
 ## API
 成员 | 说明 | 类型 | 默认值
 ---|---|---|---
-title|当有标题的时候，type属性为card，不再接受其他属性|String|-
+title|tabPane 之前加上title|String|无
+nextCnt|tabPane 之后加上react |React Node|无

@@ -4,6 +4,7 @@ import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 
 import TableDemo from './demo/TableDemo'
+import FormItemDemo from './demo/FormItemDemo'
 
 class App extends Component {
 
@@ -11,6 +12,8 @@ class App extends Component {
         return (
             <div>
                <TableDemo />
+               <hr/>
+               <FormItemDemo />
             </div>
         )
     }

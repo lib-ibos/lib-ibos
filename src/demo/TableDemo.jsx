@@ -28,7 +28,6 @@ export default class TableDemo extends Component {
                 pageSize: 20,
                 fixCols: 1
             }
-            
         }
     }
 
@@ -42,11 +41,10 @@ export default class TableDemo extends Component {
         const {columnKeys, width, height} = this.state.config
 
         return (
-            <div title="表格 > 自定义列" style={{width: 700, overflow: 'auto'}}>
+            <div title="表格 > 自定义列" style={{width: 700}}>
                 <Table dataSource={mockData} 
                     customConfig={this.state.config} 
                     onCustomChange={this.handleCustomConfigChange} 
-                   
                 >
                     <Table.Col title="姓名" dataIndex="name" width={60} />
                     <Table.Col title="年龄" dataIndex="age" width={60} />

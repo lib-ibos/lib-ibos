@@ -5,8 +5,8 @@ import {checkSecurity} from '../share'
 
 import CustomColumnsModal from './CustomColumnsModal'
 
-function checkCustomColumns(props, customColumns ) {
-    return customColumns.indexOf(props.dataIndex) > -1
+function checkCustomColumns(props, columnKeys ) {
+    return columnKeys.indexOf(props.dataIndex) > -1
 }
 
 class Table extends Component {
@@ -27,10 +27,14 @@ class Table extends Component {
     }
 
     render() {
-        const {children, security, customConfig, onCustomChange, ...otherProps} = this.props
-        const {canAccess} = checkSecurity(this.props)
+        const {children, security, customConfig, onCustomChange, pagination, ...otherProps} = this.props
 
-        const columnKeys = customConfig && customConfig.columnKeys
+        // 检查整个table权限
+        if (!checkSecurity(this.props).canAccess) {
+            return <noscript />
+        }
+
+        const columnKeys = customConfig ? customConfig.columnKeys : void 0
 
         const isValidCustomKeys = columnKeys && Array.isArray(columnKeys) && columnKeys.length > 0
 
@@ -51,10 +55,12 @@ class Table extends Component {
             columns = columnKeys.map(col => memo[col])
         }
         
-        let title, pageSize = 10, scroll = {}
+        let title
 
         if (customConfig) {
+
             title = (data) => <Button onClick={this.handleShow}>自定义列</Button>
+
             if (customConfig.fixCols) {
                 columns = columns.map((c,i) => {
                    const fixed = i < customConfig.fixCols 
@@ -63,48 +69,45 @@ class Table extends Component {
             }
 
             if (customConfig.pageSize) {
-                pageSize = customConfig.pageSize
+                otherProps.pagination = otherProps.pagination || {}
+                otherProps.pagination.pageSize = customConfig.pageSize
             }
 
             if (customConfig.width) {
-                scroll.x = customConfig.width
+                otherProps.scroll = otherProps.scroll || {}
+                otherProps.scroll.x = customConfig.width
             }
 
             if (customConfig.height) {
-                scroll.y = customConfig.height
+                otherProps.scroll = otherProps.scroll || {}
+                otherProps.scroll.y = customConfig.height
             }
         }
         
-        if (canAccess) {
-            const tableOpts = {
-                title,
-                ...otherProps,
-                columns,
-                pagination: {
-                    pageSize,
-                    showTotal: (total) =>  `共${total}条`
-                },
-                scroll
-            }
-            const modalOpts = {
-                ...customConfig,
-                visible: this.state.visible,
-                onCancel: this.handleClose,
-                onOk: onCustomChange,
-                dataSource: columnConfigs.map( ({title, dataIndex}) => ({key: dataIndex, title})),
-            }
-            // 每次弹框都重新渲染
-            const CustomColumnsModalGen = () => <CustomColumnsModal {...modalOpts} />
-
-            console.log(tableOpts)
-            return (
-                <div>
-                    <AntdTable {...tableOpts}  />
-                    <CustomColumnsModalGen />
-                </div>
-            )
+        // 表格参数
+        const tableOpts = {
+            title,
+            ...otherProps,
+            columns,
         }
-        return <noscript/>
+        // 弹出框参数
+        const modalOpts = {
+            ...customConfig,
+            visible: this.state.visible,
+            onCancel: this.handleClose,
+            onOk: onCustomChange,
+            dataSource: columnConfigs.map( ({title, dataIndex}) => ({key: dataIndex, title})),
+        }
+        // 每次弹框都重新渲染
+        const CustomColumnsModalGen = () => <CustomColumnsModal {...modalOpts} />
+
+        return (
+            <div>
+                <AntdTable {...tableOpts}  />
+                <CustomColumnsModalGen />
+            </div>
+        )
+       
     }
 }
 

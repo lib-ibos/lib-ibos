@@ -58,7 +58,9 @@ class Table extends Component {
         let title
 
         if (customConfig) {
+
             title = (data) => <Button onClick={this.handleShow}>自定义列</Button>
+
             if (customConfig.fixCols) {
                 columns = columns.map((c,i) => {
                    const fixed = i < customConfig.fixCols 
@@ -82,11 +84,13 @@ class Table extends Component {
             }
         }
         
+        // 表格参数
         const tableOpts = {
             title,
             ...otherProps,
             columns,
         }
+        // 弹出框参数
         const modalOpts = {
             ...customConfig,
             visible: this.state.visible,

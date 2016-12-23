@@ -14,24 +14,21 @@ function findFiles(startPath, filter, cb) {
     var files = fs.readdirSync(startPath);
     for (var i = 0; i < files.length; i++) {
         var filename = path.join(startPath, files[i]);
+        var ext = path.extname(filename)
         var stat = fs.lstatSync(filename);
         if (stat.isDirectory()) {
             findFiles(filename, filter, cb); //recurse
-        } else if (filename.indexOf(filter) >= 0) {
+        } else if (filter.test(filename)) {
             cb(filename)
         };
     };
 };
 
-var componentsPath = "src/components", libPath='lib';
+var componentsPath = "src/components", libPath='lib', rstyle = /\.(less|css)$/;
 var len = componentsPath.length
 var styleFiles = []
 
-findFiles(componentsPath, '.less', function(fileName){
-    styleFiles.push(fileName)
-});
-
-findFiles(componentsPath, '.css', function(fileName){
+findFiles(componentsPath, rstyle , function(fileName){
     styleFiles.push(fileName)
 });
 

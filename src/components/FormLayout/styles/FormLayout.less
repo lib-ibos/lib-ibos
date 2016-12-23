@@ -259,6 +259,15 @@
       height: 22px;
     }
   }
+  .ant-form-item-control{
+    &:before{
+      display: inline-block;
+      width: 0;
+      height: 23px;
+      content: '';
+      vertical-align: middle;
+    }
+  }
 }
 
 .o-form-item-input--normal {
@@ -322,10 +331,20 @@
   }
 }
 
-// 临时存放
+.ant-input[disabled], fieldset[disabled] .ant-input{
+  color: #666;
+  cursor: default;
+}
+
+// TODO: 移动到公共库
 .split-container {
   margin: 4px auto;
   background-color: #f9f9f9;
   border: 1px dashed #ddd;
   padding: 6px 0
+}
+
+// TODO: 移动到公共库
+.none{
+  display: none;
 }

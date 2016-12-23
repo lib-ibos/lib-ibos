@@ -62,8 +62,8 @@ class ScrollContainer extends Component {
             return window;
         },
         prefixId: 'scrollContainer_',
-        type:'card',
-        size:'default'
+        type: 'card',
+        size: 'default'
     }
 
     affixChange = () => {
@@ -74,14 +74,16 @@ class ScrollContainer extends Component {
         this.setState({
             activeKey: index
         });
+        this._option.tabClicked = true;
     }
 
     scrollTo = (index) => {
         const cntIndex = index;
         const {cnts, affixHeight, affixTop, affix} = this._option
         const cnt = cnts[cntIndex]
+        const offsetTop = this.props.offsetTop ? this.props.offsetTop : 0;
 
-        let scrollNum = getOffset(affix, this.props.target()).top + getOffset(cnt, affix).top - affixHeight;
+        let scrollNum = getOffset(affix, this.props.target()).top + getOffset(cnt, affix).top - affixHeight - offsetTop;
 
         document.documentElement.scrollTop = scrollNum //ie
         document.body.scrollTop = scrollNum
@@ -91,34 +93,40 @@ class ScrollContainer extends Component {
     updatePosition = (e) => {
         let scrollDir = this.scrollDirection()
         const scrollTop = getScroll(this.props.target(), true);
-        const {affixHeight, cnts, cntsOffestTop, cntsHeight}=this._option
+        const {tabClicked, affixHeight, cnts, cntsOffestTop, cntsHeight}=this._option
+        const offsetTop = this.props.offsetTop ? this.props.offsetTop : 0;
         let cur = 0;
         if (scrollDir === "up") {
             for (let i = cnts.length - 1; i >= 0; i--) {
-                scrollTop < cntsOffestTop[i] - affixHeight + cntsHeight[i] / 2 && (cur = i);
+                //往上滚动到容器一半的位置，就算到聚焦到这个容器
+                scrollTop < cntsOffestTop[i] - affixHeight - offsetTop + cntsHeight[i] / 2 && (cur = i);
             }
         } else {
             for (let i = 0, length = cnts.length; i < length; i++) {
-                scrollTop >= cntsOffestTop[i] - affixHeight && (cur = i);
+                scrollTop >= cntsOffestTop[i] - affixHeight - offsetTop && (cur = i);
             }
         }
 
         // 每 setState 一次，就会render一次，当值一样的时候就不触发 setState
         if (this.state.activeKey != cur) {
-            this.setState({
-                activeKey: cur.toString()
-            });
+            if (!tabClicked) {//以点击事件的tab聚焦为优先
+                this.setState({
+                    activeKey: cur.toString()
+                });
+            }
+            this._option.tabClicked = false
         }
-
 
     }
 
     scrollDirection = () => {
         const scrollTop = getScroll(this.props.target(), true);
 
-        if (scrollTop >= this._option.lastScrollTop) {
+        if (scrollTop > this._option.lastScrollTop) {
             this._option.scrollDir = "down"
-        } else {
+        } else if (scrollTop == this._option.lastScrollTop) {
+        }//ie下经常出现相同的值，相同的时候就默认当前的方向
+        else {
             this._option.scrollDir = "up"
         }
         this._option.lastScrollTop = scrollTop;
@@ -152,7 +160,8 @@ class ScrollContainer extends Component {
             cntsHeight: cntsHeight,
             affix: affix, // tab
             affixHeight: affixHeight,
-            affixTop: getOffset(affix, target()).top
+            affixTop: getOffset(affix, target()).top,
+            tabClicked: false//当tab点击的时候，避免去触发滚动的高度判断引起的tab聚焦，因为最后一个容器往往滚动不到最上面
         }
 
     }
@@ -186,7 +195,7 @@ class ScrollContainer extends Component {
     }
 
     render() {
-        let {prefixCls,type, tabTitle, prefixId,size, children, ...props} = this.props;
+        let {prefixCls, offsetTop, type, tabTitle, prefixId, size, children, ...props} = this.props;
         let tabChildren = children.map(function (item, index) {
             return <TabPane key={index} tab={item.props.tab}></TabPane>
         })
@@ -199,7 +208,6 @@ class ScrollContainer extends Component {
             prefixCls
         )
 
-
         return (
             <div
                 {...props}
@@ -208,6 +216,7 @@ class ScrollContainer extends Component {
                 <Affix
                     ref="affix"
                     onChange={this.affixChange}
+                    offsetTop={offsetTop}
                 >
                     <Tabs
                         title={tabTitle}

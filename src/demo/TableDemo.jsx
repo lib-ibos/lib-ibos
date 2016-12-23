@@ -46,8 +46,7 @@ export default class TableDemo extends Component {
                 <Table dataSource={mockData} 
                     customConfig={this.state.config} 
                     onCustomChange={this.handleCustomConfigChange} 
-                    scroll={{x: 200}}
-                    style={{width, height}}
+                   
                 >
                     <Table.Col title="姓名" dataIndex="name" width={60} />
                     <Table.Col title="年龄" dataIndex="age" width={60} />

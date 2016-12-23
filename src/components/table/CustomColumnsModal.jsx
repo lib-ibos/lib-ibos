@@ -10,9 +10,9 @@ const titles = ['可选', '已选']
 
 class columnKeysModal extends Component {
 
-
     handleOk = () => {
         const {selectedKey, ...rest} = this.props.form.getFieldsValue()
+        rest.pageSize = rest.pageSize - 0
         this.props.onOk(rest)
         this.props.onCancel()
     }
@@ -85,9 +85,11 @@ class columnKeysModal extends Component {
         }
 
         const getFieldProps = (id, initialValue, valuePropName) => {
-            return form.getFieldProps(id, {initialValue, valuePropName})
+            return form.getFieldProps(id, {
+                initialValue, 
+                valuePropName, 
+            })
         }
-
         
         getFieldProps('selectedKey')
 
@@ -137,7 +139,7 @@ class columnKeysModal extends Component {
                             <InputNumber {...fixColsFieldProps} />
                         </Form.Item>
                         <Form.Item label="每页行数" labelCol={{span: 8}} wrapperCol={{span: 9}}>
-                            <Select {...pageSizeFieldProps} >
+                            <Select {...pageSizeFieldProps } >
                                 <Select.Option value="10" >10行/页</Select.Option>
                                 <Select.Option value="20" >20行/页</Select.Option>
                                 <Select.Option value="30" >30行/页</Select.Option>

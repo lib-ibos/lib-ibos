@@ -27,7 +27,7 @@ class Table extends Component {
     }
 
     render() {
-        const {children, security, customConfig, onCustomConfigChange, ...otherProps} = this.props
+        const {children, security, customConfig, onCustomChange, ...otherProps} = this.props
         const {canAccess} = checkSecurity(this.props)
 
         const columnKeys = customConfig && customConfig.columnKeys
@@ -73,7 +73,7 @@ class Table extends Component {
                 ...customConfig,
                 visible: this.state.visible,
                 onCancel: this.handleClose,
-                onOk: onCustomConfigChange,
+                onOk: onCustomChange,
                 dataSource: columnConfigs.map( ({title, dataIndex}) => ({key: dataIndex, title})),
             }
             // 每次弹框都重新渲染

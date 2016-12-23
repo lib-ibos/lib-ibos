@@ -26,7 +26,12 @@ function findFiles(startPath, filter, cb) {
 var componentsPath = "src/components", libPath='lib';
 var len = componentsPath.length
 var styleFiles = []
+
 findFiles(componentsPath, '.less', function(fileName){
+    styleFiles.push(fileName)
+});
+
+findFiles(componentsPath, '.css', function(fileName){
     styleFiles.push(fileName)
 });
 

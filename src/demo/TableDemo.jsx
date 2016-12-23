@@ -45,7 +45,7 @@ export default class TableDemo extends Component {
             <div title="表格 > 自定义列" style={{width: 700, overflow: 'auto'}}>
                 <Table dataSource={mockData} 
                     customConfig={this.state.config} 
-                    onCustomConfigChange={this.handleCustomConfigChange} 
+                    onCustomChange={this.handleCustomConfigChange} 
                     scroll={{x: 200}}
                     style={{width, height}}
                 >

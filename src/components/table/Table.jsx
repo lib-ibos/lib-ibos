@@ -51,7 +51,7 @@ class Table extends Component {
             columns = columnKeys.map(col => memo[col])
         }
         
-        let title
+        let title, pageSize = 10
 
         if (customConfig) {
             title = (data) => <Button onClick={this.handleShow}>自定义列</Button>
@@ -61,6 +61,10 @@ class Table extends Component {
                    return {...c, fixed}
                 } )
             }
+
+            if (customConfig.pageSize) {
+                pageSize = customConfig.pageSize
+            }
         }
         
         if (canAccess) {
@@ -68,6 +72,10 @@ class Table extends Component {
                 title,
                 ...otherProps,
                 columns,
+                pagination: {
+                    pageSize,
+                    showTotal: (total) =>  `共${total}条`
+                }
             }
             const modalOpts = {
                 ...customConfig,

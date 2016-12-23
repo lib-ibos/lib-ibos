@@ -6,3 +6,4 @@ public
 test
 npm-debug.log
 webpack.*
+.babelrc

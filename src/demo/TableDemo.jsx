@@ -22,11 +22,7 @@ export default class TableDemo extends Component {
         super()
         this.state = {
             config: {
-                columnKeys: ['name', 'age', 'gender', 'address'],
-                width: 500,
-                height: 200,
-                pageSize: 20,
-                fixCols: 1
+               
             }
         }
     }
@@ -46,6 +42,7 @@ export default class TableDemo extends Component {
                     customConfig={this.state.config} 
                     onCustomChange={this.handleCustomConfigChange} 
                 >
+                    <Table.Col title="序号" dataIndex="seq" width={80} fixed render={() => new Date().getTime()} />
                     <Table.Col title="姓名" dataIndex="name" width={60} />
                     <Table.Col title="年龄" dataIndex="age" width={60} />
                     <Table.Col title="性别" dataIndex="gender" width={60}

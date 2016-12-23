@@ -1,0 +1,87 @@
+@import "../../styles/variable";
+
+.panel{
+  background: #fff;
+  margin-bottom:16px;
+  &:last-child{
+    margin-bottom:0;
+  }
+
+  &>&__header{
+    padding-top:@panel-padding;
+    padding-bottom: 4px;
+    border-bottom:1px solid #eee;
+    margin-left:@panel-padding;
+    margin-right:@panel-padding;
+    margin-bottom:-4px;
+  }
+
+  &__title{
+    line-height:24px;
+    font-weight:bold;
+    display: inline-block;
+  }
+
+  &__fn{
+    float: right;
+    &&--inline{
+      float: none;
+      display: inline-block;
+      padding-left:16px;
+    }
+  }
+
+  &>&__body{
+    padding:@panel-padding;
+  }
+
+  &--transparent{
+    background: transparent;
+  }
+
+  &--no-header-bd{
+    &>.panel{
+      &__header{
+        margin-bottom: -18px;
+        border:transparent;
+      }
+    }
+  }
+
+  &--no-padding{
+    &>.panel{
+      &__header{
+        margin-left:0;
+        margin-right:0;
+      }
+      &__body{
+        padding-left:0;
+        padding-right:0;
+      }
+    }
+  }
+
+  &--gray{
+    background: #f9f9f9;
+    border:1px solid #eee;
+    border-radius: 3px;
+  }
+
+  &--gray&--no-header-bd &__header{
+    padding-top: 12px;
+  }
+
+  & & &__header{
+    padding-top:0;
+  }
+
+  & &--gray >&__header{
+    padding-top:16px;
+  }
+
+  & &--gray&--no-header-bd > &__header{
+    padding-top:10px;
+  }
+
+
+}

@@ -24,17 +24,23 @@ function findFiles(startPath, filter, cb) {
     };
 };
 
-var componentsPath = "src/components", libPath='lib', rstyle = /\.(less|css)$/;
-var len = componentsPath.length
-var styleFiles = []
+function copyStyle(sourceDir, targetDir) {
+    var len = sourceDir.length
+    var styleFiles = []
+    findFiles(sourceDir, /\.(less|css)$/ , function(fileName){
+        styleFiles.push(fileName)
+    });
 
-findFiles(componentsPath, rstyle , function(fileName){
-    styleFiles.push(fileName)
-});
-
-for (var i = 0; i < styleFiles.length; i++) {
-    var source = styleFiles[i]
-    var target = libPath + source.substr(len)
-    fs.copySync(source, target)
-    console.log(source + ' -> ' + target)
+    for (var i = 0; i < styleFiles.length; i++) {
+        var source = styleFiles[i]
+        var target = targetDir + source.substr(len)
+        fs.copySync(source, target)
+        console.log(source + ' -> ' + target)
+    }
 }
+
+copyStyle("./src/components", './lib')
+
+
+
+

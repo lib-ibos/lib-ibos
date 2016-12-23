@@ -7,7 +7,7 @@ const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const chalk = require('chalk');
 const historyApiFallback = require('connect-history-api-fallback');
 
-var config = require('./webpack.config.js');
+var config = require('../webpack.config.js');
 
 let compiler;
 

@@ -1,13 +1,13 @@
 {
   "name": "lib-ibos",
-  "version": "0.0.47",
+  "version": "0.0.49",
   "description": "ibos前端设计依赖的组件",
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require ./test/setup.js",
     "build": "rimraf lib && babel src/components --out-dir lib && node scripts/copyStyle",
     "patch": "npm run build && npm version patch",
-    "start": "node server.js"
+    "start": "node scripts/server.js"
   },
   "author": "codering",
   "license": "MIT",

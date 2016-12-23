@@ -22,7 +22,11 @@ export default class TableDemo extends Component {
         super()
         this.state = {
             config: {
-               
+                // columnKeys: ['name', 'age', 'gender', 'address'],
+                // width: 500,
+                // height: 200,
+                // pageSize: 20,
+                // fixCols: 1
             }
         }
     }

@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+
 import {Table as AntdTable, Button, Modal, Transfer } from 'antd'
 import {checkSecurity} from '../share'
 
@@ -26,38 +27,62 @@ class Table extends Component {
     }
 
     render() {
-        const {children, security, customColumns, onCustomColumnsChange, ...otherProps} = this.props
+        const {children, security, customConfig, onCustomConfigChange, ...otherProps} = this.props
         const {canAccess} = checkSecurity(this.props)
 
-        const isValidCustomColumns = customColumns && Array.isArray(customColumns) && customColumns.length > 0
+        const columnKeys = customConfig && customConfig.columnKeys
+
+        const isValidCustomKeys = columnKeys && Array.isArray(columnKeys) && columnKeys.length > 0
+
         const columnConfigs =  React.Children.map(children, child => child.props)
-        const columns = columnConfigs
-            .filter(childProps => isValidCustomColumns ? checkCustomColumns(childProps, customColumns) : true)
-            .filter(childProps => checkSecurity(childProps).canAccess)
+        
+        // 缓存下，便于自定义列时快速查找
+        let memo = {}
+
+        let columns = columnConfigs
+            .filter(childProps => isValidCustomKeys ? checkCustomColumns(childProps, columnKeys) : true)
+            .filter(childProps => {
+                const canAccess = checkSecurity(childProps).canAccess
+                canAccess && (memo[childProps.dataIndex] = childProps)
+                return canAccess
+            })
+
+        if (isValidCustomKeys) {
+            columns = columnKeys.map(col => memo[col])
+        }
         
         let title
-        if (customColumns) {
+
+        if (customConfig) {
             title = (data) => <Button onClick={this.handleShow}>自定义列</Button>
+            if (customConfig.fixCols) {
+                columns = columns.map((c,i) => {
+                   const fixed = i < customConfig.fixCols 
+                   return {...c, fixed}
+                } )
+            }
         }
         
         if (canAccess) {
             const tableOpts = {
                 title,
-                ...otherProps
+                ...otherProps,
+                columns,
             }
             const modalOpts = {
+                ...customConfig,
                 visible: this.state.visible,
                 onCancel: this.handleClose,
-                onOk: onCustomColumnsChange,
+                onOk: onCustomConfigChange,
                 dataSource: columnConfigs.map( ({title, dataIndex}) => ({key: dataIndex, title})),
-                targetKeys: customColumns,
             }
             // 每次弹框都重新渲染
             const CustomColumnsModalGen = () => <CustomColumnsModal {...modalOpts} />
 
+            console.log(tableOpts)
             return (
                 <div>
-                    <AntdTable {...tableOpts} columns={columns} />
+                    <AntdTable {...tableOpts}  />
                     <CustomColumnsModalGen />
                 </div>
             )

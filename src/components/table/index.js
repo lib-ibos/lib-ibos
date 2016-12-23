@@ -1,3 +1,5 @@
+
+import './style.css'
 import {noop} from '../share'
 import Table from './Table'
 

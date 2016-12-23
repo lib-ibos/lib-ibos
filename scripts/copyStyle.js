@@ -39,7 +39,7 @@ function copyStyle(sourceDir, targetDir) {
     }
 }
 
-copyStyle("./src/components", './lib')
+copyStyle("src/components", 'lib')
 
 
 

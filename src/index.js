@@ -3,6 +3,7 @@ import './index.html'
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 
+import ChartDemo from './demo/ChartDemo'
 import TableDemo from './demo/TableDemo'
 import FormItemDemo from './demo/FormItemDemo'
 
@@ -14,6 +15,8 @@ class App extends Component {
                <TableDemo />
                <hr/>
                <FormItemDemo />
+               <hr/>
+               <ChartDemo />
             </div>
         )
     }

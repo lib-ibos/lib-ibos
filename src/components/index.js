@@ -7,6 +7,7 @@ import FormLayout from './FormLayout'
 import Wrap from './Wrap'
 import Tabs from './Tabs'
 import Split from './Split'
+import Chart from './chart'
 
 export default {
     Panel,
@@ -17,5 +18,7 @@ export default {
     MultiColSelect,
     Wrap,
     Tabs,
-    Split
+    Split,
+    Chart,
+    
 }

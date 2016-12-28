@@ -7,7 +7,8 @@
     "test": "mocha --compilers js:babel-core/register --require ./test/setup.js",
     "build": "rimraf lib && babel src/components --out-dir lib && node scripts/copyStyle",
     "patch": "npm run build && npm version patch",
-    "start": "node scripts/server.js"
+    "start": "node scripts/server.js",
+    "nohot": "node scripts/server.js --no-hot"
   },
   "author": "codering",
   "license": "MIT",

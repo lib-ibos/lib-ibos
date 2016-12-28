@@ -182,7 +182,7 @@ class Chart extends Component {
             }
         }
         React.Children.forEach(children, child => {
-            const name = child.type.name
+            const name = child.type.displayName
             if (name === 'Serie') {
                 if (child.props.type ==='pie') {
                     hash.isPie = true

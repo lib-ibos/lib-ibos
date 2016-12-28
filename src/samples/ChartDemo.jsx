@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Chart} from '../components'
+import Chart from '../components/chart'
 
 const mockData = [
     {x: {value: '一月'}, soldNum: {value: 200}, avaliableNum: {value: 100}, invalidNum: {value: 12}},

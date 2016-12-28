@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 
 import {Card} from 'antd'
 
-import {Table, Button} from '../components'
+import Table from '../components/table'
+import Button from '../components/button'
 
 const mockData =  [
     { key: '1', name: '萨克', age: 22, gender: '1', address: '试点试点试点试点试点试点试点试点试点试点试点试点试点试点试点试点' },
@@ -22,11 +23,11 @@ export default class TableDemo extends Component {
         super()
         this.state = {
             config: {
-                // columnKeys: ['name', 'age', 'gender', 'address'],
-                // width: 500,
-                // height: 200,
-                // pageSize: 20,
-                // fixCols: 1
+                columnKeys: ['name', 'age', 'gender', 'address'],
+                width: 500,
+                height: 200,
+                pageSize: 20,
+                fixCols: 1
             }
         }
     }

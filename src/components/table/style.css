@@ -7,3 +7,20 @@
 .transfer-updown-item-selected {
    color: #2db7f5
 }
+
+.custom-filter-dropdown {
+  /*width: 200px;*/
+  padding: 8px;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+}
+
+.table-range-input-number .ant-input-wrapper {
+    display: inline-block;
+    width: 70px;
+}
+
+.table-range-input-number .split-tilde {
+    margin: 8px;
+}

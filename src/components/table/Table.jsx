@@ -1,9 +1,12 @@
 import React, {Component} from 'react'
 
 import {Table as AntdTable, Button, Modal, Transfer } from 'antd'
+
 import {checkSecurity} from '../share'
 
 import CustomColumnsModal from './CustomColumnsModal'
+import ColumnDropdown from './ColumnDropdown'
+import FilterBar from './FilterBar'
 
 function checkCustomColumns(props, columnKeys ) {
     return columnKeys.indexOf(props.dataIndex) > -1
@@ -14,7 +17,7 @@ class Table extends Component {
     constructor() {
         super()
         this.state = {
-            visible: false
+            visible: false,
         }
     }
 
@@ -24,6 +27,34 @@ class Table extends Component {
 
     handleClose = () => {
         this.setState({visible: false})
+    }
+
+    handleChange = (pagination, filters, sorter) => {
+        const mergedFilters = {...this.state.filters, ...filters}
+        this.setState({pagination, sorter, filters: mergedFilters}, () => {
+            this.props.onChange && this.props.onChange(
+                this.state.pagination, 
+                this.state.filters, 
+                this.state.sorter
+            )
+        })
+    }
+
+    handleCustomFiltersChange = (cutomFilters) => {
+        const mergedFilters = {...this.state.filters, ...cutomFilters}
+        this.setState({filters: mergedFilters}, () => {
+            this.props.onChange && this.props.onChange(
+                this.state.pagination, 
+                this.state.filters, 
+                this.state.sorter
+            )
+        })
+    }
+
+    handleTagRemove = (key) => {
+        const filters = {...this.state.filters}
+        delete filters[key]
+        this.setState({filters})
     }
 
     render() {
@@ -39,6 +70,11 @@ class Table extends Component {
         const isValidCustomKeys = columnKeys && Array.isArray(columnKeys) && columnKeys.length > 0
 
         const columnConfigs =  React.Children.map(children, child => child.props)
+
+        const colTitles = columnConfigs.reduce((memo, {dataIndex, title}) => {
+            memo[dataIndex] = title
+            return memo
+        }, {})
 
         const seqColConfig = columnConfigs.splice(0,1)[0]
         
@@ -89,12 +125,29 @@ class Table extends Component {
         const allColConfig = columnConfigs.map( ({title, dataIndex}) => ({key: dataIndex, title}))
 
         columns.unshift(seqColConfig)
+
+        columns = columns.map(colProps => {
+            const props =  {...colProps}
+            if (props.filterDropdownType) {
+                props.filterDropdown = (
+                    <ColumnDropdown 
+                        type={props.filterDropdownType}
+                        dataSource={props.filters}
+                        multiple={props.filterMultiple}
+                        onChange={v => this.handleCustomFiltersChange({[props.dataIndex]: v})}
+                    />
+                )
+                delete props.filterDropdownType
+            }
+            return props
+        })
         
         // 表格参数
         const tableOpts = {
             title,
             ...otherProps,
             columns,
+            onChange: this.handleChange,
         }
         // 弹出框参数
         const modalOpts = {
@@ -109,6 +162,7 @@ class Table extends Component {
 
         return (
             <div>
+                <FilterBar colTitles={colTitles} filters={this.state.filters} onClose={this.handleTagRemove} />
                 <AntdTable {...tableOpts}  />
                 <CustomColumnsModalGen />
             </div>
@@ -118,3 +172,7 @@ class Table extends Component {
 }
 
 export default Table
+
+
+
+

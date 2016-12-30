@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 
 import {Card} from 'antd'
 
-import {Table, Button} from '../components'
+import Table from '../components/table'
+import Button from '../components/button'
 
 const mockData =  [
     { key: '1', name: '萨克', age: 22, gender: '1', address: '试点试点试点试点试点试点试点试点试点试点试点试点试点试点试点试点' },
@@ -46,6 +47,7 @@ export default class TableDemo extends Component {
                     customConfig={this.state.config} 
                     onCustomChange={this.handleCustomConfigChange} 
                 >
+                    <Table.Col title="序号" dataIndex="seq" width={80} fixed render={() => new Date().getTime()} />
                     <Table.Col title="姓名" dataIndex="name" width={60} />
                     <Table.Col title="年龄" dataIndex="age" width={60} />
                     <Table.Col title="性别" dataIndex="gender" width={60}

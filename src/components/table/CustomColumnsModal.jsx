@@ -10,23 +10,36 @@ const titles = ['可选', '已选']
 
 class columnKeysModal extends Component {
 
+    constructor() {
+        super()
+        this.state = {
+            selectedKey: ''
+        }
+    }
+
     handleOk = () => {
-        const {selectedKey, ...rest} = this.props.form.getFieldsValue()
-        rest.pageSize = rest.pageSize - 0
-        this.props.onOk(rest)
+        const values = this.props.form.getFieldsValue()
+        values.pageSize = values.pageSize - 0
+        this.props.onOk(values)
         this.props.onCancel()
     }
 
     handleSelect = (selectedKey) => {
-        const {getFieldValue, setFieldsValue} = this.props.form
-        if (getFieldValue('selectedKey') !== selectedKey) {
-            setFieldsValue({selectedKey})
+        const {getFieldsValue, setFieldsValue} = this.props.form
+        const {columnKeys} = getFieldsValue(['columnKeys'])
+        if (columnKeys.indexOf(selectedKey) > -1) {
+            if (selectedKey !== this.state.selectedKey) {
+                this.setState({selectedKey})
+            }
+        } else {
+            this.setState({selectedKey: ''})
         }
     }
 
     handleMoveUp = () => {
+        const {selectedKey} = this.state
         const {getFieldsValue, setFieldsValue} = this.props.form
-        const {columnKeys, selectedKey} = getFieldsValue(['columnKeys', 'selectedKey'])
+        const {columnKeys} = getFieldsValue(['columnKeys'])
         const tmp = columnKeys.concat()
         const idx = tmp.indexOf(selectedKey)
         if (idx !== 0 ) {
@@ -39,8 +52,9 @@ class columnKeysModal extends Component {
     }
 
     handleMoveDown = () => {
+        const {selectedKey} = this.state
         const {getFieldsValue, setFieldsValue} = this.props.form
-        const {columnKeys, selectedKey} = getFieldsValue(['columnKeys', 'selectedKey'])
+        const {columnKeys} = getFieldsValue(['columnKeys'])
         const tmp = columnKeys.concat()
         const idx = tmp.indexOf(selectedKey)
         if (idx + 1 !== tmp.length) {
@@ -54,9 +68,10 @@ class columnKeysModal extends Component {
 
     renderItem = (item) => {
         const {form} = this.props
-        const {columnKeys, selectedKey} = form.getFieldsValue(['columnKeys','selectedKey'])
+        const {selectedKey} = this.state
+        const {columnKeys} = form.getFieldsValue(['columnKeys'])
         const cls = classNames({
-            'transfer-updown-item-selected': columnKeys.indexOf(selectedKey) > -1 && (item.key === selectedKey)
+            'transfer-updown-item-selected': item.key === selectedKey
         })
         const customLabel = (
             <span className={cls} onClick={() => this.handleSelect(item.key)} >
@@ -69,12 +84,15 @@ class columnKeysModal extends Component {
         };
     }
 
-    handleChange = (prop, value) => {
-        this.setState({[prop]: value})
+    handleChange = (targetKeys, direction, moveKeys) => {
+        const {selectedKey} = this.state
+        if (direction === 'left' && moveKeys.indexOf(selectedKey) > -1) {
+            this.setState({selectedKey: ''})
+        }
     }
 
     render() {
-        
+        const {selectedKey} = this.state
         const {form, visible, dataSource, onCancel, columnKeys, width, height, fixCols, pageSize} = this.props
 
         const modalOpts = {
@@ -84,22 +102,21 @@ class columnKeysModal extends Component {
             onOk: this.handleOk
         }
 
-        const getFieldProps = (id, initialValue, valuePropName) => {
+        const getFieldProps = (id, initialValue, valuePropName, onChange) => {
             return form.getFieldProps(id, {
                 initialValue, 
                 valuePropName, 
+                onChange,
             })
         }
         
-        getFieldProps('selectedKey')
-
-        const columnKeysFieldProps = getFieldProps('columnKeys', columnKeys , 'targetKeys')
+        const columnKeysFieldProps = getFieldProps('columnKeys', columnKeys||[] , 'targetKeys', this.handleChange)
         const widthFieldProps = getFieldProps('width', width)
         const heightFieldProps = getFieldProps('height', height)
         const fixColsFieldProps = getFieldProps('fixCols', fixCols)
-        const pageSizeFieldProps = getFieldProps('pageSize', `${pageSize}`)
+        const pageSizeFieldProps = getFieldProps('pageSize', `${pageSize||10}`)
 
-        const {columnKeys: targetKeys, selectedKey} = form.getFieldsValue(['columnKeys','selectedKey'])
+        const {columnKeys: targetKeys} = form.getFieldsValue(['columnKeys'])
         const canMove = selectedKey && targetKeys.indexOf(selectedKey) > -1
 
         return (

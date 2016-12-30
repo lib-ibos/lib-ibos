@@ -13,9 +13,14 @@ let compiler;
 
 const isInteractive = process.stdout.isTTY;
 
+// ie8 不使用热加载
+const noHot =  process.argv.indexOf('--no-hot') > -1
+
 function setupCompiler(host, port, protocol) {
 
-  config.entry.unshift(require.resolve('react-dev-utils/webpackHotDevClient'));
+  if (!noHot) {
+    config.entry.unshift(require.resolve('react-dev-utils/webpackHotDevClient'));
+  }
   
   compiler = webpack(config);
 

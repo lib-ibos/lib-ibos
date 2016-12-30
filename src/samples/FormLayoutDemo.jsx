@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {Input, Select, DatePicker, Checkbox} from 'antd'
-import {FormLayout} from '../components'
+import FormLayout from '../components/FormLayout'
 const FormItem = FormLayout.FormItem
 
-class FormItemDemo extends Component {
+class FormLayoutDemo extends Component {
 
     render() {
         return (
@@ -27,4 +27,4 @@ class FormItemDemo extends Component {
     }
 }
 
-export default FormItemDemo
+export default FormLayoutDemo

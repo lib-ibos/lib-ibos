@@ -1,0 +1,27 @@
+.ant-layout-aside {
+  position: relative;
+  min-height: 100%;
+}
+
+.ant-layout-aside .ant-layout-logo {
+  width: 150px;
+  height: 32px;
+  border-radius: 6px;
+  margin: 16px 24px 16px 28px;
+}
+
+.ant-layout-aside .ant-layout-sider {
+  width: 224px;
+  position: absolute;
+  overflow: auto;
+  padding-bottom: 24px;
+
+}
+
+.ant-layout-aside .ant-layout-sider > .ant-menu {
+  margin-bottom: 20px;
+}
+
+.ant-layout-aside .ant-layout-main {
+  margin-left: 224px;
+}

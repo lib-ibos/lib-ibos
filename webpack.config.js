@@ -56,6 +56,9 @@ module.exports = {
             new webpack.HotModuleReplacementPlugin()
         ]
     },
+    babel: {
+        cacheDirectory: true,
+    },
     postcss: function() {
         return [
             autoprefixer({

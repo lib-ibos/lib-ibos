@@ -39,6 +39,8 @@ class Table extends Component {
         const isValidCustomKeys = columnKeys && Array.isArray(columnKeys) && columnKeys.length > 0
 
         const columnConfigs =  React.Children.map(children, child => child.props)
+
+        const seqColConfig = columnConfigs.splice(0,1)[0]
         
         // 缓存下，便于自定义列时快速查找
         let memo = {}
@@ -83,6 +85,10 @@ class Table extends Component {
                 otherProps.scroll.y = customConfig.height
             }
         }
+
+        const allColConfig = columnConfigs.map( ({title, dataIndex}) => ({key: dataIndex, title}))
+
+        columns.unshift(seqColConfig)
         
         // 表格参数
         const tableOpts = {
@@ -96,7 +102,7 @@ class Table extends Component {
             visible: this.state.visible,
             onCancel: this.handleClose,
             onOk: onCustomChange,
-            dataSource: columnConfigs.map( ({title, dataIndex}) => ({key: dataIndex, title})),
+            dataSource: allColConfig
         }
         // 每次弹框都重新渲染
         const CustomColumnsModalGen = () => <CustomColumnsModal {...modalOpts} />

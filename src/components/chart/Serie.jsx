@@ -4,6 +4,8 @@ export default function Serie() {
     return null
 }
 
+Serie.displayName = Serie.name || 'Serie'
+
 Serie.defaultProps = {
     type: 'line'
 }

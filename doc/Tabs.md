@@ -4,5 +4,7 @@
 ## API
 成员 | 说明 | 类型 | 默认值
 ---|---|---|---
-title|tabPane 之前加上title|String|无
-nextCnt|tabPane 之后加上react |React Node|无
+title|标题|String|-
+nextCnt|tabPane 之后加上react |React Node| -
+addTabsItemText| 后面下拉选择的按钮名称 | String | -
+dropdownStyle | 后面下拉选择框的style 属性 | Object | -

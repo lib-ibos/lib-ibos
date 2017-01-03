@@ -86,7 +86,7 @@ export default class TableDemo extends Component {
                     <Table.Col title="性别" dataIndex="gender" width={60} 
                         render={(v)=> v === '1' ? '男' : '女' }
                         filters={[{text: '男', value: '1'}, {text: '女', value: '0'}]}
-                        filterMultiple={false}
+                        filterMultiple
                         filterDropdownType='select'
                     />
                     <Table.Col title="年龄" dataIndex="age"  

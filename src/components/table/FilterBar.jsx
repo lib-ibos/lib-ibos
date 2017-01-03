@@ -11,11 +11,15 @@ export default class FilterBar extends Component {
         const {filters = {}, colTitles = {}} = this.props
         const keys = Object.keys(filters)
         if (keys.length) {
-            const message = keys.map(key => (
-                <Tag key={key} closable color="blue" onClose={_ => this.handleClose(key)}>
-                    {`${colTitles[key]}:${filters[key]}`}
-                </Tag>)
-            )
+            const message = keys.map(key => {
+                const name = colTitles[key]
+                let value = filters[key]
+                return (
+                    <Tag key={key} closable color="blue" onClose={_ => this.handleClose(key)}>
+                        {`${name}:${value}`}
+                    </Tag>
+                )
+            })
             return <Alert message={message} type="info" showIcon />
         } 
         return null

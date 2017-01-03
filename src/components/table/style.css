@@ -24,3 +24,14 @@
 .table-range-input-number .split-tilde {
     margin: 8px;
 }
+
+.custom-filter-dropdown .ant-checkbox-group-item {
+    line-height: 30px;
+    display: block;
+}
+
+.custom-filter-dropdown .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+    margin-left: 0px;
+}
+
+

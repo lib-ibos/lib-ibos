@@ -27,12 +27,8 @@ export default class ColumnDropdown extends Component {
 
     renderSelect = (dataSource, multiple) => {
         if (multiple) {
-            const checkboxStyle = {lineHeight: '30px'}
-            return dataSource.map(item => (
-                    <div key={item.value} >
-                        <Checkbox style={checkboxStyle} value={item.value}>{item.text}</Checkbox> 
-                    </div>
-                ))
+            const options = dataSource.map(item => ({label: item.text, value: item.value}))
+            return  <Checkbox.Group options={options} onChange={this.handleSearch} />
         } else {
             const radioStyle = {
                 display: 'block',
@@ -40,7 +36,7 @@ export default class ColumnDropdown extends Component {
                 lineHeight: '30px',
             };
             return (
-                <Radio.Group>
+                <Radio.Group onChange={this.handleInputChange}>
                 {dataSource.map(item => (
                     <Radio style={radioStyle} key={item.value} value={item.value}>
                         {item.text}
@@ -67,5 +63,13 @@ export default class ColumnDropdown extends Component {
                 {content}
             </div>
         )
+    }
+}
+
+class CheckboxGroupWrapper extends Component {
+
+    render() {
+        
+       
     }
 }

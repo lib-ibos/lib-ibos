@@ -72,11 +72,8 @@ class OTabs extends Component {
             _children.push(children[item])
         })
 
+        dropdownContainer = dropdownContainer ? dropdownContainer : function () {return document.body}
 
-        dropdownContainer = dropdownContainer ? dropdownContainer : function () {
-                return document.getElementsByTagName('body')[0]
-            }
-        console.log(dropdownContainer)
         if (!!addTabsItemText) {
             nextCnt = <Dropdown
                 trigger={['click']}

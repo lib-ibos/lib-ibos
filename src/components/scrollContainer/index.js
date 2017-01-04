@@ -261,7 +261,7 @@ class ScrollContainer extends Component {
 
     render() {
 
-        let {prefixCls, offsetTop, type, tabsTitle, prefixId, size, children, ...props} = this.props;
+        let {prefixCls,addTabsItemText,offsetTop, type, tabsTitle, prefixId, size, children, ...props} = this.props;
         let tabChildren = children.map(function (item, index) {
             return <TabPane key={index} tab={item.props.tab} hidden={!!item.props.hidden}></TabPane>
         })
@@ -291,7 +291,7 @@ class ScrollContainer extends Component {
                         size={size}
                         onTabClick={(index) => this.tabClick(index)}
                         activeKey={this.state.activeKey}
-                        addTabsItemText="设置"
+                        addTabsItemText={addTabsItemText}
                         onConfirm = {this.tabsOnConfirm}
                         dropdownContainer={()=>document.getElementById(fixId)}
                     >

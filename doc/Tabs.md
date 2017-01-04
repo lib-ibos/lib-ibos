@@ -8,3 +8,4 @@ title|标题|String|-
 nextCnt|tabPane 之后加上react |React Node| -
 addTabsItemText| 后面下拉选择的按钮名称 | String | -
 dropdownStyle | 后面下拉选择框的style 属性 | Object | -
+dropdwonContainer|下拉框的渲染节点，默认在body上|Function|() => document.body

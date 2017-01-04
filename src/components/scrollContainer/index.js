@@ -28,6 +28,12 @@ function getTargetRect(target) {
         {top: 0, left: 0, bottom: 0};
 }
 
+function sortACS(data) {
+    return data.sort(function (a, b) {
+        return a > b ? 1 : -1
+    })
+}
+
 function getOffset(element, target) {
     const elemRect = element.getBoundingClientRect();
     const targetRect = getTargetRect(target);
@@ -52,7 +58,9 @@ class ScrollContainer extends Component {
         super(props)
 
         this.state = {
-            activeKey: '0'
+            activeKey: '0',
+            cntChildren:null,
+            tabsChanged:false
         }
     }
 
@@ -72,38 +80,45 @@ class ScrollContainer extends Component {
     tabClick = (index) => {
         this.scrollTo(index)
         this.setState({
-            activeKey: index
+            activeKey: index,
         });
         this._option.tabClicked = true;
     }
 
     scrollTo = (index) => {
         const cntIndex = index;
-        const {cnts, affixHeight, affixTop, affix} = this._option
-        const cnt = cnts[cntIndex]
+        const { affixHeight, affixTop, affix} = this._option
+        const cnt = document.getElementById(this.props.prefixId + cntIndex)
         const offsetTop = this.props.offsetTop ? this.props.offsetTop : 0;
 
         let scrollNum = getOffset(affix, this.props.target()).top + getOffset(cnt, affix).top - affixHeight - offsetTop;
 
         document.documentElement.scrollTop = scrollNum //ie
         document.body.scrollTop = scrollNum
-
     }
 
     updatePosition = (e) => {
+        const that = this
         let scrollDir = this.scrollDirection()
         const scrollTop = getScroll(this.props.target(), true);
         const {tabClicked, affixHeight, cnts, cntsOffestTop, cntsHeight}=this._option
+
         const offsetTop = this.props.offsetTop ? this.props.offsetTop : 0;
         let cur = 0;
+
+        function getIndex (index){
+            let reg = new RegExp(that.props.prefixId)
+            return cnts[index].id.replace(reg,'')
+        }
+
         if (scrollDir === "up") {
             for (let i = cnts.length - 1; i >= 0; i--) {
                 //往上滚动到容器一半的位置，就算到聚焦到这个容器
-                scrollTop < cntsOffestTop[i] - affixHeight - offsetTop + cntsHeight[i] / 2 && (cur = i);
+                scrollTop < cntsOffestTop[i] - affixHeight - offsetTop + cntsHeight[i] / 2 && (cur = getIndex(i));
             }
         } else {
             for (let i = 0, length = cnts.length; i < length; i++) {
-                scrollTop >= cntsOffestTop[i] - affixHeight - offsetTop && (cur = i);
+                scrollTop >= cntsOffestTop[i] - affixHeight - offsetTop && (cur = getIndex(i));
             }
         }
 
@@ -119,6 +134,7 @@ class ScrollContainer extends Component {
 
     }
 
+    //判断向上还是向下滚动页面
     scrollDirection = () => {
         const scrollTop = getScroll(this.props.target(), true);
 
@@ -133,22 +149,36 @@ class ScrollContainer extends Component {
         return this._option.scrollDir
     }
 
-    componentDidMount() {
-        // warning(!('offset' in this.props), '`offset` prop of Affix is deprecated, use `offsetTop` instead.');
+    initChildren = (visibleList,callback)=>{
+        let { prefixId,  children} = this.props;
+        const cntChildren = []
+        const list = sortACS(visibleList)
+        list.forEach(function (item,index) {
+            cntChildren.push(<div id={prefixId + item} key={children[item].key}>{children[item].props.children}</div>)
+        })
+
+        this.setState({
+            cntChildren:cntChildren
+        })
+
+        return cntChildren
+    }
+
+    initComponet = (visibleList)=>{
         const props = this.props;
         const affix = this.refs.affix.refs.fixedNode
         const affixHeight = affix.offsetHeight
-        let childrenSize = props.children.length
         let cnts = [];
         let cntsOffestTop = [];
         let cntsHeight = []
+        const list = sortACS(visibleList)
 
-        for (let i = 0; i < childrenSize; i++) {
-            let cnt = document.getElementById(props.prefixId + i);
-            cnts.push(cnt)
-            cntsOffestTop.push(getOffset(cnt, props.target()).top)
-            cntsHeight.push(cnt.offsetHeight)
-        }
+        list.forEach(function (item,index) {
+                let cnt = document.getElementById(props.prefixId + item);
+                cnts.push(cnt)
+                cntsOffestTop.push(getOffset(cnt, props.target()).top)
+                cntsHeight.push(cnt.offsetHeight)
+        })
 
         const target = props.target;
         this.setTargetEventListeners(target);
@@ -161,9 +191,44 @@ class ScrollContainer extends Component {
             affix: affix, // tab
             affixHeight: affixHeight,
             affixTop: getOffset(affix, target()).top,
+            selectKeys:list,
             tabClicked: false//当tab点击的时候，避免去触发滚动的高度判断引起的tab聚焦，因为最后一个容器往往滚动不到最上面
         }
 
+        this.state.tabsChanged && this.setState({
+            tabsChanged:false
+        })
+    }
+
+    tabsOnConfirm =(selectKeys)=>{
+        this.initChildren(selectKeys)
+        this._option.selectKeys = selectKeys
+        this.setState({
+            tabsChanged:true
+        })
+    }
+
+    componentWillMount(){
+        const visibleList = []
+        this.props.children.forEach(function (item, index) {
+            return !!!item.props.hidden && visibleList.push(index)
+        })
+
+        this.initChildren(visibleList)
+    }
+
+    componentDidMount() {
+        // warning(!('offset' in this.props), '`offset` prop of Affix is deprecated, use `offsetTop` instead.');
+        const visibleList =[]
+        this.props.children.forEach(function (item, index) {
+            const isHidden = !!item.props.hidden
+            !isHidden && visibleList.push(index)
+        })
+        this.initComponet(visibleList)
+    }
+
+    componentDidUpdate(){
+        this.state.tabsChanged && this.initComponet(this._option.selectKeys)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -195,18 +260,18 @@ class ScrollContainer extends Component {
     }
 
     render() {
-        let {prefixCls, offsetTop, type, tabTitle, prefixId, size, children, ...props} = this.props;
+
+        let {prefixCls, offsetTop, type, tabsTitle, prefixId, size, children, ...props} = this.props;
         let tabChildren = children.map(function (item, index) {
-            return <TabPane key={index} tab={item.props.tab}></TabPane>
+            return <TabPane key={index} tab={item.props.tab} hidden={!!item.props.hidden}></TabPane>
         })
 
-        let cntChildren = children.map(function (item, index) {
-            return <div id={prefixId + index} key={item.key}>{item.props.children}</div>
-        })
 
         let _class = classnames(
             prefixCls
         )
+
+        const fixId = prefixId +('00000' + (Math.random() * 16777216 << 0).toString(16)).substr(-6).toUpperCase()
 
         return (
             <div
@@ -218,17 +283,23 @@ class ScrollContainer extends Component {
                     onChange={this.affixChange}
                     offsetTop={offsetTop}
                 >
+                    <span id={fixId} style={{position:'relative'}}>
                     <Tabs
-                        title={tabTitle}
+                        ref="tabs"
+                        title={tabsTitle}
                         type={type}
                         size={size}
                         onTabClick={(index) => this.tabClick(index)}
                         activeKey={this.state.activeKey}
+                        addTabsItemText="设置"
+                        onConfirm = {this.tabsOnConfirm}
+                        dropdownContainer={()=>document.getElementById(fixId)}
                     >
                         {tabChildren}
                     </Tabs>
+                        </span>
                 </Affix>
-                {cntChildren}
+                {this.state.cntChildren}
             </div>
         )
     }

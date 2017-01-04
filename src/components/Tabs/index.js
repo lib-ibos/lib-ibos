@@ -42,11 +42,12 @@ class OTabs extends Component {
     }
 
     handlerDropdownConfirm = (selectkeys) => {
+        this.props.onConfirm && this.props.onConfirm(selectkeys)
         this.concatTabsItem(selectkeys)
     }
 
     concatTabsItem = (list) => {
-        let {prefixCls, addTabsItemText, children, nextCnt,dropdownStyle} = this.props
+        let {prefixCls, addTabsItemText,dropdownContainer, children, nextCnt,dropdownStyle} = this.props
         const visibleList = list.sort(function (a, b) {
             return a > b ? 1 : -1
         })
@@ -72,6 +73,10 @@ class OTabs extends Component {
         })
 
 
+        dropdownContainer = dropdownContainer ? dropdownContainer : function () {
+                return document.getElementsByTagName('body')[0]
+            }
+        console.log(dropdownContainer)
         if (!!addTabsItemText) {
             nextCnt = <Dropdown
                 trigger={['click']}
@@ -81,6 +86,7 @@ class OTabs extends Component {
                 dropdownStyle={dropdownStyle}
                 onConfirm={this.handlerDropdownConfirm}
                 uniqueSelect
+                getPopupContainer ={()=>dropdownContainer()}
             >
                 <Button size="small" type="dashed">
                     {addTabsItemText}
@@ -115,7 +121,7 @@ class OTabs extends Component {
     }
 
     render() {
-        let {prefixCls, addTabsItemText, children, nextCnt, title, ...props} = this.props;
+        let {prefixCls,  title, ...props} = this.props;
 
         let classNames = classnames({
             [prefixCls]: !!title,

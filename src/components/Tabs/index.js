@@ -11,14 +11,18 @@ import Menu, {MenuItem, Divider} from 'rc-menu';
 //style
 import './styles/';
 
-
+function sortACS(data) {
+    return data.sort(function (a, b) {
+        return a > b ? 1 : -1
+    })
+}
 class OTabs extends Component {
 
     constructor(props) {
         super(props)
 
         this.state = {
-            panes: [],
+            visibleList: [],
             dropdownVisible: false
         }
     }
@@ -42,20 +46,23 @@ class OTabs extends Component {
     }
 
     handlerDropdownConfirm = (selectkeys) => {
-        this.props.onConfirm && this.props.onConfirm(selectkeys)
-        this.concatTabsItem(selectkeys)
+        const list = sortACS(selectkeys)
+        this.props.onConfirm && this.props.onConfirm(list)
+        this.setState({
+            visibleList:list
+        })
     }
 
     concatTabsItem = (list) => {
         let {prefixCls, addTabsItemText,dropdownContainer, children, nextCnt,dropdownStyle} = this.props
-        const visibleList = list.sort(function (a, b) {
-            return a > b ? 1 : -1
-        })
+        const visibleList = list
 
         const menuItems = [];
+        !Array.isArray(children) && (children = [children])
         children.forEach(function (item, index) {
             menuItems.push(<MenuItem key={index}>{children[index].props.tab}</MenuItem>)
         })
+
 
         const menu = (
             <Menu >
@@ -71,6 +78,7 @@ class OTabs extends Component {
         visibleList.forEach(function (item) {
             _children.push(children[item])
         })
+
 
         dropdownContainer = dropdownContainer ? dropdownContainer : function () {return document.body}
 
@@ -99,23 +107,29 @@ class OTabs extends Component {
             _children.push(nextPane)
         }
 
-        this.setState({
-            panes: _children
-        })
+        return _children
     }
 
     initVisibleList = () => {
         let visibleList = []
         let children = this.props.children
+        !Array.isArray(children) && (children = [children])
         for (let x in children) {
             !!!children[x].props.hidden && visibleList.push(x)
         }
-        return visibleList
+
+        return sortACS(visibleList)
     }
 
     componentWillMount() {
-        this.concatTabsItem(this.initVisibleList())
+
+        const visibleList = this.initVisibleList()
+        this.setState({
+            visibleList:visibleList
+        })
     }
+
+
 
     render() {
         let {prefixCls,  title, ...props} = this.props;
@@ -125,12 +139,14 @@ class OTabs extends Component {
             [prefixCls + '--small']: this.props.type == "card" && this.props.size == "small"
         })
 
+        const newChildren = this.concatTabsItem(this.state.visibleList)
+
         return (
             <Tabs
                 {...props}
                 className={classNames}
             >
-                {this.state.panes}
+                {newChildren}
             </Tabs>
         )
     }

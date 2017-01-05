@@ -23,3 +23,4 @@ title|Tabs 前面的title|string|-
 type|Tabs的外观'card','line'|string|card
 target|需要监听其滚动事件的元素，值为一个返回对应 DOM 元素的函数|Function|() => window
 offsetTop|Tabs 距离顶部的值|
+addTabsItemText|设置显示内容|String|-

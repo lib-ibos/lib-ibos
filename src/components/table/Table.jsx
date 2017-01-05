@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 
 import {Table as AntdTable, Button, Modal, Transfer } from 'antd'
 
-import {checkSecurity} from '../share'
+import {checkSecurity, noop} from '../share'
 
 import CustomColumnsModal from './CustomColumnsModal'
 import ColumnDropdown from './ColumnDropdown'
@@ -12,12 +12,27 @@ function checkCustomColumns(props, columnKeys ) {
     return columnKeys.indexOf(props.dataIndex) > -1
 }
 
+const defaultPagination = {
+  onChange: noop,
+  onShowSizeChange: noop,
+};
+
 class Table extends Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
+        const pagination = props.pagination || {};
         this.state = {
             visible: false,
+            sorter: {},
+            filters: {},
+            pagination: this.props.pagination !== false ?
+                {
+                    ...defaultPagination,
+                    ...pagination,
+                    current: pagination.defaultCurrent || pagination.current || 1,
+                    pageSize: pagination.defaultPageSize || pagination.pageSize || 10,
+                } : {},
         }
     }
 
@@ -29,32 +44,25 @@ class Table extends Component {
         this.setState({visible: false})
     }
 
+    callback = () => {
+        const {pagination, filters, sorter} = this.state
+        this.props.onChange && this.props.onChange(pagination, filters, sorter)
+    }
+
     handleChange = (pagination, filters, sorter) => {
         const mergedFilters = {...this.state.filters, ...filters}
-        this.setState({pagination, sorter, filters: mergedFilters}, () => {
-            this.props.onChange && this.props.onChange(
-                this.state.pagination, 
-                this.state.filters, 
-                this.state.sorter
-            )
-        })
+        this.setState({pagination, sorter, filters: mergedFilters}, this.callback)
     }
 
     handleCustomFiltersChange = (cutomFilters) => {
         const mergedFilters = {...this.state.filters, ...cutomFilters}
-        this.setState({filters: mergedFilters}, () => {
-            this.props.onChange && this.props.onChange(
-                this.state.pagination, 
-                this.state.filters, 
-                this.state.sorter
-            )
-        })
+        this.setState({filters: mergedFilters}, this.callback)
     }
 
     handleTagRemove = (key) => {
         const filters = {...this.state.filters}
         delete filters[key]
-        this.setState({filters})
+        this.setState({filters}, this.callback)
     }
 
     render() {
@@ -70,11 +78,6 @@ class Table extends Component {
         const isValidCustomKeys = columnKeys && Array.isArray(columnKeys) && columnKeys.length > 0
 
         const columnConfigs =  React.Children.map(children, child => child.props)
-
-        const colTitles = columnConfigs.reduce((memo, {dataIndex, title}) => {
-            memo[dataIndex] = title
-            return memo
-        }, {})
 
         const seqColConfig = columnConfigs.splice(0,1)[0]
         
@@ -131,13 +134,14 @@ class Table extends Component {
             if (props.filterDropdownType) {
                 props.filterDropdown = (
                     <ColumnDropdown 
+                        value={this.state.filters[props.dataIndex]}
                         type={props.filterDropdownType}
                         dataSource={props.filters}
                         multiple={props.filterMultiple}
                         onChange={v => this.handleCustomFiltersChange({[props.dataIndex]: v})}
                     />
                 )
-                delete props.filterDropdownType
+                //delete props.filterDropdownType
             }
             return props
         })
@@ -162,7 +166,7 @@ class Table extends Component {
 
         return (
             <div>
-                <FilterBar colTitles={colTitles} filters={this.state.filters} onClose={this.handleTagRemove} />
+                <FilterBar dataSource={columns} filters={this.state.filters} onClose={this.handleTagRemove} />
                 <AntdTable {...tableOpts}  />
                 <CustomColumnsModalGen />
             </div>

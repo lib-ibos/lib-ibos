@@ -18,8 +18,11 @@ class FormLayoutDemo extends Component {
                             <Select.Option value="2">读写</Select.Option>
                         </Select >
                     </FormItem>
-                    <FormItem label="用户名" security="r">
-                        <DatePicker defaultValue="2017-01-01"/>
+                    <FormItem label="只读日期" security="r">
+                        <DatePicker defaultValue="2017-01-01" />
+                    </FormItem>
+                    <FormItem label="日期值" >
+                        <DatePicker defaultValue="2017-01-01" onChange={(v,a) => console.log(v,a)}/>
                     </FormItem>
                 </FormLayout>
             </div>

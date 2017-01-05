@@ -4,11 +4,22 @@ import {filterNum, noop} from '../share'
 
 export default class RangeInputNumber extends Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
+        const value = props.value || []
         this.state = {
-            startValue: '',
-            endValue: ''
+            startValue: value[0],
+            endValue: value[0],
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if ('value' in nextProps) {
+            const value = nextProps.value || []
+            this.setState({
+                startValue: value[0],
+                endValue: value[1]
+            })
         }
     }
 
@@ -46,7 +57,7 @@ export default class RangeInputNumber extends Component {
         return (
             <div className="table-range-input-number">
                 <Input value={startValue} onChange={this.handleStartChange} onPressEnter={this.handleChange} />
-                <span className="split-tilde">~</span>
+                <span className="table-range-split-tilde">~</span>
                 <Input  value={endValue} onChange={this.handleEndChange} onPressEnter={this.handleChange} />
             </div>
         )

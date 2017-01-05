@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
-import {Tag,Alert} from 'antd'
+import {Tag,Alert,Row,Col, Button} from 'antd'
 
 export default class FilterBar extends Component {
 
     handleClose = (key) => {
-        this.props.onClose(key)
+        this.props.onRemove(key)
     }
 
     render() {
@@ -17,7 +17,7 @@ export default class FilterBar extends Component {
 
         const keys = Object.keys(filters)
         if (keys.length) {
-            const message = keys.map(key => {
+            let tags = keys.map(key => {
                 const {title, filters: filterOptions, filterDropdownType } = columnInfo[key]
                 const name = title
                 let value = filters[key]
@@ -33,7 +33,13 @@ export default class FilterBar extends Component {
                     </Tag>
                 )
             })
-            return <Alert message={message} type="info" showIcon />
+            const message = (
+                <Row>
+                    <Col span={22}>{tags}</Col>
+                    <Col span={2}><Button onClick={this.props.onReset} size="small" type="dashed" >重置</Button></Col>
+                </Row>
+            )
+            return <Alert message={message} type="info" />
         } 
         return null
     }

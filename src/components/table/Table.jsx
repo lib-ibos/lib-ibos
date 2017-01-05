@@ -65,6 +65,10 @@ class Table extends Component {
         this.setState({filters}, this.callback)
     }
 
+    hanldeTagAllRemove = () => {
+        this.setState({filters: {}}, this.callback)
+    }
+
     render() {
         const {children, security, customConfig, onCustomChange, pagination, ...otherProps} = this.props
 
@@ -166,7 +170,12 @@ class Table extends Component {
 
         return (
             <div>
-                <FilterBar dataSource={columns} filters={this.state.filters} onClose={this.handleTagRemove} />
+                <FilterBar 
+                    dataSource={columns} 
+                    filters={this.state.filters} 
+                    onRemove={this.handleTagRemove} 
+                    onReset={this.hanldeTagAllRemove}
+                />
                 <AntdTable {...tableOpts}  />
                 <CustomColumnsModalGen />
             </div>

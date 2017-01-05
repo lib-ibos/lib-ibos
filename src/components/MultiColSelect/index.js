@@ -18,6 +18,7 @@ class MultiColSelect extends Component {
             open:false,
             selectKeys:['-1'],
             activeKey:'0',
+            canMenuHide:true
         }
     }
 
@@ -125,7 +126,7 @@ class MultiColSelect extends Component {
                 open:false,
                 selectKeys:[String(currentKey)]
             })
-            this.props.onChange(_obj[currentKey][_key])
+            this.props.onChange &&　this.props.onChange(_obj[currentKey][_key])
             this.props.onSelect && this.props.onSelect(_obj[_key]);
             event.preventDefault();
             event.stopPropagation();
@@ -140,11 +141,15 @@ class MultiColSelect extends Component {
     }
 
     handleChange=(e)=>{
-        this.props.onChange(e.target.value);
+        this.props.onChange &&　this.props.onChange(e.target.value);
         this.props.dataBody.length > 0 && this.setOpenState(true)
+        this.setState({
+            selectKeys:['-1'],
+        })
     }
 
-    handleSelect =(value) =>{
+
+    onMenuSelect =(value) =>{
         let _key = this.props.selectKey;
         let _obj = this.props.dataBody[value.key]
         let currentKey = _obj[_key]
@@ -153,9 +158,34 @@ class MultiColSelect extends Component {
             selectKeys:[String(value.key)]
         })
         this.setActiveState(value.key)
-        this.props.onChange(currentKey)
+        this.props.onChange &&　this.props.onChange(currentKey)
         this.props.onSelect && this.props.onSelect(_obj);
 }
+
+    handleBlur = ()=>{
+        this.state.canMenuHide && this.setOpenState(false)
+    }
+
+
+    handleClick =(e)=>{
+        this.props.onChange &&　this.props.onChange(e.target.value);
+        this.setOpenState(true)
+    }
+
+    handleMenuMouseEnter=()=>{
+        this.setState({
+            canMenuHide:false
+        })
+    }
+
+    handleMenuMouseLeave=()=>{
+        this.setState({
+            canMenuHide:true
+        })
+        let input = ReactDOM.findDOMNode(this.refs.input).children[0]
+        input.focus()
+    }
+
 
     render() {
         const {dataHeader,dataBody,type,rows,autosize,...props} = this.props;
@@ -165,9 +195,9 @@ class MultiColSelect extends Component {
 
         // 拼接下拉框header部分结构
         const dropdownHeadElement = dropdownHeadData ? <MenuItem key="title" disabled>{dropdownHeadData.map(val => <p key={val.dataIndex}>{val.title}</p>)}</MenuItem> : '';
-        const dropdownBodyElement = !hasDataBody ? <MenuItem className="no-data" disabled><p colSpan="2">{dropdownBodyData}</p><p></p></MenuItem> : bodyElement();
+        const dropdownBodyElement = !hasDataBody ? <MenuItem className="no-data" disabled><p colSpan="2">{dropdownBodyData}</p><p></p></MenuItem> : createBodyElement();
         //下拉框body部分
-        function bodyElement() {
+        function createBodyElement() {
             const isArray = dropdownBodyData instanceof  Array;
             if(!isArray ){
                 throw  new TypeError('MultiColSelect 组件的 dataBody 只接受 "Array" 格式的数据');
@@ -185,29 +215,38 @@ class MultiColSelect extends Component {
 
         return (
             <Dropdown overlay={
-                <Menu
-                    ref="menu"
-                    onSelect={this.handleSelect}
+                <div
                     className="o-dropdown-multi-col"
+                    ref="menu"
+                    style={dropdwonStyle}
+                    onMouseEnter={this.handleMenuMouseEnter}
+                    onMouseLeave={this.handleMenuMouseLeave}
+                >
+                    <Menu
+                    onSelect={this.onMenuSelect}
                     activeKey ={this.state.activeKey}
                     selectedKeys={this.state.selectKeys}
-                    style={dropdwonStyle}
                 >
                     {dropdownHeadElement}
                     {dropdownBodyElement}
                 </Menu>
+
+                </div>
             }
-                      onClick ={()=>this.setOpenState(true)}
                       visible={this.state.open}
+
             >
 
                 <Input
+                    ref="input"
                     type={type}
                     value={props.value}
                     rows={rows}
                     autosize={autosize}
+                    onClick ={this.handleClick}
                     onChange={this.handleChange}
                     onKeyDown={this.onKeyDown}
+                    onBlur = {this.handleBlur}
                 />
             </Dropdown>
         );

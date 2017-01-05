@@ -1,0 +1,40 @@
+//TODO 全局样式
+.reset-ant-disable-pointer{
+  cursor:  pointer !important;
+  pointer-events: auto!important;
+}
+
+
+.o-multi-dropdown{
+  .ant-dropdown-menu-item-selected{
+    background: #F9F9F9;
+  }
+
+  .ant-dropdown-menu-item {
+    padding-right:40px;
+    &:after {
+      content:"\e62e";
+      font-family:"anticon";
+      color: transparent;
+      transition: all 0.2s ease;
+      position: absolute;
+      right: 15px;
+      font-weight: bold;
+      text-shadow: 0 0.1px 0, 0.1px 0 0, 0 -0.1px 0, -0.1px 0;
+    }
+
+    &:hover:after {
+      color: #ddd;
+    }
+
+    &-disabled:after {
+      display: none;
+    }
+
+    &-selected:after,
+    &-selected:hover:after {
+      color: #0083e5;
+      display: inline-block;
+    }
+  }
+}

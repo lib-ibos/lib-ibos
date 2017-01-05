@@ -7,7 +7,7 @@
   "plugins": [
     "add-module-exports",
     "transform-runtime",
-    ["import", { "libraryName": "antd" }]
+    ["import", { "libraryName": "antd", "libarayDirectory": "lib", "style": "css" }]
   ],
   "env": {
     "test": {

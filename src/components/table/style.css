@@ -1,0 +1,9 @@
+.transfer-updown {
+    height: 200px;
+    top: 73px;
+    position: relative;
+}
+
+.transfer-updown-item-selected {
+   color: #2db7f5
+}

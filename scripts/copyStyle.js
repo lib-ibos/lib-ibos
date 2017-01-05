@@ -14,25 +14,33 @@ function findFiles(startPath, filter, cb) {
     var files = fs.readdirSync(startPath);
     for (var i = 0; i < files.length; i++) {
         var filename = path.join(startPath, files[i]);
+        var ext = path.extname(filename)
         var stat = fs.lstatSync(filename);
         if (stat.isDirectory()) {
             findFiles(filename, filter, cb); //recurse
-        } else if (filename.indexOf(filter) >= 0) {
+        } else if (filter.test(filename)) {
             cb(filename)
         };
     };
 };
 
-var componentsPath = "src/components", libPath='lib';
-var len = componentsPath.length
-var styleFiles = []
-findFiles(componentsPath, '.less', function(fileName){
-    styleFiles.push(fileName)
-});
+function copyStyle(sourceDir, targetDir) {
+    var len = sourceDir.length
+    var styleFiles = []
+    findFiles(sourceDir, /\.(less|css)$/ , function(fileName){
+        styleFiles.push(fileName)
+    });
 
-for (var i = 0; i < styleFiles.length; i++) {
-    var source = styleFiles[i]
-    var target = libPath + source.substr(len)
-    fs.copySync(source, target)
-    console.log(source + ' -> ' + target)
+    for (var i = 0; i < styleFiles.length; i++) {
+        var source = styleFiles[i]
+        var target = targetDir + source.substr(len)
+        fs.copySync(source, target)
+        console.log(source + ' -> ' + target)
+    }
 }
+
+copyStyle("src/components", 'lib')
+
+
+
+

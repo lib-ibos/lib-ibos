@@ -1,58 +1,79 @@
 
 const path = require('path');
-const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const webpack = require('webpack')
+const autoprefixer = require('autoprefixer')
 const HtmlwebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 // let ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
-    entry:  __dirname + "/src/index.js",//已多次提及的唯一入口文件
+    entry: [__dirname + "/src/index.js"], //已多次提及的唯一入口文件
     output: {
-        path: __dirname + "/public",//打包后的文件存放的地方
+        path: __dirname + "/dist",//打包后的文件存放的地方
+        pathinfo: true,
         filename: "bundle.js"//打包后输出文件的文件名
     },
-    module: {//在配置文件里添加JSON loader
+    resolve: {
+        extensions: ['', '.js', '.jsx', '.json']
+    },
+    devtool: 'cheap-module-source-map', // 便于调试
+    module: {
         loaders: [
+            {
+                test: /\.(js|jsx)$/,
+                include: /src/,
+                loader: 'babel'
+            },
+            {
+                test: /\.css$/,
+                include: [/node_modules/,/src/],
+                loader: 'style!css!postcss'//添加对样式表的处理
+            },
+            {   
+                test: /\.less$/, 
+                include: [/node_modules/,/src/],
+                loader: 'style!css!postcss!less'
+            },
+            {
+                test: /\.html$/,
+                loader: 'file?name=[name].[ext]',
+            },
             {
                 test: /\.json$/,
                 loader: "json"
             },
-            {
-                test: /\.js[x]?$/,
-                exclude: /node_modules/,
-                loader: 'babel'//在webpack的module部分的loaders里进行配置即可
-            },
-            {
-                test: /\.css$/,
-                loader: 'style!css'//添加对样式表的处理
-            },
-            {test: /\.less$/, loader: 'style!css!less!postcss'}
         ],
         postLoaders: [
             {
-                test: /\.js[x]?$/,
+                test: /\.(js|jsx)$/,
+                include: [/node_modules/,/src/],
                 loaders: ['es3ify-loader'],
             },
         ],
         plugins: [
             new HtmlwebpackPlugin({
-                title: 'Webpack-demos',
-                filename:'/index.html',
-                alwaysWriteToDisk: true
+                title: 'lib-ibos',
+                template: 'src/index.html',
             }),
-            new HtmlWebpackHarddiskPlugin(),
-            new OpenBrowserPlugin({
-                url: 'http://localhost:8080'
-            })
+            new webpack.HotModuleReplacementPlugin()
         ]
     },
-    resolve: {
-        extensions: ['', '.js', '.jsx']
+    babel: {
+        cacheDirectory: true,
     },
-    devServer: {
-        contentBase: "./public",//本地服务器所加载的页面所在的目录
-        colors: true,//终端中输出结果为彩色
-        historyApiFallback: true,//不跳转
-        inline: true,//实时刷新
-        hot: true
+    postcss: function() {
+        return [
+            autoprefixer({
+                browsers: [
+                    '>1%',
+                    'last 4 versions',
+                    'Firefox ESR',
+                    'not ie < 8'
+                ],
+            }),
+        ];
+    },
+    node: {
+        fs: 'empty',
+        net: 'empty',
+        tls: 'empty',
     }
 }

@@ -70,7 +70,7 @@ class Table extends Component {
                 } )
             }
 
-            if (customConfig.pageSize) {
+            if (pagination && customConfig.pageSize) {
                 otherProps.pagination = otherProps.pagination || {}
                 otherProps.pagination.pageSize = customConfig.pageSize
             }
@@ -93,6 +93,7 @@ class Table extends Component {
         // 表格参数
         const tableOpts = {
             title,
+            pagination,
             ...otherProps,
             columns,
         }

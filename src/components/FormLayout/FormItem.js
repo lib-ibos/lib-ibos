@@ -18,9 +18,10 @@ class FormItem extends Component {
         }
         // 检查是否只读
         if (readOnly) {
-            children = React.Children.map(children, c => {
-                return React.cloneElement(c, {disabled: true})
-            })
+            children = React.cloneElement(children, {disabled: true})
+            // children = React.Children.map(children, c => {
+            //     return React.cloneElement(c, {disabled: true})
+            // })
         }
 
         const _style = label ? {} : {paddingLeft: 0}

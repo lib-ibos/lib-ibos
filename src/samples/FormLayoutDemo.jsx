@@ -1,16 +1,30 @@
 import React, {Component} from 'react'
-import {Input, Select, DatePicker, Checkbox} from 'antd'
+import {Form, Input, Select, DatePicker, Checkbox} from 'antd'
 import FormLayout from '../components/FormLayout'
 const FormItem = FormLayout.FormItem
 
 class FormLayoutDemo extends Component {
 
+    constructor() {
+        super()
+        this.state = {}
+    }
+
+    handleChange =() => {
+        this.setState({ok: !this.state.ok})
+    }
+
     render() {
+        const {form} = this.props
         return (
             <div style={{width: 300}}>
+                <button onClick={this.handleChange}>change</button>
                 <FormLayout>
                     <FormItem label="用户名" security="r">
                         <Input defaultValue="只读"/>
+                    </FormItem>
+                    <FormItem label="用户名" security={this.state.ok ? 'ru' : 'r'}>
+                        <Input {...form.getFieldProps('test',{initialValue: 'aaa' + this.state.ok})}/>
                     </FormItem>
                     <FormItem label="类型" security="r">
                         <Select defaultValue="1">
@@ -30,4 +44,4 @@ class FormLayoutDemo extends Component {
     }
 }
 
-export default FormLayoutDemo
+export default Form.create()(FormLayoutDemo)

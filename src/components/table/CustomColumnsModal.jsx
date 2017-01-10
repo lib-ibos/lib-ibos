@@ -8,12 +8,15 @@ function renderItem(item) {
 
 const titles = ['可选', '已选']
 
-class columnKeysModal extends Component {
+class CustomColumnsModal extends Component {
 
     constructor() {
         super()
         this.state = {
-            selectedKey: ''
+            selectedKeys: [],
+            targetKeys: [],
+            fixCols: '',
+            pageSize: 10
         }
     }
 
@@ -111,13 +114,12 @@ class columnKeysModal extends Component {
         }
         
         const columnKeysFieldProps = getFieldProps('columnKeys', columnKeys||[] , 'targetKeys', this.handleChange)
-        const widthFieldProps = getFieldProps('width', width)
-        const heightFieldProps = getFieldProps('height', height)
         const fixColsFieldProps = getFieldProps('fixCols', fixCols)
         const pageSizeFieldProps = getFieldProps('pageSize', `${pageSize||10}`)
 
         const {columnKeys: targetKeys} = form.getFieldsValue(['columnKeys'])
-        const canMove = selectedKey && targetKeys.indexOf(selectedKey) > -1
+        const canMove = targetKeys.length > 0
+        const btnType = canMove ? 'primary' : 'default'
 
         return (
             <Modal {...modalOpts}>
@@ -131,30 +133,24 @@ class columnKeysModal extends Component {
                             titles={titles}
                             dataSource={dataSource}
                             render={this.renderItem}
-                            listStyle={{width: 180}}
+                            listStyle={{width: 180, height: 300}}
                         />
                         </Col>
                         <Col span={2}>
                             <div className="transfer-updown ant-transfer-operation" >
-                                <Button icon="up" size="small" disabled={!canMove} onClick={this.handleMoveUp}/>
-                                <Button icon="down" size="small" disabled={!canMove} onClick={this.handleMoveDown} />
+                                <Button icon="up" size="small" type={btnType} disabled={!canMove} onClick={this.handleMoveUp}/>
+                                <Button icon="down" size="small" type={btnType} disabled={!canMove} onClick={this.handleMoveDown} />
                             </div>
                         </Col>
                     </Row>
                     </Form.Item>
                     <Row>
                       <Col span={10}>
-                        <Form.Item label="宽度" labelCol={{span: 5}} wrapperCol={{span: 13}}>
-                            <InputNumber {...widthFieldProps} /><span>px</span>
-                        </Form.Item>
-                        <Form.Item label="高度" labelCol={{span: 5}} wrapperCol={{span: 13}} >
-                            <InputNumber {...heightFieldProps} /><span>px</span>
+                        <Form.Item label="固定前几列" labelCol={{span: 8}} wrapperCol={{span: 14}} >
+                            <InputNumber {...fixColsFieldProps} />
                         </Form.Item>
                       </Col>
                       <Col span={14}>
-                        <Form.Item label="固定前几列" labelCol={{span: 8}} wrapperCol={{span: 14}} extra="(不含序号)">
-                            <InputNumber {...fixColsFieldProps} />
-                        </Form.Item>
                         <Form.Item label="每页行数" labelCol={{span: 8}} wrapperCol={{span: 9}}>
                             <Select {...pageSizeFieldProps } >
                                 <Select.Option value="10" >10行/页</Select.Option>
@@ -174,4 +170,4 @@ class columnKeysModal extends Component {
 }
 
 
-export default Form.create()(columnKeysModal)
+export default Form.create()(CustomColumnsModal)

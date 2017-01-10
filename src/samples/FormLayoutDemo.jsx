@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Form, Input, Select, Checkbox} from 'antd'
+import {Button, Form, Input, Select, Checkbox} from 'antd'
 import FormLayout from '../components/FormLayout'
 const FormItem = FormLayout.FormItem
 import DatePicker from '../components/date-picker'
@@ -23,7 +23,6 @@ class FormLayoutDemo extends Component {
         const {form} = this.props
         return (
             <div style={{width: 300}}>
-                <button onClick={this.handleChange}>change</button>
                 <FormLayout>
                     <FormItem label="用户名" security="r">
                         <Input defaultValue="只读"/>
@@ -43,11 +42,11 @@ class FormLayoutDemo extends Component {
                     <FormItem label="日期" >
                         <DatePicker defaultValue="2017-01-01" onChange={v => console.log(v)}/>
                     </FormItem>
-                    <FormItem label="日期+form" >
+                    <FormItem label="日期form" >
                         <DatePicker {...form.getFieldProps('date1', {initialValue: '2017-01-11'})} />
                     </FormItem>
 
-                    <FormItem label="日期+showTime+form" >
+                    <FormItem label="日期时间form" labelWidth="6em">
                         <DatePicker showTime format="yyyy-MM-dd HH:mm:ss" {...form.getFieldProps('date2', {initialValue: '2017-01-11 12:12:22'})} />
                     </FormItem>
 

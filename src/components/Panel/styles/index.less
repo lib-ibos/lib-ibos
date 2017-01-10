@@ -3,9 +3,6 @@
 .panel{
   background: #fff;
   margin-bottom:16px;
-  &:last-child{
-    margin-bottom:0;
-  }
 
   &>&__header{
     padding-top:@panel-padding;
@@ -14,10 +11,11 @@
     margin-left:@panel-padding;
     margin-right:@panel-padding;
     margin-bottom:-4px;
+    line-height:24px;
+
   }
 
   &__title{
-    line-height:24px;
     font-weight:bold;
     display: inline-block;
   }

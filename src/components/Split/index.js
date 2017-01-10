@@ -4,14 +4,15 @@ import classnames  from 'classnames';
 import './styles/';
 
 
-function split({type,style,...props}) {
+function split({type,dashed,space,vertical,style,...props}) {
     // console.log(type)
     const prifix = 'hr';
     const _class = classnames(
         prifix,
         {
-            [prifix+"--dashed"]: type == "dashed" || props.dashed,
-            [prifix+"--space"]: type == "space" || props.space
+            [prifix+"--dashed"]: dashed,
+            [prifix+"--space"]: space,
+            [prifix+"--vertical"]: vertical,
         }
     )
     return <hr className={_class} style={style} />

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import classnames from 'classnames';
-import {Form} from 'antd';
+import {Form,Tag,Checkbox,Radio} from 'antd';
 const AntFormItem = Form.Item;
 
 import {checkSecurity, hasOwnProp} from'../share'
@@ -70,28 +70,31 @@ class FormItem extends Component {
             {["o-form-label--" + labelWidth]: labelWidth},
             {"o-form-label--none": (label == " ")}
         )
-        console.log(children)
+
         const isToChange = typeof children ==="object" && !!children && !!children.props
         let childrenValue = isToChange && (children.props.value || children.props.defaultValue) ;
 
         // 特殊组件取值
+        // TODO 考虑的组件还不够丰富，目前只有radio group 和 checkbox group
         if(isToChange){
-            if(children.type.name == "RadioGroup"){
+            // TODO children 是数组的话就会报错
+            if(children.type == Radio.Group){
                 let child = children.props.children.filter((child)=> (child.props.value === childrenValue))
                 childrenValue = child[0].props.children
             }
 
-            if(children.type.name == "CheckboxGroup"){
+            // checkbox
+            if(children.type == Checkbox.Group){
                 let arr=[]
                 childrenValue.forEach(function (item) {
                    children.props.options.forEach(function (child) {
                        child.value == item && arr.push(child.label)
                    })
-
                 })
 
                 if(arr.length > 1){
-                    childrenValue = arr.map((item,index)=>(<span className="tags" key={index}>{item}</span>))
+                    //多个选项
+                    childrenValue = arr.map((item,index)=>(<Tag key={index}>{item}</Tag>))
                 }else {
                     childrenValue = arr
                 }

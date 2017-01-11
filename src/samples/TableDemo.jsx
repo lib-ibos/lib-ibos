@@ -33,10 +33,8 @@ export default class TableDemo extends Component {
         super()
         this.state = {
             config: {
-                columnKeys: ['name', 'age', 'gender', 'address'],
-                width: 500,
-                height: 200,
-                pageSize: '20',
+                columnKeys: [{key:'name', required: true}, {key:'age'}, {key:'gender'}, {key:'address'}],
+                pageSize: 20,
                 fixCols: 1
             }
         }
@@ -52,8 +50,6 @@ export default class TableDemo extends Component {
     }
 
     render() {
-
-        const {columnKeys, width, height} = this.state.config
 
         return (
             <div style={{width: 700}}>

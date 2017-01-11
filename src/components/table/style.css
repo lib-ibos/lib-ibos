@@ -1,11 +1,7 @@
-.transfer-updown {
+.table-custom-column .transfer-updown {
     height: 200px;
     top: 124px;
     position: relative;
-}
-
-.transfer-updown-item-selected {
-   color: #2db7f5
 }
 
 .custom-filter-dropdown {

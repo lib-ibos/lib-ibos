@@ -5,6 +5,10 @@ import CustomTransfer from './CustomTransfer'
 
 const titles = ['可选', '已选']
 
+function RedStar() {
+    return <span style={{color: 'red'}}>*</span>
+}
+
 class CustomColumnsModal extends Component {
 
     static defaultProps = {
@@ -15,16 +19,26 @@ class CustomColumnsModal extends Component {
 
     constructor(props) {
         super(props)
+        const targetKeys = props.columnKeys.map(info => info.key)
+        const dataSource = props.dataSource.map(data => {
+            const a = props.columnKeys.filter(info => info.key === data.key)[0]
+            const required = a ? !!a.required : false
+            return {...data, required}
+        })
         this.state = {
-            selectedKeys: [],
-            targetKeys: props.columnKeys,
+            dataSource,
+            targetKeys,
             fixCols: props.fixCols,
-            pageSize: props.pageSize,
+            pageSize: props.pageSize.toString(),
+            selectedKeys: [],
         }
     }
 
     handleOk = () => {
-        const values = this.state
+        const {columnKeys} = this.props
+        const {targetKeys, selectedKeys, dataSource, ...values} = this.state
+        values.columnKeys = targetKeys.map(key => 
+            columnKeys.filter(info => info.key === key)[0] || {key})
         this.props.onOk(values)
         this.props.onCancel()
     }
@@ -41,7 +55,17 @@ class CustomColumnsModal extends Component {
         }
     }
 
-    handleTransferChange = (targetKeys) => {
+    handleTransferChange = (targetKeys, direction, moveKeys) => {
+        const {columnKeys} = this.props
+        function isRequired(key) {
+            return columnKeys.filter(info => info.key === key && info.required ).length > 0
+        }
+        if (direction === 'left') {
+            this.setState({selectedKeys: []})
+            if (moveKeys.some(isRequired)) {
+                return
+            }
+        }
         this.setState({targetKeys})
     }
 
@@ -82,24 +106,24 @@ class CustomColumnsModal extends Component {
     }
 
     renderItem = (item) => {
+        const customLabel = (
+            <span>
+                <span style={{marginRight: 2}}>{item.required ? <RedStar/> : ' '}</span>
+                {item.title}
+            </span>
+        )
         return  {
-            label: item.title, // for displayed item
+            label: customLabel, // for displayed item
             value: item.title,   // for title and filter matching
         };
     }
 
-    handleChange = (targetKeys, direction, moveKeys) => {
-        const {selectedKey} = this.state
-        if (direction === 'left' && moveKeys.indexOf(selectedKey) > -1) {
-            this.setState({selectedKeys: []})
-        }
-    }
-
     render() {
-        const {targetKeys, selectedKeys, pageSize, fixCols} = this.state
-        const {visible, dataSource, onCancel} = this.props
+        const {dataSource, targetKeys, selectedKeys, pageSize, fixCols} = this.state
+        const {visible, onCancel} = this.props
 
         const modalOpts = {
+            className: 'table-custom-column',
             maskClosable: false,
             visible,
             onCancel,
@@ -130,7 +154,7 @@ class CustomColumnsModal extends Component {
         return (
             <Modal {...modalOpts}>
                 <Form horizontal>
-                    <Form.Item label="选择列">
+                    <Form.Item label={<span>选择列( <RedStar/> 为必选)</span>} >
                     <Row>
                         <Col span={20}>
                         <CustomTransfer 

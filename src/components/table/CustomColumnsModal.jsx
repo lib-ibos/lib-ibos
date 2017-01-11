@@ -178,7 +178,7 @@ class CustomColumnsModal extends Component {
                     <Row>
                       <Col span={10}>
                         <Form.Item label="固定前几列" labelCol={{span: 8}} wrapperCol={{span: 14}} >
-                            <InputNumber value={fixCols} onChange={this.handleFixColsChange} />
+                            <InputNumber min={0} max={3} value={fixCols} onChange={this.handleFixColsChange} />
                         </Form.Item>
                       </Col>
                       <Col span={14}>

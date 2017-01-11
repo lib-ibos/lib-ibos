@@ -9,7 +9,7 @@ import ColumnDropdown from './ColumnDropdown'
 import FilterBar from './FilterBar'
 
 function checkCustomColumns(props, columnKeys ) {
-    return columnKeys.indexOf(props.dataIndex) > -1
+    return columnKeys.some(info => info.key === props.dataIndex)
 }
 
 const defaultPagination = {
@@ -97,7 +97,7 @@ class Table extends Component {
             })
 
         if (isValidCustomKeys) {
-            columns = columnKeys.map(col => memo[col])
+            columns = columnKeys.map(col => memo[col.key])
         }
         
         let title

@@ -36,7 +36,7 @@ export default class TableDemo extends Component {
                 columnKeys: ['name', 'age', 'gender', 'address'],
                 width: 500,
                 height: 200,
-                pageSize: 20,
+                pageSize: '20',
                 fixCols: 1
             }
         }

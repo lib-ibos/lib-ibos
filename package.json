@@ -13,8 +13,8 @@
   "author": "codering",
   "license": "MIT",
   "dependencies": {
-    "echarts": "^3.3.2",
-    "antd": "^1.11.2"
+    "antd": "^1.11.6",
+    "echarts": "^3.3.2"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

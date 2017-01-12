@@ -60,13 +60,17 @@ class CustomColumnsModal extends Component {
         function isRequired(key) {
             return columnKeys.filter(info => info.key === key && info.required ).length > 0
         }
+        let newTargetKeys = this.state.targetKeys
         if (direction === 'left') {
             this.setState({selectedKeys: []})
             if (moveKeys.some(isRequired)) {
                 return
             }
+            newTargetKeys = newTargetKeys.filter(key => moveKeys.indexOf(key) === -1)
+        } else {
+            newTargetKeys = newTargetKeys.concat(moveKeys)
         }
-        this.setState({targetKeys})
+        this.setState({targetKeys: newTargetKeys})
     }
 
     handleFixColsChange = (value) => {

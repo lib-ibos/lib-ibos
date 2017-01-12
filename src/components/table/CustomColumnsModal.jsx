@@ -63,9 +63,8 @@ class CustomColumnsModal extends Component {
         let newTargetKeys = this.state.targetKeys
         if (direction === 'left') {
             this.setState({selectedKeys: []})
-            if (moveKeys.some(isRequired)) {
-                return
-            }
+            // 必选字段是无法移动的
+            moveKeys = moveKeys.filter(key => !isRequired(key))
             newTargetKeys = newTargetKeys.filter(key => moveKeys.indexOf(key) === -1)
         } else {
             newTargetKeys = newTargetKeys.concat(moveKeys)

@@ -70,7 +70,7 @@ class Table extends Component {
     }
 
     render() {
-        const {children, security, customConfig, onCustomChange, pagination, ...otherProps} = this.props
+        const {children, security, customConfig, onCustomChange, showSeq, pagination, ...otherProps} = this.props
 
         // 检查整个table权限
         if (!checkSecurity(this.props).canAccess) {
@@ -131,7 +131,7 @@ class Table extends Component {
 
         const allColConfig = columnConfigs.map( ({title, dataIndex}) => ({key: dataIndex, title}))
 
-        columns.unshift(seqColConfig)
+        showSeq && columns.unshift(seqColConfig)
 
         columns = columns.map(colProps => {
             const props =  {...colProps}

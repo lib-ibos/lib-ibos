@@ -56,6 +56,7 @@ export default class TableDemo extends Component {
                 <Table dataSource={mockData} onChange={this.handleChange}
                     customConfig={this.state.config} 
                     onCustomChange={this.handleCustomConfigChange} 
+                    showSeq
                 >
                     <Table.Col title="序号" dataIndex="seq" width={80} fixed render={() => new Date().getTime()} />
                     <Table.Col title="姓名" dataIndex="name" width={60} />

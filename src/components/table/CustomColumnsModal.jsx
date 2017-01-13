@@ -14,7 +14,7 @@ class CustomColumnsModal extends Component {
     static defaultProps = {
         columnKeys: [],
         fixCols: 0,
-        pageSize: '10'
+        pageSize: 10
     }
 
     constructor(props) {
@@ -37,6 +37,7 @@ class CustomColumnsModal extends Component {
     handleOk = () => {
         const {columnKeys} = this.props
         const {targetKeys, selectedKeys, dataSource, ...values} = this.state
+        values.pageSize = Number(values.pageSize)
         values.columnKeys = targetKeys.map(key => 
             columnKeys.filter(info => info.key === key)[0] || {key})
         this.props.onOk(values)

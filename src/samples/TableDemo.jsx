@@ -36,6 +36,9 @@ export default class TableDemo extends Component {
                 columnKeys: [{key:'name', required: true}, {key:'age'}, {key:'gender'}, {key:'address'}],
                 pageSize: 20,
                 fixCols: 1
+            },
+            pagination: {
+                pageSize: 10
             }
         }
     }
@@ -52,11 +55,12 @@ export default class TableDemo extends Component {
     render() {
 
         return (
-            <div style={{width: 700}}>
+            <div style={{width: 800}}>
                 <Table dataSource={mockData} onChange={this.handleChange}
                     customConfig={this.state.config} 
                     onCustomChange={this.handleCustomConfigChange} 
                     showSeq
+                    pagination={this.state.pagination}
                 >
                     <Table.Col title="序号" dataIndex="seq" width={80} fixed render={() => new Date().getTime()} />
                     <Table.Col title="姓名" dataIndex="name" width={60} />

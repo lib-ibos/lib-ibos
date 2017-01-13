@@ -84,7 +84,6 @@ export default class ColumnDropdown extends Component {
                 showClear
                 showOk
                 dateInputPlaceholder={locale.lang.rangePlaceholder}
-                value={this.state.value}
                 onOk={this.handleDateChange} 
             />
         )

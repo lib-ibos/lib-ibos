@@ -57,6 +57,7 @@ class FormItem extends Component {
         }
         // 检查是否只读
         if (readOnly) {
+            // 只能处理单个child的情况
             children = React.cloneElement(children, {disabled: true})
             // children = React.Children.map(children, c => {
             //     return React.cloneElement(c, {disabled: true})

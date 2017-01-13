@@ -27,3 +27,8 @@ export function checkSecurity(props) {
     }
     return result
 }
+
+/*数字过滤， 如 11.a4.kdkdsd212 ==> 114212 */
+export function filterNum(val) {
+    return val.replace(/\D/, s => '')
+}

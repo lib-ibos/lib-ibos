@@ -1,20 +1,38 @@
 import React, {Component} from 'react'
 
 import {Table as AntdTable, Button, Modal, Transfer } from 'antd'
-import {checkSecurity} from '../share'
+
+import {checkSecurity, noop} from '../share'
 
 import CustomColumnsModal from './CustomColumnsModal'
+import ColumnDropdown from './ColumnDropdown'
+import FilterBar from './FilterBar'
 
 function checkCustomColumns(props, columnKeys ) {
-    return columnKeys.indexOf(props.dataIndex) > -1
+    return columnKeys.some(info => info.key === props.dataIndex)
 }
+
+const defaultPagination = {
+  onChange: noop,
+  onShowSizeChange: noop,
+};
 
 class Table extends Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
+        const pagination = props.pagination || {};
         this.state = {
-            visible: false
+            visible: false,
+            sorter: {},
+            filters: {},
+            pagination: this.props.pagination !== false ?
+                {
+                    ...defaultPagination,
+                    ...pagination,
+                    current: pagination.defaultCurrent || pagination.current || 1,
+                    pageSize: pagination.defaultPageSize || pagination.pageSize || 10,
+                } : {},
         }
     }
 
@@ -26,8 +44,33 @@ class Table extends Component {
         this.setState({visible: false})
     }
 
+    callback = () => {
+        const {pagination, filters, sorter} = this.state
+        this.props.onChange && this.props.onChange(pagination, filters, sorter)
+    }
+
+    handleChange = (pagination, filters, sorter) => {
+        const mergedFilters = {...this.state.filters, ...filters}
+        this.setState({pagination, sorter, filters: mergedFilters}, this.callback)
+    }
+
+    handleCustomFiltersChange = (cutomFilters) => {
+        const mergedFilters = {...this.state.filters, ...cutomFilters}
+        this.setState({filters: mergedFilters}, this.callback)
+    }
+
+    handleTagRemove = (key) => {
+        const filters = {...this.state.filters}
+        delete filters[key]
+        this.setState({filters}, this.callback)
+    }
+
+    hanldeTagAllRemove = () => {
+        this.setState({filters: {}}, this.callback)
+    }
+
     render() {
-        const {children, security, customConfig, onCustomChange, pagination, ...otherProps} = this.props
+        const {children, security, customConfig, onCustomChange, showSeq, pagination, ...otherProps} = this.props
 
         // 检查整个table权限
         if (!checkSecurity(this.props).canAccess) {
@@ -54,7 +97,7 @@ class Table extends Component {
             })
 
         if (isValidCustomKeys) {
-            columns = columnKeys.map(col => memo[col])
+            columns = columnKeys.map(col => memo[col.key])
         }
         
         let title
@@ -88,7 +131,24 @@ class Table extends Component {
 
         const allColConfig = columnConfigs.map( ({title, dataIndex}) => ({key: dataIndex, title}))
 
-        columns.unshift(seqColConfig)
+        showSeq && columns.unshift(seqColConfig)
+
+        columns = columns.map(colProps => {
+            const props =  {...colProps}
+            if (props.filterDropdownType) {
+                props.filterDropdown = (
+                    <ColumnDropdown 
+                        value={this.state.filters[props.dataIndex]}
+                        type={props.filterDropdownType}
+                        dataSource={props.filters}
+                        multiple={props.filterMultiple}
+                        onChange={v => this.handleCustomFiltersChange({[props.dataIndex]: v})}
+                    />
+                )
+                //delete props.filterDropdownType
+            }
+            return props
+        })
         
         // 表格参数
         const tableOpts = {
@@ -96,6 +156,7 @@ class Table extends Component {
             pagination,
             ...otherProps,
             columns,
+            onChange: this.handleChange,
         }
         // 弹出框参数
         const modalOpts = {
@@ -110,6 +171,12 @@ class Table extends Component {
 
         return (
             <div>
+                <FilterBar 
+                    dataSource={columns} 
+                    filters={this.state.filters} 
+                    onRemove={this.handleTagRemove} 
+                    onReset={this.hanldeTagAllRemove}
+                />
                 <AntdTable {...tableOpts}  />
                 <CustomColumnsModalGen />
             </div>
@@ -119,3 +186,7 @@ class Table extends Component {
 }
 
 export default Table
+
+
+
+

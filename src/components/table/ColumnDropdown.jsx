@@ -9,14 +9,29 @@ import GregorianCalendar from 'gregorian-calendar';
 
 import RangeCalendar from 'rc-calendar/lib/RangeCalendar'
 
+function getFormatter() {
+    const formatter = new DateTimeFormat('yyyy-MM-dd', locale.lang.format);;
+    return formatter;
+}
+
+function parseDateFromValue(value) {
+    if (value) {
+        if (typeof value === 'string') {
+            return getFormatter().parse(value, { locale});
+        } else if (value instanceof Date) {
+            let date = new GregorianCalendar(locale);
+            date.setTime(+value);
+            return date;
+        }
+    }
+    return value;
+}
+
 function formatDate(date) {
     if (!date) {
       return date
     }
-    const formatter = new DateTimeFormat('yyyy-MM-dd', locale.lang.format);
-    // const calendar = new GregorianCalendar(locale)
-    // calendar.setTime(date)
-    return formatter.format(date)
+    return getFormatter().format(date)
 }
 
 export default class ColumnDropdown extends Component {
@@ -49,8 +64,9 @@ export default class ColumnDropdown extends Component {
         }
     }
 
-    handleDateChange = (val) => {
-        val = [formatDate(val[0]), formatDate(val[1])]
+    handleDateChange = (value) => {
+        const val = [formatDate(value[0]), formatDate(value[1])]
+        this.setState({value})
         this.handleSearch(val)
     }
 

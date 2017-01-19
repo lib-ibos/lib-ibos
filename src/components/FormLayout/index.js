@@ -16,15 +16,15 @@ function FormLayout({children,labelWidth,inline,inputType, ...props}) {
     );
 
     // 传给children的熟悉
-    const _childrenPros = {
-        type:inputType
-    }
+    // const _childrenPros = {
+    //     type:inputType
+    // }
 
 
     // 复制children 并赋值额外属性
-    const _children = React.Children.map(children,(child)=>React.cloneElement(child,_childrenPros))
+    // const _children = React.Children.map(children,(child)=>React.cloneElement(child,_childrenPros))
 
-    return <div {...props} className={_class} >{_children}</div>
+    return <div {...props} className={_class} >{children}</div>
 }
 
 FormLayout.FormItem =FormItem;

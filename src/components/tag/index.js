@@ -16,12 +16,14 @@ class Tag extends Component {
 
 
     render() {
-        const {children,className,size,prefixCls,...props} = this.props;
+        const {children,className,size,hasTag,prefixCls,...props} = this.props;
 
         const _class = classnames(
             className,
             prefixCls,
-            {[prefixCls+'--'+size]:/small|middle|large/.test(size)
+            {
+                [prefixCls+'--'+size]:/mini|small|middle|large/.test(size),
+                [prefixCls+'--has-tag']:hasTag,
         })
 
         return (

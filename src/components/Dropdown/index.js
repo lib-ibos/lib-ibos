@@ -7,6 +7,13 @@ import Menu ,{MenuItem,Divider} from 'rc-menu';
 import KeyCode from 'rc-util/lib/KeyCode';
 import './styles/index'
 
+
+
+function sortACS(data) {
+    return data.sort(function (a, b) {
+        return a > b ? 1 : -1
+    })
+}
 //props selectKey 指定一个key的值填入input中
 class Dropdown extends Component {
     constructor(props) {
@@ -44,7 +51,7 @@ class Dropdown extends Component {
 
     handlerConfirm=()=>{
 
-            this.props.onConfirm && this.props.onConfirm(this.state.selectedKeys)
+            this.props.onConfirm && this.props.onConfirm(sortACS(this.state.selectedKeys))
 
             this.setState({
                 visible: false,
@@ -76,7 +83,7 @@ class Dropdown extends Component {
             onClick={this.handlerConfirm}
         > 确定 </Button>
 
-        confirmBtn = this.props.uniqueSelect && !!!this.state.selectedKeys.length ? <Tooltip  title="必须选择一项！"><Button className="reset-ant-disable-pointer" size="small" disabled> 确定 </Button></Tooltip> : confirmBtn
+        confirmBtn = this.props.uniqueSelect && !!!this.state.selectedKeys.length ? <Tooltip  title="必须选择一项！" overlayClassName="reset-ant-disable-pointer"><Button className="reset-ant-disable-pointer" size="small" disabled> 确定 </Button></Tooltip> : confirmBtn
 
         const menu = (
             <Menu

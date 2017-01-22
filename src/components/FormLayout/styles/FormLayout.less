@@ -117,7 +117,8 @@
       top: 35px;
       padding: 6px 12px;
       background: #FF5150;
-      color: #fff;
+      //TODO 和 antd .ant-form-explain 冲突加了important
+      color: #fff !important;
       border-radius: 3px;
       z-index: 5;
       box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
@@ -236,6 +237,16 @@
   textarea.ant-input {
     height: auto;
   }
+
+  //当时 showtime 模式的时候，antd 会给他设一个style width 180px
+  .ant-calendar-picker{
+    width: 100% !important;
+  }
+
+  // div换行
+  .ant-checkbox-group{
+    display: inline-block;
+  }
 }
 
 //容器设置里面input 尺寸
@@ -336,6 +347,16 @@
   cursor: default;
 }
 
+
+.o-form-item{
+  &--inline{
+    .ant-form-item{
+      display: inline-block;
+    }
+  }
+}
+
+
 // TODO: 移动到公共库
 .split-container {
   margin: 4px auto;
@@ -344,7 +365,3 @@
   padding: 6px 0
 }
 
-// TODO: 移动到公共库
-.none{
-  display: none;
-}

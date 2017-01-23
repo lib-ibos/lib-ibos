@@ -125,7 +125,7 @@ class MultiColSelect extends Component {
             this.setState({
                 open: false,
                 selectKeys: [String(currentKey)]
-            })
+            },()=>this.onSearch())
             this.props.onChange && this.props.onChange(_obj[currentKey][_key])
             this.props.onSelect && this.props.onSelect(_obj[_key]);
             event.preventDefault();
@@ -145,9 +145,18 @@ class MultiColSelect extends Component {
         this.props.dataBody.length > 0 && this.setOpenState(true)
         this.setState({
             selectKeys: ['-1'],
-        })
+        },()=>this.onSearch())
+
     }
 
+    onSearch = (e)=>{
+        const onSearch = this.props.onSearch;
+        const _key = this.state.selectKeys[0];
+        let _obj = this.props.dataBody && this.props.dataBody[_key]
+        //如果没有命中选项，则返回空对象
+        !_obj && (_obj={})
+        onSearch && onSearch(this.refs.input.props.value,_obj)
+    }
 
 
     onMenuSelect = (value) => {
@@ -157,10 +166,12 @@ class MultiColSelect extends Component {
         this.setState({
             open: false,
             selectKeys: [String(value.key)]
-        })
+        },()=>this.onSearch())
         this.setActiveState(value.key)
         this.props.onChange && this.props.onChange(currentKey)
         this.props.onSelect && this.props.onSelect(_obj);
+
+
     }
 
     //失焦
@@ -177,7 +188,6 @@ class MultiColSelect extends Component {
             })
         }
 
-        console.log(this)
     }
 
 

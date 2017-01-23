@@ -142,7 +142,7 @@ class MultiColSelect extends Component {
 
     handleChange = (e) => {
         this.props.onChange && this.props.onChange(e.target.value);
-        this.props.dataBody.length > 0 && this.setOpenState(true)
+        this.props.dataBody && this.props.dataBody.length > 0 && this.setOpenState(true)
         this.setState({
             selectKeys: ['-1'],
         },()=>this.onSearch())

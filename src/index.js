@@ -3,6 +3,8 @@ import './index.html'
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 
+import 'antd/dist/antd.css'
+
 import Router from 'react-router/lib/Router'
 import Route from 'react-router/lib/Route'
 import IndexRoute from 'react-router/lib/IndexRoute'

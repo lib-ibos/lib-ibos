@@ -1,6 +1,6 @@
 {
   "name": "lib-ibos",
-  "version": "1.0.0-beta1",
+  "version": "1.0.0",
   "description": "ibos前端设计依赖的组件",
   "main": "lib/index.js",
   "scripts": {

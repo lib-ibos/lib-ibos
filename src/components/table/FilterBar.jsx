@@ -25,21 +25,25 @@ export default class FilterBar extends Component {
                     value = filterOptions.filter(c => value.indexOf(c.value) > -1).map(c => c.text)
                 }
                 if (filterDropdownType === 'number' || filterDropdownType === 'date') {
-                    value = value.join(' ~ ')
+                    value = value.some(v => !!v) ? value.join('~') : ''
                 }
-                return (
-                    <Tag key={key} closable color="blue" onClose={_ => this.handleClose(key)}>
-                        {name}: {`${value}`}
-                    </Tag>
-                )
+                return {key,name,value}
             })
-            const message = (
-                <Row>
-                    <Col span={22}>{tags}</Col>
-                    <Col span={2}><Button onClick={this.props.onReset} size="small" type="dashed" >清空</Button></Col>
-                </Row>
-            )
-            return <Alert message={message} type="info" />
+            .filter(obj => !!obj.value) // 只显示有值的
+            .map(obj => (
+                <Tag key={obj.key} closable color="blue" onClose={_ => this.handleClose(obj.key)}>
+                    {obj.name}: {`${obj.value}`}
+                </Tag>
+            ))
+            if (tags.length) {
+                const message = (
+                    <Row>
+                        <Col span={22}>{tags}</Col>
+                        <Col span={2}><Button onClick={this.props.onReset} size="small" type="dashed" >清空</Button></Col>
+                    </Row>
+                )
+                return <Alert message={message} type="info" />
+            }
         } 
         return null
     }

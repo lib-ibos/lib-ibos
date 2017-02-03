@@ -34,14 +34,13 @@ export default class RangeInputNumber extends Component {
                 values = [Number(startValue), Number(endValue)]
             }
         } else if (startValue) {
-            values = [Number(startValue), endValue]
+            values = [Number(startValue) + '', endValue]
         } else if (endValue) {
-            values = [startValue, Number(endValue)]
-        } else {
+            values = [startValue, Number(endValue) + '']
+        } else if (startValue !== void 0 || endValue !== void 0) {
             values = [startValue, endValue]
-            callback(startValue, endValue)
         }
-        callback(values)
+        values.length && callback(values)
     }
 
     handleStartChange = (e) => {

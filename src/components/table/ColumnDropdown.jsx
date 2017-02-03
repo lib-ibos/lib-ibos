@@ -49,7 +49,7 @@ export default class ColumnDropdown extends Component {
         }
     }
 
-    handleC = (e) => {
+    handleInputChange = (e) => {
         this.setState({value: e.target.value})
     }
 
@@ -57,7 +57,7 @@ export default class ColumnDropdown extends Component {
         this.props.onChange && this.props.onChange(value)
     }
 
-    handleInputChange = (e) => {
+    handleChange = (e) => {
         const value = e.target.value
         if (value !== this.props.value) {
             this.handleSearch(value)
@@ -100,7 +100,7 @@ export default class ColumnDropdown extends Component {
                 lineHeight: '30px',
             };
             return (
-                <Radio.Group value={this.state.value} onChange={this.handleInputChange}>
+                <Radio.Group value={this.state.value} onChange={this.handleChange}>
                 {dataSource.map(item => (
                     <Radio style={radioStyle} key={item.value} value={item.value}>
                         {item.text}
@@ -113,7 +113,13 @@ export default class ColumnDropdown extends Component {
 
     render() {
         const {type, value, dataSource = [], multiple} = this.props
-        let content = <Input value={this.state.value} onChange={this.handleC} onPressEnter={this.handleInputChange} />
+        let content = (
+            <Input
+                value={this.state.value}
+                onChange={this.handleInputChange}
+                onPressEnter={this.handleChange}
+            />
+        )
         if (type === 'number') {
             content = this.renderRangeNumber()
         } else if (type === 'date') {

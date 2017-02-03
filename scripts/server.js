@@ -18,7 +18,10 @@ const hotUpdate =  process.argv.indexOf('--ie8') === -1
 function setupCompiler(host, port, protocol) {
 
   if (hotUpdate) {
-    config.entry.unshift(require.resolve('react-dev-utils/webpackHotDevClient'));
+    const entry = config.entry
+    Object.keys(entry).forEach(function(key){
+      entry[key].unshift(require.resolve('react-dev-utils/webpackHotDevClient'));
+    })
   } else {
     // ie8 不使用热加载, 但需配置es3ify
     config.module.postLoaders = [

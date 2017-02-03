@@ -10,11 +10,13 @@ function resolve(relativePath) {
 }
 
 module.exports = {
-    entry: [resolve("src/index.js")], //已多次提及的唯一入口文件
+    entry: {
+        index: [resolve("src/index.js")],
+    },
     output: {
         path: resolve("dist"),//打包后的文件存放的地方
         pathinfo: true,
-        filename: "bundle.js"//打包后输出文件的文件名
+        filename: "[name].js",//打包后输出文件的文件名
     },
     resolve: {
         extensions: ['', '.js', '.jsx', '.json']

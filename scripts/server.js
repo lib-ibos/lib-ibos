@@ -28,7 +28,7 @@ function setupCompiler(host, port, protocol) {
       {
         test: /\.(js|jsx)$/,
         include: [/node_modules/,/src/],
-        loaders: ['es3ify-loader'],
+        loaders: ['es3ify'],
       },
     ]
   }

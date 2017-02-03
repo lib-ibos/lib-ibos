@@ -75,15 +75,19 @@ export default class ColumnDropdown extends Component {
     }
 
     renderRangePicker = () => {
-        //return <DatePicker.RangePicker onChange={this.handleDateChange} />
-        //return <RangeDatePicker onChange={this.handleDateChange} />
+        let value = this.state.value || []
+        if (value && typeof value[0] === 'string') {
+           value = value.map(v => parseDateFromValue(v))
+        }
         return (
             <RangeCalendar 
                 prefixCls="ant-calendar" 
                 locale={locale.lang} 
                 showClear
                 showOk
+                selectedValue={value}
                 dateInputPlaceholder={locale.lang.rangePlaceholder}
+                onChange={v => this.setState({value: v})}
                 onOk={this.handleDateChange} 
             />
         )

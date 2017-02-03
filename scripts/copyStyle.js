@@ -27,7 +27,7 @@ function findFiles(startPath, filter, cb) {
 function copyStyle(sourceDir, targetDir) {
     var len = sourceDir.length
     var styleFiles = []
-    findFiles(sourceDir, /\.(less|css)$/ , function(fileName){
+    findFiles(sourceDir, /\.(less|css|png|jpg)$/ , function(fileName){
         styleFiles.push(fileName)
     });
 

@@ -49,7 +49,7 @@ class FormItem extends Component {
 
 
     render() {
-        let {security, children, labelVertical,type,readonly, labelWidth, label,isEasyEdit, ...props} = this.props
+        let {security, children, labelVertical,type, labelWidth, label,isEasyEdit, ...props} = this.props
         const {canAccess, readOnly} = checkSecurity(this.props)
         // 检查是否可显示
         if (!canAccess) {
@@ -72,7 +72,8 @@ class FormItem extends Component {
             {"o-form-label--none": (label == " ")}
         )
 
-        const isToChange = typeof children ==="object" && !!children && !!children.props
+
+        const isToChange = typeof children ==="object" && type ==="text" && !!children && !!children.props
         let childrenValue = isToChange && (children.props.value || children.props.defaultValue) ;
 
         // 特殊组件取值
@@ -129,8 +130,7 @@ class FormItem extends Component {
                 style={_style}
                 label={_label}
                 className={_class}
-                tyep={type}
-                readonly={readonly}
+                type={type}
             >
                 {_children}
             </AntFormItem>

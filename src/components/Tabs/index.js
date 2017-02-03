@@ -114,9 +114,8 @@ class OTabs extends Component {
         let visibleList = []
         let children = this.props.children
         !Array.isArray(children) && (children = [children])
-        for (let x in children) {
-            !!!children[x].props.hidden && visibleList.push(x)
-        }
+
+        children.forEach((item,index)=> !!!item.props.hidden && visibleList.push(index.toString()))
 
         return sortACS(visibleList)
     }

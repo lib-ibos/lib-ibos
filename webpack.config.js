@@ -37,13 +37,13 @@ module.exports = {
                 test: /\.css$/,
                 include: [resolve("src"), resolve("node_modules")],
                 loader: 'style!css?importLoaders=1!postcss',
-                //loader: ExtractTextPlugin.extract('style-loader','css-loader?importLoaders=1!postcss-loader')//添加对样式表的处理
+                //loader: ExtractTextPlugin.extract('style','css?importLoaders=1!postcss')
             },
             {   
                 test: /\.less$/, 
                 include: [resolve("src"), resolve("node_modules")],
                 loader: 'style!css?importLoaders=1!postcss!less',
-                //loader: ExtractTextPlugin.extract('style-loader','css-loader?importLoaders=1!postcss-loader!less-loader')
+                //loader: ExtractTextPlugin.extract('style','css?importLoaders=1!postcss!less')
             },
             {
                 test: /\.html$/,

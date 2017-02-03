@@ -36,7 +36,7 @@ export default class FilterBar extends Component {
             const message = (
                 <Row>
                     <Col span={22}>{tags}</Col>
-                    <Col span={2}><Button onClick={this.props.onReset} size="small" type="dashed" >重置</Button></Col>
+                    <Col span={2}><Button onClick={this.props.onReset} size="small" type="dashed" >清空</Button></Col>
                 </Row>
             )
             return <Alert message={message} type="info" />

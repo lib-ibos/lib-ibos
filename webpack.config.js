@@ -19,10 +19,10 @@ module.exports = {
     resolve: {
         extensions: ['', '.js', '.jsx', '.json']
     },
-    // resolveLoader: {
-    //   root: [__dirname + '/node_modules',],
-    //   moduleTemplates: ['*-loader'],
-    // },
+    resolveLoader: {
+      root: [resolve("node_modules")],
+      moduleTemplates: ['*-loader'],
+    },
     devtool: 'source-map', // 便于调试
     module: {
         loaders: [
@@ -58,7 +58,7 @@ module.exports = {
                 template: 'src/index.html',
             }),
             new webpack.HotModuleReplacementPlugin(),
-            new ExtractTextPlugin('style.css'),
+            //new ExtractTextPlugin('style.css'),
         ]
     },
     babel: {

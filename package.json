@@ -7,6 +7,7 @@
     "test": "mocha --compilers js:babel-core/register --require ./test/setup.js",
     "build": "rimraf lib && babel src/components --out-dir lib && node scripts/copyStyle",
     "patch": "npm run build && npm version patch",
+    "beta": "npm publish --tag=beta",
     "start": "node scripts/server.js",
     "ie8": "node scripts/server.js --ie8"
   },

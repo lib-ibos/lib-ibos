@@ -77,7 +77,7 @@ class Table extends Component {
             return <noscript />
         }
 
-        const columnKeys = customConfig ? customConfig.columnKeys : void 0
+        let columnKeys = customConfig ? customConfig.columnKeys : void 0
 
         const isValidCustomKeys = columnKeys && Array.isArray(columnKeys) && columnKeys.length > 0
 
@@ -97,6 +97,8 @@ class Table extends Component {
             })
 
         if (isValidCustomKeys) {
+            // 持久化的自定义列可能在前端不存在了
+            columnKeys = columnKeys.filter(col => !!memo[col.key])
             columns = columnKeys.map(col => memo[col.key])
         }
         
@@ -160,6 +162,7 @@ class Table extends Component {
         // 弹出框参数
         const modalOpts = {
             ...customConfig,
+            columnKeys,
             visible: this.state.visible,
             onCancel: this.handleClose,
             onOk: onCustomChange,

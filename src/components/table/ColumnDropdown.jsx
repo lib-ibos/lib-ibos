@@ -128,7 +128,7 @@ export default class ColumnDropdown extends Component {
             content = this.renderRangeNumber()
         } else if (type === 'date') {
             content = this.renderRangePicker()
-        } else if (type === 'select') {
+        } else if (type === 'list') {
             content = this.renderSelect(dataSource, multiple)
         }
 

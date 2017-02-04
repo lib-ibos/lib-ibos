@@ -70,7 +70,7 @@ class Table extends Component {
     }
 
     render() {
-        const {children, security, customConfig, onCustomChange, showSeq, pagination, ...otherProps} = this.props
+        const {children, security, customConfig, onCustomChange, showSeq, ...otherProps} = this.props
 
         // 检查整个table权限
         if (!checkSecurity(this.props).canAccess) {
@@ -113,7 +113,7 @@ class Table extends Component {
                 } )
             }
 
-            if (pagination && customConfig.pageSize) {
+            if (otherProps.pagination && customConfig.pageSize) {
                 otherProps.pagination = otherProps.pagination || {}
                 otherProps.pagination.pageSize = customConfig.pageSize
             }
@@ -153,7 +153,6 @@ class Table extends Component {
         // 表格参数
         const tableOpts = {
             title,
-            pagination,
             ...otherProps,
             columns,
             onChange: this.handleChange,

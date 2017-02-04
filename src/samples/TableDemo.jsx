@@ -38,7 +38,8 @@ export default class TableDemo extends Component {
                 fixCols: 1
             },
             pagination: {
-                pageSize: 10
+                pageSize: 10,
+                total: 200,
             }
         }
     }

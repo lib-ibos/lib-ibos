@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Icon } from 'antd'
 
+//@see https://github.com/ant-design/ant-design/blob/1.x-stable/components/date-picker/RangePicker.jsx
+
 import GregorianCalendar from 'gregorian-calendar';
 import RangeCalendar from 'rc-calendar/lib/RangeCalendar';
 import RcDatePicker from 'rc-calendar/lib/Picker';

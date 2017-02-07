@@ -8,6 +8,8 @@ export function isRenderResultPlainObject(result) {
     Object.prototype.toString.call(result) === '[object Object]';
 }
 
+//@see https://github.com/ant-design/ant-design/blob/1.x-stable/components/transfer/list.jsx#L206
+
 class CustomTransfer extends Component {
 
     constructor(props){

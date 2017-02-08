@@ -39,7 +39,13 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                include: [resolve("src"), resolve("node_modules")],
+                include: [resolve("node_modules")],
+                //loader: 'style!css?importLoaders=1!postcss',
+                loader: ExtractTextPlugin.extract('style','css?importLoaders=1!postcss')
+            },
+            {
+                test: /\.css$/,
+                include: [resolve("src")],
                 loader: 'style!css?importLoaders=1!postcss',
                 //loader: ExtractTextPlugin.extract('style','css?importLoaders=1!postcss')
             },
@@ -88,7 +94,7 @@ module.exports = {
             template: resolve('src/index.html'),
         }),
         new webpack.HotModuleReplacementPlugin(),
-        //new ExtractTextPlugin('style.css'),
+        new ExtractTextPlugin('style.css'),
         new CaseSensitivePathsPlugin(),
         new WatchMissingNodeModulesPlugin(path.resolve(__dirname,'node_modules')),
         new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: "vendor.js", minChunks: Infinity}),

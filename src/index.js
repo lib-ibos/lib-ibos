@@ -1,36 +1,33 @@
-import './index.html'
 
-require.ensure([], function(){
-    const React = require('react')
-    const ReactDOM = require('react-dom')
-    const Router = require('react-router/lib/Router')
-    const Route = require('react-router/lib/Route')
-    const IndexRoute = require('react-router/lib/IndexRoute')
-    const hashHistory = require( 'react-router/lib/hashHistory')
+import React, {Component} from 'react'
+import ReactDOM from 'react-dom'
+import {Router, Route, hashHistory} from './reactRouter'
 
-    const Index = require('./samples/Index')
+function getIndex(nextState, cb) {
+    cb(null, require(`./samples/Index`));
+}
 
-    class App extends React.Component {
+function getDemo(nextState, cb) {
+    const {component} = nextState.params
+    const name = component.charAt(0).toUpperCase() + component.slice(1);
+    cb(null, require(`./samples/${name}Demo`));
+}
 
-        render() {
-            return (
-                <Router history={hashHistory} >
-                    <Route path="/" component={Index}>
-                        <Route path=":component" getComponent={(nextState, cb) => {
-                            const {component} = nextState.params
-                            const name = component.charAt(0).toUpperCase() + component.slice(1);
-                            require.ensure([], function(){
-                                cb(null, require(`./samples/${name}Demo`));
-                            },'pages')
-                        }} />
-                    </Route>
-                </Router>
-            )
-        }
+class App extends React.Component {
+
+    render() {
+        return (
+            <Router history={hashHistory} >
+                <Route path="/" getComponent={getIndex}>
+                    <Route path=":component" getComponent={getDemo} />
+                </Route>
+            </Router>
+        )
     }
+}
 
-    ReactDOM.render(<App/>, document.getElementById('root'))
-}, 'lib')
+ReactDOM.render(<App/>, document.getElementById('root'))
+
 
 
 

@@ -2,8 +2,11 @@
 const path = require('path');
 const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
-const HtmlwebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 
 function resolve(relativePath) {
     return path.resolve(__dirname, relativePath)
@@ -11,6 +14,7 @@ function resolve(relativePath) {
 
 module.exports = {
     entry: {
+        vendor: ['react','react-dom','./src/reactRouter.js','echarts'],
         index: [resolve("src/index.js")],
     },
     output: {
@@ -46,22 +50,10 @@ module.exports = {
                 //loader: ExtractTextPlugin.extract('style','css?importLoaders=1!postcss!less')
             },
             {
-                test: /\.html$/,
-                loader: 'file?name=[name].[ext]',
-            },
-            {
                 test: /\.json$/,
                 loader: "json"
             },
         ],
-        plugins: [
-            new HtmlwebpackPlugin({
-                title: 'lib-ibos',
-                template: 'src/index.html',
-            }),
-            new webpack.HotModuleReplacementPlugin(),
-            //new ExtractTextPlugin('style.css'),
-        ]
     },
     babel: {
       babelrc: false,
@@ -89,6 +81,18 @@ module.exports = {
             }),
         ];
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            title: "lib-ibos",
+            inject: true,
+            template: resolve('src/index.html'),
+        }),
+        new webpack.HotModuleReplacementPlugin(),
+        //new ExtractTextPlugin('style.css'),
+        new CaseSensitivePathsPlugin(),
+        new WatchMissingNodeModulesPlugin(path.resolve(__dirname,'node_modules')),
+        new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: "vendor.js", minChunks: Infinity}),
+    ],
     node: {
         fs: 'empty',
         net: 'empty',

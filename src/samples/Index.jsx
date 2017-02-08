@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Link from 'react-router/lib/Link'
+import {Link} from '../reactRouter'
 import { Menu, Icon } from 'antd';
 const SubMenu = Menu.SubMenu;
 import './Index.css'

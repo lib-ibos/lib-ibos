@@ -1,28 +1,25 @@
-import './index.html'
 
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
+import {Router, Route, hashHistory} from './reactRouter'
 
-import 'antd/dist/antd.css'
+function getIndex(nextState, cb) {
+    cb(null, require(`./samples/Index`));
+}
 
-import Router from 'react-router/lib/Router'
-import Route from 'react-router/lib/Route'
-import IndexRoute from 'react-router/lib/IndexRoute'
-import hashHistory from 'react-router/lib/hashHistory'
+function getDemo(nextState, cb) {
+    const {component} = nextState.params
+    const name = component.charAt(0).toUpperCase() + component.slice(1);
+    cb(null, require(`./samples/${name}Demo`));
+}
 
-import Index from './samples/Index'
-
-class App extends Component {
+class App extends React.Component {
 
     render() {
         return (
             <Router history={hashHistory} >
-                <Route path="/" component={Index}>
-                    <Route path=":component" getComponent={(nextState, cb) => {
-                        const {component} = nextState.params
-                        const name = component.charAt(0).toUpperCase() + component.slice(1);
-                        cb(null, require(`./samples/${name}Demo`));
-                    }} />
+                <Route path="/" getComponent={getIndex}>
+                    <Route path=":component" getComponent={getDemo} />
                 </Route>
             </Router>
         )
@@ -30,3 +27,7 @@ class App extends Component {
 }
 
 ReactDOM.render(<App/>, document.getElementById('root'))
+
+
+
+

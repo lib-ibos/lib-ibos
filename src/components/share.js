@@ -27,3 +27,10 @@ export function checkSecurity(props) {
     }
     return result
 }
+
+/*只返回数字 */
+export function filterNum(val) {
+    //return val.replace(/[^-]?\D/, s => '')
+    const a = val.match(/-?\d+\.?\d{0,}/)
+    return a ? a[0] : ''
+}

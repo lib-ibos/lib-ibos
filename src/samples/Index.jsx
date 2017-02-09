@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Link from 'react-router/lib/Link'
+import {Link} from '../reactRouter'
 import { Menu, Icon } from 'antd';
 const SubMenu = Menu.SubMenu;
 import './Index.css'
@@ -18,6 +18,7 @@ export default class Index extends Component {
                     >
                         <SubMenu title="组件预览" key="nav">
                             <Menu.Item key="Chart"><Link to="chart">Chart</Link></Menu.Item>
+                            <Menu.Item key="Transfer"><Link to="transfer">Transfer</Link></Menu.Item>
                             <Menu.Item key="Table"><Link to="table">Table</Link></Menu.Item>
                             <Menu.Item key="FormLayout"><Link to="formLayout">FormLayout</Link></Menu.Item>
                         </SubMenu>

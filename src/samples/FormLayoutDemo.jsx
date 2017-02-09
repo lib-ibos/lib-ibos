@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Input, Select, Checkbox, Form, Button} from 'antd'
+import {Button, Form, Input, Select, Checkbox} from 'antd'
 import FormLayout from '../components/FormLayout'
 const FormItem = FormLayout.FormItem
 import DatePicker from '../components/date-picker'
@@ -37,16 +37,16 @@ class FormLayoutDemo extends Component {
                         </Select >
                     </FormItem>
                     <FormItem label="只读日期" security="r">
-                        <DatePicker defaultValue="2017-01-01"/>
+                        <DatePicker defaultValue="2017-01-01" />
                     </FormItem>
-                    <FormItem label="lib-ibos日期" >
+                    <FormItem label="日期" >
                         <DatePicker defaultValue="2017-01-01" onChange={v => console.log(v)}/>
                     </FormItem>
-                    <FormItem label="lib-ibos日期" >
+                    <FormItem label="日期form" >
                         <DatePicker {...form.getFieldProps('date1', {initialValue: '2017-01-11'})} />
                     </FormItem>
 
-                    <FormItem label="lib-ibos日期" >
+                    <FormItem label="日期时间form" labelWidth="6em">
                         <DatePicker showTime format="yyyy-MM-dd HH:mm:ss" {...form.getFieldProps('date2', {initialValue: '2017-01-11 12:12:22'})} />
                     </FormItem>
 

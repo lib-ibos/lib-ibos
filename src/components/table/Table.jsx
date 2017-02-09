@@ -36,6 +36,16 @@ class Table extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if ('filters' in nextProps) {
+            this.setState({filters: nextProps.filters || {}})
+        }
+        if ('sorter' in nextProps) {
+            this.setState({sorter: nextProps.sorter || {}})
+        }
+    }
+    
+
     handleShow = () => {
         this.setState({visible: true})
     }
@@ -72,12 +82,8 @@ class Table extends Component {
         this.setState({filters: {}}, this.callback)
     }
 
-    handleFilterDropdownVisibleChange = (visible, {dataIndex}, keepVisible) => {
-        // if (!visible && keepVisible) {
-        //     this.setState({[`filterDropdown-${dataIndex}Visible`]: keepVisible})
-        // } else {
-            this.setState({[`filterDropdown-${dataIndex}Visible`]: visible})
-        // }
+    handleFilterDropdownVisibleChange = (visible, {dataIndex}) => {
+        this.setState({[`filterDropdown-${dataIndex}Visible`]: visible})
     }
 
     render() {
@@ -159,8 +165,7 @@ class Table extends Component {
                     />
                 )
                 props.filterDropdownVisible = this.state[`filterDropdown-${colProps.dataIndex}Visible`]
-                const keepVisible = props.filterDropdownType === 'date'
-                props.onFilterDropdownVisibleChange = (visible) => this.handleFilterDropdownVisibleChange(visible, colProps, keepVisible)
+                props.onFilterDropdownVisibleChange = (visible) => this.handleFilterDropdownVisibleChange(visible, colProps)
                 //delete props.filterDropdownType
             }
             return props

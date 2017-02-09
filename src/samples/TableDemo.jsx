@@ -53,6 +53,13 @@ export default class TableDemo extends Component {
         console.log(pagination, filters, sorter)
     }
 
+    componentDidMount() {
+        setTimeout(()=> {
+            this.setState({filters: {age:[3,5], name:"aaa", birthDay: ['2011-01-01','2011-02-01']}})
+        },2000)
+    }
+    
+
     render() {
 
         return (
@@ -83,7 +90,7 @@ export default class TableDemo extends Component {
                     dataSource={mockData} 
                     onChange={this.handleChange} 
                     size="small"
-                    filters={{age:[3,5], name:"aaa", birthDay: ['2011-01-01','2011-02-01']}}
+                    filters={this.state.filters}
                 >
                     <Table.Col title="序号" dataIndex="seq" width={80} fixed render={() => new Date().getTime()} />
                     <Table.Col title="姓名" 

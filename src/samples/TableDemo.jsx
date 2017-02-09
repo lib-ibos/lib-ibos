@@ -58,6 +58,10 @@ export default class TableDemo extends Component {
             this.setState({filters: {age:[3,5], name:"aaa", birthDay: ['2011-01-01','2011-02-01']}})
         },2000)
     }
+
+    handleBtnClick = (d) => {
+        console.log(d)
+    }
     
 
     render() {
@@ -69,6 +73,7 @@ export default class TableDemo extends Component {
                     onCustomChange={this.handleCustomConfigChange} 
                     showSeq
                     pagination={this.state.pagination}
+                    title={(d)=><Button onClick={() => this.handleBtnClick(d)}>按钮</Button>}
                 >
                     <Table.Col title="序号" dataIndex="seq" width={80} fixed render={() => new Date().getTime()} />
                     <Table.Col title="姓名" dataIndex="name" width={60} />

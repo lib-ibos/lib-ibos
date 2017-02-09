@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import {Table as AntdTable, Button, Modal, Transfer } from 'antd'
+import {Table as AntdTable, Button, Modal } from 'antd'
 
 import {checkSecurity, noop} from '../share'
 
@@ -119,10 +119,17 @@ class Table extends Component {
             columns = columnKeys.map(col => memo[col.key])
         }
         
-        let title
+        let title = this.props.title
 
         if (customConfig) {
 
+            //兼容外部的title
+            /*title = (data) => (
+                <Row>
+                    <Col span={21}>{this.props.title(data)}</Col>
+                    <Col span={2}><Button onClick={this.handleShow}>自定义列</Button></Col>
+                </Row>
+            )*/
             title = (data) => <Button onClick={this.handleShow}>自定义列</Button>
 
             if (customConfig.fixCols) {
@@ -173,8 +180,8 @@ class Table extends Component {
         
         // 表格参数
         const tableOpts = {
-            title,
             ...otherProps,
+            title,
             columns,
             onChange: this.handleChange,
         }

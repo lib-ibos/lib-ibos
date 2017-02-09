@@ -29,7 +29,7 @@ module.exports = {
       root: [resolve("node_modules")],
       moduleTemplates: ['*-loader'],
     },
-    devtool: 'source-map', // 便于调试
+    devtool: 'cheap-source-map', // 便于调试
     module: {
         loaders: [
             {

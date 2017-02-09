@@ -79,7 +79,11 @@ export default class TableDemo extends Component {
 
                 <hr/>
 
-                <Table dataSource={mockData} onChange={this.handleChange} size="small"
+                <Table 
+                    dataSource={mockData} 
+                    onChange={this.handleChange} 
+                    size="small"
+                    filters={{age:[3,5], name:"aaa", birthDay: ['2011-01-01','2011-02-01']}}
                 >
                     <Table.Col title="序号" dataIndex="seq" width={80} fixed render={() => new Date().getTime()} />
                     <Table.Col title="姓名" 

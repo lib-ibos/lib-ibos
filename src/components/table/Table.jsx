@@ -25,7 +25,7 @@ class Table extends Component {
         this.state = {
             visible: false,
             sorter: {},
-            filters: {},
+            filters: props.filters || {},
             pagination: this.props.pagination !== false ?
                 {
                     ...defaultPagination,
@@ -46,7 +46,7 @@ class Table extends Component {
 
     callback = () => {
         const {pagination, filters, sorter} = this.state
-        this.props.onChange && this.props.onChange(pagination, filters, sorter)
+        this.props.onChange(pagination, filters, sorter)
     }
 
     handleChange = (pagination, filters, sorter) => {
@@ -54,9 +54,12 @@ class Table extends Component {
         this.setState({pagination, sorter, filters: mergedFilters}, this.callback)
     }
 
-    handleCustomFiltersChange = (cutomFilters) => {
-        const mergedFilters = {...this.state.filters, ...cutomFilters}
-        this.setState({filters: mergedFilters}, this.callback)
+    handleCustomFiltersChange = (key, value) => {
+        const filterValues = {...this.state.filters, [key]: value}
+        this.setState({
+            [`filterDropdown-${key}Visible`]: false,
+            filters: filterValues
+        }, this.callback)
     }
 
     handleTagRemove = (key) => {
@@ -67,6 +70,14 @@ class Table extends Component {
 
     hanldeTagAllRemove = () => {
         this.setState({filters: {}}, this.callback)
+    }
+
+    handleFilterDropdownVisibleChange = (visible, {dataIndex}, keepVisible) => {
+        // if (!visible && keepVisible) {
+        //     this.setState({[`filterDropdown-${dataIndex}Visible`]: keepVisible})
+        // } else {
+            this.setState({[`filterDropdown-${dataIndex}Visible`]: visible})
+        // }
     }
 
     render() {
@@ -144,9 +155,12 @@ class Table extends Component {
                         type={props.filterDropdownType}
                         dataSource={props.filters}
                         multiple={props.filterMultiple}
-                        onChange={v => this.handleCustomFiltersChange({[props.dataIndex]: v})}
+                        onOk={v => this.handleCustomFiltersChange(props.dataIndex, v)}
                     />
                 )
+                props.filterDropdownVisible = this.state[`filterDropdown-${colProps.dataIndex}Visible`]
+                const keepVisible = props.filterDropdownType === 'date'
+                props.onFilterDropdownVisibleChange = (visible) => this.handleFilterDropdownVisibleChange(visible, colProps, keepVisible)
                 //delete props.filterDropdownType
             }
             return props

@@ -1,46 +1,15 @@
-
 import React, {Component} from 'react'
-import {Input, DatePicker, Checkbox, Menu, Radio  } from 'antd'
-import RangeInputNumber from './RangeInputNumber'
-import RangeDatePicker from './RangeDatePicker'
-import DateTimeFormat from 'gregorian-calendar-format';
-import locale from 'antd/lib/date-picker/locale/zh_CN'
-import GregorianCalendar from 'gregorian-calendar';
-
-import RangeCalendar from 'rc-calendar/lib/RangeCalendar'
-
-function getFormatter() {
-    const formatter = new DateTimeFormat('yyyy-MM-dd', locale.lang.format);;
-    return formatter;
-}
-
-function parseDateFromValue(value) {
-    if (value) {
-        if (typeof value === 'string') {
-            return getFormatter().parse(value, { locale});
-        } else if (value instanceof Date) {
-            let date = new GregorianCalendar(locale);
-            date.setTime(+value);
-            return date;
-        }
-    }
-    return value;
-}
-
-function formatDate(date) {
-    if (!date) {
-      return date
-    }
-    return getFormatter().format(date)
-}
+import {Button} from 'antd'
+import ColumnDropdownInput from './ColumnDropdownInput'
+import ColumnDropdownList from './ColumnDropdownList'
+import ColumnDropdownNumber from './ColumnDropdownNumber'
+import ColumnDropdownDate from './ColumnDropdownDate'
 
 export default class ColumnDropdown extends Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-            value: props.value
-        }
+        this.state = {value: props.value}
     }
 
     componentWillReceiveProps(nextProps) {
@@ -49,95 +18,77 @@ export default class ColumnDropdown extends Component {
         }
     }
 
-    handleInputChange = (e) => {
-        this.setState({value: e.target.value})
-    }
-
-    handleSearch = (value) => {
-        this.props.onChange && this.props.onChange(value)
-    }
-
-    handleChange = (e) => {
-        const value = e.target.value
-        if (value !== this.props.value) {
-            this.handleSearch(value)
+    getValue = () => {
+        if (this.props.type === 'number' && this.state.value) {
+            const sortedValue = this.sortNumber(this.state.value)
+            this.setState({value: sortedValue})
+            return sortedValue
         }
+        return this.state.value
     }
 
-    handleDateChange = (value) => {
-        const val = [formatDate(value[0]), formatDate(value[1])]
+    sortNumber = (val) => {
+        const [startValue, endValue] = val || []
+        let values = []
+        if (startValue && endValue) {
+            if (Number(startValue) > Number(endValue)) {
+                values = [Number(endValue), Number(startValue)]
+            } else {
+                values = [Number(startValue), Number(endValue)]
+            }
+        } else if (startValue) {
+            values = [Number(startValue) + '', endValue]
+        } else if (endValue) {
+            values = [startValue, Number(endValue) + '']
+        } else if (startValue !== void 0 || endValue !== void 0) {
+            values = [startValue, endValue]
+        }
+        return values
+    }
+
+    handleChange = (value) => {
         this.setState({value})
-        this.handleSearch(val)
     }
 
-    renderRangeNumber = () => {
-        return <RangeInputNumber value={this.state.value} onChange={this.handleSearch} />
+    handleOk = () => {
+        this.props.onOk(this.getValue())
+    }
+    
+    handleReset = () => {
+        this.setState({value: this.props.value})
     }
 
-    renderRangePicker = () => {
-        let value = this.state.value || []
-        if (value && typeof value[0] === 'string') {
-           value = value.map(v => parseDateFromValue(v))
-        }
-        return (
-            <RangeCalendar 
-                prefixCls="ant-calendar" 
-                locale={locale.lang} 
-                showClear
-                showOk
-                selectedValue={value}
-                dateInputPlaceholder={locale.lang.rangePlaceholder}
-                onChange={v => this.setState({value: v})}
-                onOk={this.handleDateChange} 
-            />
-        )
-    }
-
-    renderSelect = (dataSource, multiple) => {
-        if (multiple) {
-            const options = dataSource.map(item => ({label: item.text, value: item.value}))
-            return  <Checkbox.Group value={this.state.value} options={options} onChange={this.handleSearch} />
-        } else {
-            const radioStyle = {
-                display: 'block',
-                height: '30px',
-                lineHeight: '30px',
-            };
-            return (
-                <Radio.Group value={this.state.value} onChange={this.handleChange}>
-                {dataSource.map(item => (
-                    <Radio style={radioStyle} key={item.value} value={item.value}>
-                        {item.text}
-                    </Radio> 
-                ))}
-                </Radio.Group>
-            )
-        }         
+    handleToggle = (open) => {
+       // if (!open) {
+            this.props.handleFilterDropdownVisible(true)
+       // }
     }
 
     render() {
-        const {type, value, dataSource = [], multiple} = this.props
-        let content = (
-            <Input
-                value={this.state.value}
-                onChange={this.handleInputChange}
-                onPressEnter={this.handleChange}
-            />
-        )
-        if (type === 'number') {
-            content = this.renderRangeNumber()
-        } else if (type === 'date') {
-            content = this.renderRangePicker()
-        } else if (type === 'list') {
-            content = this.renderSelect(dataSource, multiple)
+        const {type, handleFilterDropdownVisible, ...restProps} = this.props
+        const props = {
+            ...restProps,
+            value: this.state.value,
+            onChange: this.handleChange,
         }
-
+        let content
+        if (type === 'list') {
+            content = <ColumnDropdownList {...props} />
+        } else if (type === 'number') {
+            content = <ColumnDropdownNumber {...props} />
+        } else if (type === 'date') {
+            content = <ColumnDropdownDate {...props} onToggle={this.handleToggle} />
+        } else{
+            content = <ColumnDropdownInput {...props} />
+        }
         return (
             <div className="custom-filter-dropdown">
                 {content}
+                <div className="custom-filter-dropdown-btns">
+                  <Button type="primary" style={{marginRight: 8}} onClick={this.handleOk}>确定</Button>
+                  <Button type="ghost" onClick={this.handleReset}>重置</Button>
+                </div>
             </div>
         )
     }
 }
-
-

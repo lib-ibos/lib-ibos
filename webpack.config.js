@@ -39,13 +39,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                include: [resolve("node_modules")],
-                //loader: 'style!css?importLoaders=1!postcss',
-                loader: ExtractTextPlugin.extract('style','css?importLoaders=1!postcss')
-            },
-            {
-                test: /\.css$/,
-                include: [resolve("src")],
+                include: [resolve("src"),resolve("node_modules")],
                 loader: 'style!css?importLoaders=1!postcss',
                 //loader: ExtractTextPlugin.extract('style','css?importLoaders=1!postcss')
             },

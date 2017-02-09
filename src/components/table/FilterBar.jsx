@@ -25,7 +25,7 @@ export default class FilterBar extends Component {
                     value = filterOptions.filter(c => value.indexOf(c.value) > -1).map(c => c.text)
                 }
                 if (filterDropdownType === 'number' || filterDropdownType === 'date') {
-                    value = value.some(v => !!v) ? value.join('~') : ''
+                    value = value.some(v => !!v) ? value.join(' ~ ') : ''
                 }
                 return {key,name,value}
             })

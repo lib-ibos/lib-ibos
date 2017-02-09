@@ -4,7 +4,7 @@ import {DatePicker as AntdDatePicker} from 'antd'
 export default class DatePicker extends Component {
     
     handleChange = (date, str) => {
-        this.props.onChange(str)
+        this.props.onChange(str, date)
     }
 
     render() {

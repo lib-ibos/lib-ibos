@@ -95,7 +95,6 @@ export default class TableDemo extends Component {
                     dataSource={mockData} 
                     onChange={this.handleChange} 
                     size="small"
-                    filters={this.state.filters}
                 >
                     <Table.Col title="序号" dataIndex="seq" width={80} fixed render={() => new Date().getTime()} />
                     <Table.Col title="姓名" 

@@ -21,12 +21,17 @@ export default class FilterBar extends Component {
                 const {title, filters: filterOptions, filterDropdownType } = columnInfo[key]
                 const name = title
                 let value = filters[key]
-                if (filterOptions) {
-                    value = filterOptions.filter(c => value.indexOf(c.value) > -1).map(c => c.text)
+                if (value) {
+                    if (filterOptions) {
+                        value = filterOptions.filter(c => value.indexOf(c.value) > -1).map(c => c.text)
+                    }
+                    if (filterDropdownType === 'number' || filterDropdownType === 'date') {
+                        value = value.some(v => !!v) ? value.join(' ~ ') : ''
+                    }
+                } else {
+
                 }
-                if (filterDropdownType === 'number' || filterDropdownType === 'date') {
-                    value = value.some(v => !!v) ? value.join(' ~ ') : ''
-                }
+               
                 return {key,name,value}
             })
             .filter(obj => !!obj.value) // 只显示有值的

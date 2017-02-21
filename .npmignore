@@ -4,6 +4,7 @@ doc
 scripts
 public
 test
+components
 npm-debug.log
 webpack.*
 .babelrc

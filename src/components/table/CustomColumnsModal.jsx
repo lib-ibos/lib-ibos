@@ -1,162 +1,193 @@
 import React, {Component} from 'react'
 import classNames from 'classnames'
-import {Modal, Transfer, Row, Col, Button, Form, Input, InputNumber, Select } from 'antd'
-
-function renderItem(item) {
-    return item.title
-}
+import {Modal, Row, Col, Button, Form, Input, InputNumber, Select } from 'antd'
+import CustomTransfer from './CustomTransfer'
 
 const titles = ['可选', '已选']
 
-class columnKeysModal extends Component {
+function RedStar() {
+    return <span style={{color: 'red'}}>*</span>
+}
 
-    constructor() {
-        super()
+class CustomColumnsModal extends Component {
+
+    static defaultProps = {
+        columnKeys: [],
+        fixCols: 0,
+        pageSize: 10
+    }
+
+    constructor(props) {
+        super(props)
+        const targetKeys = props.columnKeys.map(info => info.key)
+        const dataSource = props.dataSource.map(data => {
+            const a = props.columnKeys.filter(info => info.key === data.key)[0]
+            const required = a ? !!a.required : false
+            return {...data, required}
+        })
         this.state = {
-            selectedKey: ''
+            dataSource,
+            targetKeys,
+            fixCols: props.fixCols,
+            pageSize: props.pageSize.toString(),
+            selectedKeys: [],
         }
     }
 
     handleOk = () => {
-        const values = this.props.form.getFieldsValue()
-        values.pageSize = values.pageSize - 0
+        const {columnKeys} = this.props
+        const {targetKeys, selectedKeys, dataSource, ...values} = this.state
+        values.pageSize = Number(values.pageSize)
+        values.columnKeys = targetKeys.map(key => 
+            columnKeys.filter(info => info.key === key)[0] || {key})
         this.props.onOk(values)
         this.props.onCancel()
     }
 
-    handleSelect = (selectedKey) => {
-        const {getFieldsValue, setFieldsValue} = this.props.form
-        const {columnKeys} = getFieldsValue(['columnKeys'])
-        if (columnKeys.indexOf(selectedKey) > -1) {
-            if (selectedKey !== this.state.selectedKey) {
-                this.setState({selectedKey})
+    handleSelectChange = ({key}, checked) => {
+        let {selectedKeys, targetKeys} = this.state
+        if (targetKeys.indexOf(key) > -1) {
+            if (checked) {
+                selectedKeys = selectedKeys.concat(key)
+            } else {
+                selectedKeys = selectedKeys.filter(item => item !== key )
             }
-        } else {
-            this.setState({selectedKey: ''})
+            this.setState({selectedKeys})
         }
     }
 
+    handleTransferChange = (targetKeys, direction, moveKeys) => {
+        const {columnKeys} = this.props
+        function isRequired(key) {
+            return columnKeys.filter(info => info.key === key && info.required ).length > 0
+        }
+        let newTargetKeys = this.state.targetKeys
+        if (direction === 'left') {
+            this.setState({selectedKeys: []})
+            // 必选字段是无法移动的
+            moveKeys = moveKeys.filter(key => !isRequired(key))
+            newTargetKeys = newTargetKeys.filter(key => moveKeys.indexOf(key) === -1)
+        } else {
+            newTargetKeys = newTargetKeys.concat(moveKeys)
+        }
+        this.setState({targetKeys: newTargetKeys})
+    }
+
+    handleFixColsChange = (value) => {
+        this.setState({fixCols: value})
+    }
+
+    handlePageSizeChange = (value) => {
+        this.setState({pageSize: value})
+    }
+
     handleMoveUp = () => {
-        const {selectedKey} = this.state
-        const {getFieldsValue, setFieldsValue} = this.props.form
-        const {columnKeys} = getFieldsValue(['columnKeys'])
-        const tmp = columnKeys.concat()
+        const {selectedKeys, targetKeys} = this.state
+        const selectedKey = selectedKeys[0]
+        const tmp = targetKeys.concat()
         const idx = tmp.indexOf(selectedKey)
         if (idx !== 0 ) {
             const targetIdx = idx - 1
             const targetKey = tmp[targetIdx]
             tmp[targetIdx] = selectedKey
             tmp[idx] = targetKey
-            setFieldsValue({columnKeys: tmp})
+            this.setState({targetKeys: tmp})
         }
     }
 
     handleMoveDown = () => {
-        const {selectedKey} = this.state
-        const {getFieldsValue, setFieldsValue} = this.props.form
-        const {columnKeys} = getFieldsValue(['columnKeys'])
-        const tmp = columnKeys.concat()
+        const {selectedKeys, targetKeys} = this.state
+        const selectedKey = selectedKeys[0]
+        const tmp = targetKeys.concat()
         const idx = tmp.indexOf(selectedKey)
         if (idx + 1 !== tmp.length) {
             const targetIdx = idx + 1
             const targetKey = tmp[targetIdx]
             tmp[targetIdx] = selectedKey
             tmp[idx] = targetKey
-            setFieldsValue({columnKeys: tmp})
+            this.setState({targetKeys: tmp})
         }
     }
 
     renderItem = (item) => {
-        const {form} = this.props
-        const {selectedKey} = this.state
-        const {columnKeys} = form.getFieldsValue(['columnKeys'])
-        const cls = classNames({
-            'transfer-updown-item-selected': item.key === selectedKey
-        })
         const customLabel = (
-            <span className={cls} onClick={() => this.handleSelect(item.key)} >
+            <span>
+                <span style={{marginRight: 2}}>{item.required ? <RedStar/> : ' '}</span>
                 {item.title}
             </span>
         )
         return  {
-            label:customLabel, // for displayed item
+            label: customLabel, // for displayed item
             value: item.title,   // for title and filter matching
         };
     }
 
-    handleChange = (targetKeys, direction, moveKeys) => {
-        const {selectedKey} = this.state
-        if (direction === 'left' && moveKeys.indexOf(selectedKey) > -1) {
-            this.setState({selectedKey: ''})
-        }
-    }
-
     render() {
-        const {selectedKey} = this.state
-        const {form, visible, dataSource, onCancel, columnKeys, width, height, fixCols, pageSize} = this.props
+        const {dataSource, targetKeys, selectedKeys, pageSize, fixCols} = this.state
+        const {visible, onCancel} = this.props
 
         const modalOpts = {
+            className: 'table-custom-column',
             maskClosable: false,
             visible,
             onCancel,
             onOk: this.handleOk
         }
 
-        const getFieldProps = (id, initialValue, valuePropName, onChange) => {
-            return form.getFieldProps(id, {
-                initialValue, 
-                valuePropName, 
-                onChange,
-            })
-        }
-        
-        const columnKeysFieldProps = getFieldProps('columnKeys', columnKeys||[] , 'targetKeys', this.handleChange)
-        const widthFieldProps = getFieldProps('width', width)
-        const heightFieldProps = getFieldProps('height', height)
-        const fixColsFieldProps = getFieldProps('fixCols', fixCols)
-        const pageSizeFieldProps = getFieldProps('pageSize', `${pageSize||10}`)
+        const canMove = selectedKeys.length === 1 
+        const btnType = canMove ? 'primary' : 'default'
+        const isFirst = canMove && targetKeys[0] === selectedKeys[0]
+        const isLast = canMove && targetKeys.length > 1 && targetKeys[targetKeys.length -1] === selectedKeys[0]
 
-        const {columnKeys: targetKeys} = form.getFieldsValue(['columnKeys'])
-        const canMove = selectedKey && targetKeys.indexOf(selectedKey) > -1
+        const upBtnProps = {
+            icon: 'up',
+            size: 'small',
+            type: btnType,
+            disabled: isFirst || !canMove,
+            onClick: this.handleMoveUp,
+        }
+
+        const downBtnProps = {
+            icon: 'down',
+            size: 'small',
+            type: btnType,
+            disabled: isLast || !canMove,
+            onClick: this.handleMoveDown,
+        }
 
         return (
             <Modal {...modalOpts}>
                 <Form horizontal>
-                    <Form.Item label="选择列">
+                    <Form.Item label={<span>选择列( <RedStar/> 为必选)</span>} >
                     <Row>
                         <Col span={20}>
-                        <Transfer 
-                            {...columnKeysFieldProps}
-                            showSearch
+                        <CustomTransfer 
                             titles={titles}
+                            listStyle={{width: 180, height: 300}}
+                            targetKeys={targetKeys}
                             dataSource={dataSource}
                             render={this.renderItem}
-                            listStyle={{width: 180}}
+                            onSelectChange={this.handleSelectChange}
+                            onChange={this.handleTransferChange}
                         />
                         </Col>
                         <Col span={2}>
-                            <div className="transfer-updown ant-transfer-operation" >
-                                <Button icon="up" size="small" disabled={!canMove} onClick={this.handleMoveUp}/>
-                                <Button icon="down" size="small" disabled={!canMove} onClick={this.handleMoveDown} />
+                            <div className="ant-transfer-operation transfer-updown " >
+                                <Button {...upBtnProps} />
+                                <Button {...downBtnProps} />
                             </div>
                         </Col>
                     </Row>
                     </Form.Item>
                     <Row>
                       <Col span={10}>
-                        <Form.Item label="宽度" labelCol={{span: 5}} wrapperCol={{span: 13}}>
-                            <InputNumber {...widthFieldProps} /><span>px</span>
-                        </Form.Item>
-                        <Form.Item label="高度" labelCol={{span: 5}} wrapperCol={{span: 13}} >
-                            <InputNumber {...heightFieldProps} /><span>px</span>
+                        <Form.Item label="固定前几列" labelCol={{span: 8}} wrapperCol={{span: 14}} >
+                            <InputNumber min={0} max={3} value={fixCols} onChange={this.handleFixColsChange} />
                         </Form.Item>
                       </Col>
                       <Col span={14}>
-                        <Form.Item label="固定前几列" labelCol={{span: 8}} wrapperCol={{span: 14}} extra="(不含序号)">
-                            <InputNumber {...fixColsFieldProps} />
-                        </Form.Item>
                         <Form.Item label="每页行数" labelCol={{span: 8}} wrapperCol={{span: 9}}>
-                            <Select {...pageSizeFieldProps } >
+                            <Select value={pageSize} onChange={this.handlePageSizeChange} >
                                 <Select.Option value="10" >10行/页</Select.Option>
                                 <Select.Option value="20" >20行/页</Select.Option>
                                 <Select.Option value="30" >30行/页</Select.Option>
@@ -174,4 +205,4 @@ class columnKeysModal extends Component {
 }
 
 
-export default Form.create()(columnKeysModal)
+export default Form.create()(CustomColumnsModal)

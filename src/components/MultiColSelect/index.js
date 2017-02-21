@@ -187,13 +187,15 @@ class MultiColSelect extends Component {
                 selectKeys: ['-1'],
             })
         }
-
     }
 
 
     handleClick = (e) => {
-        this.props.onChange && this.props.onChange(e.target.value);
-        this.setOpenState(true)
+        const isDisabled = this.props.disabled
+        if(!isDisabled){
+            this.props.onChange && this.props.onChange(e.target.value);
+            this.setOpenState(true)
+        }
     }
 
     handleMenuMouseEnter = () => {
@@ -212,7 +214,7 @@ class MultiColSelect extends Component {
 
 
     render() {
-        const {dataHeader, dataBody, type, rows, autosize, ...props} = this.props;
+        const {dataHeader, disabled, dataBody, type, rows, autosize, ...props} = this.props;
         const hasDataBody = dataBody && dataBody.length > 0;
         const dropdownHeadData = dataHeader,
             dropdownBodyData = hasDataBody ? dataBody : "not found";
@@ -274,6 +276,7 @@ class MultiColSelect extends Component {
                     onChange={this.handleChange}
                     onKeyDown={this.onKeyDown}
                     onBlur={this.handleBlur}
+                    disabled ={disabled}
                 />
             </Dropdown>
         );

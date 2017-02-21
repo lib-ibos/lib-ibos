@@ -2,62 +2,72 @@
 const path = require('path');
 const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
-const HtmlwebpackPlugin = require('html-webpack-plugin');
-// let ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+
+function resolve(relativePath) {
+    return path.resolve(__dirname, relativePath)
+}
+
 module.exports = {
-    entry: [__dirname + "/src/index.js"], //已多次提及的唯一入口文件
+    entry: {
+        vendor: ['react','react-dom','./src/reactRouter.js','echarts'],
+        index: [resolve("src/index.js")],
+    },
     output: {
-        path: __dirname + "/dist",//打包后的文件存放的地方
+        path: resolve("dist"),//打包后的文件存放的地方
         pathinfo: true,
-        filename: "bundle.js"//打包后输出文件的文件名
+        filename: "[name].js",//打包后输出文件的文件名
     },
     resolve: {
         extensions: ['', '.js', '.jsx', '.json']
     },
-    devtool: 'cheap-module-source-map', // 便于调试
+    resolveLoader: {
+      root: [resolve("node_modules")],
+      moduleTemplates: ['*-loader'],
+    },
+    devtool: 'source-map', // 便于调试
     module: {
         loaders: [
             {
                 test: /\.(js|jsx)$/,
-                include: /src/,
+                include: resolve("src"),
                 loader: 'babel'
             },
             {
                 test: /\.css$/,
-                include: [/node_modules/,/src/],
-                loader: 'style!css!postcss'//添加对样式表的处理
+                include: [resolve("src"),resolve("node_modules")],
+                loader: 'style!css?importLoaders=1!postcss',
+                //loader: ExtractTextPlugin.extract('style','css?importLoaders=1!postcss')
             },
             {   
                 test: /\.less$/, 
-                include: [/node_modules/,/src/],
-                loader: 'style!css!postcss!less'
-            },
-            {
-                test: /\.html$/,
-                loader: 'file?name=[name].[ext]',
+                include: [resolve("src"), resolve("node_modules")],
+                loader: 'style!css?importLoaders=1!postcss!less',
+                //loader: ExtractTextPlugin.extract('style','css?importLoaders=1!postcss!less')
             },
             {
                 test: /\.json$/,
                 loader: "json"
             },
         ],
-        postLoaders: [
-            {
-                test: /\.(js|jsx)$/,
-                include: [/node_modules/,/src/],
-                loaders: ['es3ify-loader'],
-            },
-        ],
-        plugins: [
-            new HtmlwebpackPlugin({
-                title: 'lib-ibos',
-                template: 'src/index.html',
-            }),
-            new webpack.HotModuleReplacementPlugin()
-        ]
     },
     babel: {
-        cacheDirectory: true,
+      babelrc: false,
+      presets: [
+        require.resolve('babel-preset-es2015'),
+        require.resolve('babel-preset-react'),
+        require.resolve('babel-preset-stage-0'),
+      ],
+      plugins: [
+        require.resolve('babel-plugin-add-module-exports'),
+        require.resolve('babel-plugin-transform-runtime'),
+        [require.resolve('babel-plugin-import'), {"libraryName": "antd", style: 'css'}],
+      ],
+      cacheDirectory: true,
     },
     postcss: function() {
         return [
@@ -71,6 +81,18 @@ module.exports = {
             }),
         ];
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            title: "lib-ibos",
+            inject: true,
+            template: resolve('src/index.html'),
+        }),
+        new webpack.HotModuleReplacementPlugin(),
+        new ExtractTextPlugin('style.css'),
+        new CaseSensitivePathsPlugin(),
+        new WatchMissingNodeModulesPlugin(path.resolve(__dirname,'node_modules')),
+        new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: "vendor.js", minChunks: Infinity}),
+    ],
     node: {
         fs: 'empty',
         net: 'empty',

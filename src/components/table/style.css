@@ -1,9 +1,38 @@
-.transfer-updown {
+.table-custom-column .transfer-updown {
     height: 200px;
-    top: 73px;
+    top: 124px;
     position: relative;
 }
 
-.transfer-updown-item-selected {
-   color: #2db7f5
+.custom-filter-dropdown {
+  /*width: 200px;*/
+  padding: 8px;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
 }
+
+.custom-filter-dropdown-btns {
+  overflow: hidden;
+  padding: 8px 8px 0px 8px;
+}
+
+.table-range-input-number .ant-input-wrapper {
+    display: inline-block;
+    width: 70px;
+}
+
+.table-range-split-tilde {
+    margin: 8px;
+}
+
+.custom-filter-dropdown .ant-checkbox-group-item {
+    line-height: 30px;
+    display: block;
+}
+
+.custom-filter-dropdown .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+    margin-left: 0px;
+}
+
+

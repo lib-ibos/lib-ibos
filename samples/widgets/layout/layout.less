@@ -1,0 +1,52 @@
+@import "../../../src/components/styles/variable";
+
+.layout{
+
+  &__header{
+    position: relative;
+    height:@header-height;
+    z-index: 10;
+    background: @header-bg;
+  }
+
+  &__sidebar{
+    position: absolute;
+    left:0;
+    top:0;
+    padding-top:@header-height;
+    height: 100%;
+    width: @sidebar-width;
+    background: @sidebar-bg;
+    color: #fff;
+    z-index:1;
+    transition: width .3s ease;
+  }
+
+  &__content{
+    padding:16px;
+    margin-left:@sidebar-width;
+    transition: width .3s ease;
+  }
+
+  &__setting-bar {
+    position: fixed;
+    right:-@setting-bar-width;
+    top:0;
+    width: @setting-bar-width;
+    height: 100%;
+    z-index:11;
+    border-left:1px solid #ddd;
+    box-shadow: -2px 0 8px rgba(0,0,0,.1);
+    transition: right .5s ease;
+
+    &.enable{
+      right: 0;
+    }
+  }
+
+  &__footer{
+    height: @footer-height;
+    color: @footer-color;
+  }
+
+}

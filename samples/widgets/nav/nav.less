@@ -1,0 +1,59 @@
+@import "../../../src/components/styles/variable";
+
+.nav{
+  margin-top:16px;
+  font-size: 12px;
+
+  &__item{
+    //border-bottom:1px solid #000;
+    &.active{
+      background: #2C3E50;
+    }
+  }
+
+  &__cat{
+    font-size: 12px;
+    color: #7b99b7;
+    padding:12px 0 4px 16px;
+  }
+
+  &__link{
+    display: block;
+    padding:8px 16px;
+    color: #fff;
+    transition: all .5s ease;
+
+    >i{
+      margin-right:8px;
+    }
+    
+    &:hover{
+      color: #fff;
+      background-color: #2C3E50;
+    }
+  }
+
+}
+
+.has-subnav{
+  &:after{
+    float: right;
+    font-family:anticon!important;
+    content: "\E600";
+    color: #fff;
+    transform: scale(.7,.7);
+  }
+}
+
+.subnav{
+  padding-bottom: 8px;
+  &__item{
+
+  }
+
+  &__link{
+    display: block;
+    padding:6px 16px 6px 36px;
+    color: #cad6e2;
+  }
+}

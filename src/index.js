@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import {Router, Route, hashHistory} from './reactRouter'
 
 function getIndex(nextState, cb) {
-    cb(null, require(`./samples/Index`));
+    cb(null, require(`./.`));
 }
 
 function getDemo(nextState, cb) {

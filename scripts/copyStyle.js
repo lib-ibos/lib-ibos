@@ -41,6 +41,6 @@ function copyStyle(sourceDir, targetDir) {
 
 copyStyle("src/components", 'lib')
 
-
-
-
+// module.exports = function (from,to) {
+//     copyStyle(from,to)
+// }

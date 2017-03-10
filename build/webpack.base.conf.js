@@ -9,7 +9,7 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    vendor: ['react','react-dom','./src/reactRouter.js','echarts'],
+    vendor: ['react','react-dom','./src/reactRouter.js'],
     app: './samples/main.js'
   },
   output: {

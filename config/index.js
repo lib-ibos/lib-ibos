@@ -24,7 +24,7 @@ module.exports = {
     build:{
         env: require('./build.env'),
         assetsRoot: path.resolve(__dirname, '../libs'),
-        sourceRoot: path.resolve(__dirname, '../src'),
+        sourceRoot: path.resolve(__dirname, '../src/components'),
     },
   dev: {
     env: require('./dev.env'),

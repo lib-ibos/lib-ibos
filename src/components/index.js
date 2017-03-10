@@ -8,7 +8,7 @@ import Wrap from './Wrap'
 import Tabs from './Tabs'
 import Split from './Split'
 import Chart from './chart'
-
+console.log("tetttttttttttttttttttttttttt")
 export default {
     Panel,
     Button,

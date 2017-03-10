@@ -78,7 +78,7 @@ exports.styleLoaders = function (options) {
 exports.dealFiles = function (dir,fileType,cb) {
 
     if (!fs.existsSync(dir)) {
-        console.log(chalk.red("Can't find this directory : " + dir));
+        console.log(chalk.red("Can't find this directory : " + chalk.yellow(dir)));
         return;
     }
 
@@ -89,20 +89,21 @@ exports.dealFiles = function (dir,fileType,cb) {
         }
 
         files.forEach(file => {
-            const fileDir = path.join(dir,file);
-            fs.stat(fileDir,(err,stats) => {
+            const filePath = path.join(dir,file);
+            fs.stat(filePath,(err,stats) => {
                 if(err) throw err;
 
                 //是文件就执行对应的方法
                 if(stats.isFile()){
                     if(fileType.test(file)){
-                        cb && cb(fileDir)
+                        //filePath 为文件的全路径 , file为去掉来源目录后的路劲，以便后续的更改发布目录
+                        cb && cb(filePath)
                         // console.log(file+ '：我被执行啦')
                     }
                     // console.log(chalk.blue("我是文件: "+file))
                     // 如果是目录就继续遍历文件
                 }else if(stats.isDirectory()){
-                    exports.dealFiles(fileDir,fileType,cb)
+                    exports.dealFiles(filePath,fileType,cb)
                     // console.log(chalk.yellow("我是目录 "+fileDir))
                 }
             })
@@ -111,19 +112,41 @@ exports.dealFiles = function (dir,fileType,cb) {
 }
 
 
-exports.babelCompile = function (file,outputDir,option) {
-    // babel 编译
-    babel.transformFile(file, option, function (err, result) {
-        if (err) throw err
-        // console.log(result.options.sourceFileName)
+exports.babelCompile = function (sourceDir,outputDir,option) {
 
-        const outputFile = path.relative(outputDir,file)
-        // 把编译完的结果输出到对应目录
-        fs.outputFile(outputFile, result.code, function(err) {
-            if(err) {
-                return console.log(err);
-            }
-            console.log("Build complete!");
-        });
+    const len = sourceDir.length;
+    exports.dealFiles(sourceDir,/\.(js|jsx)$/,function (file) {
+
+        // babel 编译
+        babel.transformFile(file, option, function (err, result) {
+            if (err) throw err
+            // console.log(result.options.sourceFileName)
+
+            const outputFile =outputDir + file.substr(len)
+            // console.log(outputFile)
+
+            // 把编译完的结果输出到对应目录
+            fs.outputFile(outputFile, result.code, function(err) {
+                if(err) {
+                    return console.log(err);
+                }
+                console.log(chalk.magenta(file) + " -> Build complete!");
+            });
+        })
     })
+}
+
+exports.copyFiles = function (sourceDir, outputDir, fileType) {
+    const len = sourceDir.length;
+    exports.dealFiles(sourceDir,fileType,function (file) {
+        const outputFile =outputDir + file.substr(len)
+        fs.copy(file, outputFile,function (err) {
+            if(err){
+                return console.log(chalk.bgRed(err))
+            }
+
+            console.log(chalk.magenta(file) + " -> Copy complete!");
+        })
+    })
+
 }

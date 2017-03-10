@@ -14,7 +14,7 @@ import { Router, Route, browserHistory,IndexRoute } from 'react-router';
 import Frame from './widgets/layout/frame'
 import Home from './pages/home'
 // import Detail from './pages/detail'
-// import Crm from './pages/crm'
+import Crm from './pages/crm'
 import CrmHome from './pages/crmHome'
 // import CrmDetail from './pages/CrmDetail'
 import Footer from './widgets/footer/footer'
@@ -24,7 +24,7 @@ render(
         <Route path="/" component={Frame} >
             <IndexRoute component={Home}/>
             {/*<Route path="/detail" component={Detail} />*/}
-            {/*<Route path="/crm" component={Crm} />*/}
+            <Route path="/crm" component={Crm} />
             <Route path="/crmHome" component={CrmHome} />
             {/*<Route path="/crmDetail" component={CrmDetail} />*/}
             <Route path="/footer" component={Footer} />

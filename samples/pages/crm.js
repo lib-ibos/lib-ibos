@@ -5,17 +5,18 @@ import React, {Component} from 'react'
 import {render}  from 'react-dom';
 
 import {Row, Col, Form, Input,Button, Select,Icon ,Menu,Table} from 'antd';
-import Panel from '../../components/Panel/'
-import FormLayout from '../../components/FormLayout/'
+import Panel from '../../src/components/Panel/'
+import FormLayout from '../../src/components/FormLayout/'
 const FormItem = FormLayout.FormItem;
+import Text from '../../src/components/text'
 
 
 
-import RichSelect from '../../components/MultiColSelect/'
-import Split from '../../components/Split/'
-import Tabs from '../../components/Tabs/'
-import ScrollContainer from '../../components/ScrollContainer/'
-import Dropdown from '../../components/Dropdown/'
+import RichSelect from '../../src/components/MultiColSelect/'
+import Split from '../../src/components/Split/'
+import Tabs from '../../src/components/Tabs/'
+import ScrollContainer from '../../src/components/ScrollContainer/'
+import Dropdown from '../../src/components/Dropdown/'
 const TabPane = Tabs.TabPane;
 
 const Option = Select.Option;
@@ -317,14 +318,10 @@ class Crm extends Component {
                 <Row gutter={16}>
                     <Col span={12}>
                         <Panel title="我的业务">
-                            <Select
-                                multiple
-                                style={{ width: '100%' }}
-                                placeholder="Please select"
-                                defaultValue={['a10', 'c12']}
-                            >
-                                {childreno}
-                            </Select>
+                            当前<Text color="warning" weight="bold" align="right" margin={{left:"min",right:"normal",top:'large'}} width="200px" height="100px" >111</Text>KG
+
+
+
                         </Panel>
                     </Col>
                     <Col span={12}>

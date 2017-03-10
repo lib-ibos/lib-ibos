@@ -12,6 +12,9 @@
   "env": {
     "test": {
       "plugins": [ "istanbul" ]
+    },
+    "build":{
+      "plugins": ["transform-remove-console"]
     }
   }
 }

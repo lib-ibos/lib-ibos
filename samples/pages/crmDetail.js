@@ -5,19 +5,19 @@ import React, {Component} from 'react'
 import {render}  from 'react-dom';
 
 import {Row, Col, Form, Input, Button, Select, Icon, Collapse, Menu, Table, Radio, DatePicker, Checkbox} from 'antd';
-import Panel from '../components/Panel/'
-import FormLayout from '../components/FormLayout/'
+import Panel from '../../src/components/Panel/'
+import FormLayout from '../../src/components/FormLayout/'
 const FormItem = FormLayout.FormItem;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
 
 
-import Split from '../components/Split/'
-import Tabs from '../components/Tabs/'
-import ScrollContainer from '../components/ScrollContainer/'
-import Dropdown from '../components/Dropdown/'
-import Steps from '../components/Steps/'
+import Split from '../../src/components/Split/'
+import Tabs from '../../src/components/Tabs/'
+import ScrollContainer from '../../src/components/ScrollContainer/'
+import Dropdown from '../../src/components/Dropdown/'
+import Steps from '../../src/components/Steps/'
 const Step = Steps.Step;
 const TabPane = Tabs.TabPane;
 const Option = Select.Option;

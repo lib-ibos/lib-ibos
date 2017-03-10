@@ -5,14 +5,13 @@ import React, {Component} from 'react'
 import {render}  from 'react-dom';
 
 import {Row, Col, Form, Input, Select, Checkbox,DatePicker,Switch,Table } from 'antd';
-import Panel from '../components/Panel/'
-import FormLayout from '../components/FormLayout/'
+import Panel from '../../src/components/Panel/'
+import FormLayout from '../../src/components/FormLayout/'
 const FormItem = FormLayout.FormItem;
 
-import MultiColSelect from '../components/MultiColSelect-bak/'
-import RichSelect from '../components/MultiColSelect/'
-import Split from '../components/Split/'
-import Tabs from '../components/Tabs/'
+import RichSelect from '../../src/components/MultiColSelect/'
+import Split from '../../src/components/Split/'
+import Tabs from '../../src/components/Tabs/'
 const TabPane = Tabs.TabPane;
 
 const Option = Select.Option;

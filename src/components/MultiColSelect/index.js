@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import ReactDOM, {render}  from 'react-dom';
 
-import {Dropdown, Input} from 'antd';
+import Dropdown from '../antd/dropdown';
+import Input from '../antd/input';
 // const MenuItem = Menu.Item;
 import Menu, {MenuItem} from 'rc-menu';
 import KeyCode from 'rc-util/lib/KeyCode';

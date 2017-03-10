@@ -13,20 +13,20 @@ import { Router, Route, browserHistory,IndexRoute } from 'react-router';
 
 import Frame from './widgets/layout/frame'
 import Home from './pages/home'
-// import Detail from './pages/detail'
+import Detail from './pages/detail'
 import Crm from './pages/crm'
 import CrmHome from './pages/crmHome'
-// import CrmDetail from './pages/CrmDetail'
+import CrmDetail from './pages/CrmDetail'
 import Footer from './widgets/footer/footer'
 
 render(
     <Router history={browserHistory}>
         <Route path="/" component={Frame} >
             <IndexRoute component={Home}/>
-            {/*<Route path="/detail" component={Detail} />*/}
+            <Route path="/detail" component={Detail} />
             <Route path="/crm" component={Crm} />
             <Route path="/crmHome" component={CrmHome} />
-            {/*<Route path="/crmDetail" component={CrmDetail} />*/}
+            <Route path="/crmDetail" component={CrmDetail} />
             <Route path="/footer" component={Footer} />
          </Route>
     </Router>,

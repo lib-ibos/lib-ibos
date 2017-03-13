@@ -5,20 +5,20 @@ import React, {Component} from 'react'
 import {render}  from 'react-dom';
 
 import {Row, Col, Form, Input,Button, Select,Icon,Collapse ,Menu,Table,Radio} from 'antd';
-import Panel from '../../src/components/Panel/'
-import FormLayout from '../../src/components/FormLayout/'
+import Panel from 'ibos/Panel/'
+import FormLayout from 'ibos/FormLayout/'
 const FormItem = FormLayout.FormItem;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
-import Tag from '../../src/components/tag'
+import Tag from 'ibos/tag'
 
 
-import RichSelect from '../../src/components/MultiColSelect/'
-import Split from '../../src/components/Split/'
-import Tabs from '../../src/components/Tabs/'
-import ScrollContainer from '../../src/components/ScrollContainer/'
-import Dropdown from '../../src/components/Dropdown/'
-import Steps from '../../src/components/Steps/'
+import RichSelect from 'ibos/MultiColSelect/'
+import Split from 'ibos/Split/'
+import Tabs from 'ibos/Tabs/'
+import ScrollContainer from 'ibos/ScrollContainer/'
+import Dropdown from 'ibos/Dropdown/'
+import Steps from 'ibos/Steps/'
 const Step = Steps.Step;
 const TabPane = Tabs.TabPane;
 

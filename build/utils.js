@@ -75,21 +75,21 @@ exports.styleLoaders = function (options) {
 }
 
 //处理对应的文件
-exports.dealFiles = function (dir,fileType,cb) {
+exports.dealFiles = function (sourceDir,fileType,cb) {
 
-    if (!fs.existsSync(dir)) {
-        console.log(chalk.red("Can't find this directory : " + chalk.yellow(dir)));
+    if (!fs.existsSync(sourceDir)) {
+        console.log(chalk.red("Can't find this directory : " + chalk.yellow(sourceDir)));
         return;
     }
 
-    fs.readdir(dir,function (err, files) {
+    fs.readdir(sourceDir,function (err, files) {
         if(err){
             console.log(chalk.red(err))
             return;
         }
 
         files.forEach(file => {
-            const filePath = path.join(dir,file);
+            const filePath = path.join(sourceDir,file);
             fs.stat(filePath,(err,stats) => {
                 if(err) throw err;
 
@@ -130,7 +130,7 @@ exports.babelCompile = function (sourceDir,outputDir,option) {
                 if(err) {
                     return console.log(err);
                 }
-                console.log(chalk.magenta(file) + " -> Build complete!");
+                console.log(chalk.magenta(file) + " -> "+ chalk.green("Build complete!"));
             });
         })
     })
@@ -145,7 +145,7 @@ exports.copyFiles = function (sourceDir, outputDir, fileType) {
                 return console.log(chalk.bgRed(err))
             }
 
-            console.log(chalk.magenta(file) + " -> Copy complete!");
+            console.log(chalk.magenta(file) + " -> "+ chalk.green("Build complete!"));
         })
     })
 

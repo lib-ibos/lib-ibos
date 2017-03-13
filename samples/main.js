@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2016/11/1 0001.
  */
-import '../src/components/styles/framework.less';
+import 'ibos/styles/framework.less';
 import React, {Component} from 'react'
 import {render}  from 'react-dom';
 import { Router, Route, browserHistory,IndexRoute } from 'react-router';

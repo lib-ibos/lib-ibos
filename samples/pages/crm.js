@@ -5,18 +5,18 @@ import React, {Component} from 'react'
 import {render}  from 'react-dom';
 
 import {Row, Col, Form, Input,Button, Select,Icon ,Menu,Table} from 'antd';
-import Panel from '../../src/components/Panel/'
-import FormLayout from '../../src/components/FormLayout/'
+import Panel from 'ibos/Panel'
+import FormLayout from 'ibos/FormLayout'
 const FormItem = FormLayout.FormItem;
-import Text from '../../src/components/text'
+import Text from 'ibos/text'
 
 
 
-import RichSelect from '../../src/components/MultiColSelect/'
-import Split from '../../src/components/Split/'
-import Tabs from '../../src/components/Tabs/'
-import ScrollContainer from '../../src/components/ScrollContainer/'
-import Dropdown from '../../src/components/Dropdown/'
+import RichSelect from 'ibos/MultiColSelect/'
+import Split from 'ibos/Split/'
+import Tabs from 'ibos/Tabs/'
+import ScrollContainer from 'ibos/ScrollContainer/'
+import Dropdown from 'ibos/Dropdown/'
 const TabPane = Tabs.TabPane;
 
 const Option = Select.Option;

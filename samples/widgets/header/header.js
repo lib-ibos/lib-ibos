@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {render}  from 'react-dom';
-import { Menu, Dropdown,Icon,Badge   } from 'Antd';
+import { Menu, Dropdown,Icon,Badge   } from 'antd';
 //style
 import './header.less';
 

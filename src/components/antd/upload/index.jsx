@@ -4,6 +4,7 @@ import UploadList from './uploadList';
 import getFileItem from './getFileItem';
 import classNames from 'classnames';
 const prefixCls = 'ant-upload';
+import './style/index'
 
 function noop() {
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import RcMenu, { Item, Divider, SubMenu, ItemGroup } from 'rc-menu';
 import animation from '../_util/openAnimation';
+import './style/index'
 
 function noop() {
 }

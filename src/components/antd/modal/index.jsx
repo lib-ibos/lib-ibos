@@ -1,5 +1,6 @@
 import Modal from './Modal';
 import confirm from './confirm';
+import './style/index'
 
 Modal.info = function (props) {
   const config = {

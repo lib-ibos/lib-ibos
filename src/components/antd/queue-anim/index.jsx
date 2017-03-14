@@ -1,6 +1,7 @@
 import React from 'react';
 import RcQueueAnim from 'rc-queue-anim';
 import warning from 'warning';
+import './style/index'
 
 export default class QueueAnim extends React.Component {
   componentDidMount() {

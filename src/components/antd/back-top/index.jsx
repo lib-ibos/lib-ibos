@@ -4,6 +4,7 @@ import Icon from '../icon';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import classNames from 'classnames';
 import omit from 'object.omit';
+import './style/index'
 
 function getScroll(target, top) {
   if (typeof window === 'undefined') {

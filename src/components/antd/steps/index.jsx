@@ -1,5 +1,6 @@
 import React from 'react';
 import RcSteps from 'rc-steps';
+import './style/index'
 
 export default class Steps extends React.Component {
   static Step = RcSteps.Step;

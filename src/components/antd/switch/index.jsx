@@ -1,6 +1,7 @@
 import RcSwitch from 'rc-switch';
 import React from 'react';
 import classNames from 'classnames';
+import './style/index'
 
 export default class Switch extends React.Component {
   static defaultProps = {

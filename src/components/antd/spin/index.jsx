@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import isCssAnimationSupported from '../_util/isCssAnimationSupported';
 import warning from 'warning';
 import omit from 'object.omit';
+import './style/index'
 
 export default class Spin extends React.Component {
   static defaultProps = {

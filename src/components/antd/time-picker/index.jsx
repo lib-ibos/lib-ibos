@@ -4,6 +4,7 @@ import RcTimePicker from 'rc-time-picker/lib/TimePicker';
 import defaultLocale from './locale/zh_CN';
 import classNames from 'classnames';
 import GregorianCalendar from 'gregorian-calendar';
+import './style/index'
 
 export default class TimePicker extends React.Component {
   static defaultProps = {

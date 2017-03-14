@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import './style/index'
 
 export default props => {
   let { prefixCls = 'ant-card', className, children, extra, bodyStyle,

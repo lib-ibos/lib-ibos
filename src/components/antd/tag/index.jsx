@@ -4,6 +4,7 @@ import Animate from 'rc-animate';
 import Icon from '../icon';
 import classNames from 'classnames';
 import omit from 'object.omit';
+import './style/index'
 
 export default class Tag extends React.Component {
   static defaultProps = {

@@ -5,6 +5,7 @@ import Icon from '../icon';
 import arrayTreeFilter from 'array-tree-filter';
 import classNames from 'classnames';
 import omit from 'object.omit';
+import './style/index'
 
 export default class Cascader extends React.Component {
   static defaultProps = {

@@ -2,6 +2,7 @@ import React from 'react';
 import Animate from 'rc-animate';
 import ScrollNumber from './ScrollNumber';
 import classNames from 'classnames';
+import './style/index'
 
 export default class Badge extends React.Component {
   static defaultProps = {

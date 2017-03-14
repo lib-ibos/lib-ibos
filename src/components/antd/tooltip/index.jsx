@@ -1,6 +1,7 @@
 import React, { cloneElement } from 'react';
 import RcTooltip from 'rc-tooltip';
 import getPlacements from '../popover/placements';
+import './style/index'
 
 export default class Tooltip extends React.Component {
   static defaultProps = {

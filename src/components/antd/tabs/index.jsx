@@ -2,7 +2,7 @@ import RcTabs from 'rc-tabs';
 import React, { cloneElement } from 'react';
 import classNames from 'classnames';
 import Icon from '../icon';
-
+import './style/index'
 export default class Tabs extends React.Component {
   static TabPane = RcTabs.TabPane;
 

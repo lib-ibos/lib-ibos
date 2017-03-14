@@ -2,6 +2,7 @@ import React from 'react';
 import Tooltip from '../tooltip';
 import getPlacements from './placements';
 import warning from 'warning';
+import './style/index'
 
 export default class Popover extends React.Component {
   static defaultProps = {

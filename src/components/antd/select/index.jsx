@@ -1,6 +1,7 @@
 import React from 'react';
 import RcSelect, { Option, OptGroup } from 'rc-select';
 import classNames from 'classnames';
+import './style/index'
 
 export default class Select extends React.Component {
   static Option = Option;

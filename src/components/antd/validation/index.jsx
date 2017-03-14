@@ -1,5 +1,6 @@
 import React from 'react';
 import warning from 'warning';
+import './style/index'
 
 export default class Validation extends React.Component {
   componentDidMount() {

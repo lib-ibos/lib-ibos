@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
 import Icon from '../icon';
 import classNames from 'classnames';
+import './style/index'
 
 export default class Alert extends React.Component {
   static defaultProps = {

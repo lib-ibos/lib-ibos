@@ -4,6 +4,7 @@ import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import classNames from 'classnames';
 import warning from 'warning';
 import shallowequal from 'shallowequal';
+import './style/index'
 
 function getScroll(target, top) {
   const prop = top ? 'pageYOffset' : 'pageXOffset';

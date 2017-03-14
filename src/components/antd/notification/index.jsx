@@ -1,6 +1,7 @@
 import React from 'react';
 import Notification from 'rc-notification';
 import Icon from '../icon';
+import './style/index'
 
 let defaultTop = 24;
 let notificationInstance;

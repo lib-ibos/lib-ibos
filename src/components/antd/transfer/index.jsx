@@ -3,6 +3,7 @@ import List from './list';
 import Operation from './operation';
 import Search from './search';
 import classNames from 'classnames';
+import './style/index'
 
 function noop() {
 }

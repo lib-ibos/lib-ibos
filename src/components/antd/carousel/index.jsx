@@ -15,6 +15,7 @@ if (typeof window !== 'undefined') {
 
 import SlickCarousel from 'react-slick';
 import React from 'react';
+import './style/index'
 
 export default class Carousel extends React.Component {
   static defaultProps = {

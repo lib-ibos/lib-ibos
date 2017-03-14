@@ -4,6 +4,7 @@ import defaultLocale from './locale/zh_CN';
 import FullCalendar from 'rc-calendar/lib/FullCalendar';
 import { PREFIX_CLS } from './Constants';
 import Header from './Header';
+import './style/index'
 
 function noop() { return null; }
 

@@ -4,6 +4,7 @@ import Form from './Form';
 import FormItem from './FormItem';
 import ValueMixin from './ValueMixin';
 import { FIELD_META_PROP } from './constants';
+import './style/index'
 
 Form.create = (o = {}) => {
   const options = {

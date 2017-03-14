@@ -1,5 +1,6 @@
 import React from 'react';
 import RcSlider from 'rc-slider';
+import './style/index'
 
 export default class Slider extends React.Component {
   static defaultProps = {

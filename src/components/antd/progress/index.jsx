@@ -1,6 +1,7 @@
 import React from 'react';
 import Progress from './progress';
 import warning from 'warning';
+import './style/index'
 
 const AntProgress = Progress;
 

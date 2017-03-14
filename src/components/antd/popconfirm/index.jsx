@@ -3,6 +3,7 @@ import Tooltip from '../tooltip';
 import Icon from '../icon';
 import Button from '../button';
 import getPlacements from '../popover/placements';
+import './style/index'
 
 const noop = () => {};
 

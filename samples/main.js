@@ -19,6 +19,24 @@ import CrmHome from './pages/crmHome'
 import CrmDetail from './pages/CrmDetail'
 import Footer from './widgets/footer/footer'
 
+
+import mock from 'mockjs'
+const data = mock.mock({
+    // 属性 list 的值是一个数组，其中含有 1 到 10 个元素
+    'list|1-10': [{
+        // 属性 id 是一个自增数，起始值为 1，每次增 1
+        'id|+1': 1,
+        'string1|1-5': '★',
+        'email':'@email(oly.com)',
+        'url':'@url(http,olymtech.com)',
+        'city':'@city',
+        'date':'@date',
+        'time':'@time(HH:mm)'
+    }]
+})
+// 输出结果
+console.log(JSON.stringify(data,null,4))
+
 render(
     <Router history={browserHistory}>
         <Route path="/" component={Frame} >

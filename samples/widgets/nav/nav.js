@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {render}  from 'react-dom';
 import classnames  from 'classnames';
 
-import {Icon,Badge} from 'Antd';
+import {Icon,Badge} from 'antd';
 //style
 import './nav.less';
 

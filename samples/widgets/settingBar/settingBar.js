@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {render}  from 'react-dom';
-import { Tabs  } from 'Antd';
+import { Tabs  } from 'antd';
 import classnames  from 'classnames';
 
-import Panel from '../../../src/components/Panel/index'
+import Panel from 'ibos/Panel'
 //style
 import './settingBar.less';
 

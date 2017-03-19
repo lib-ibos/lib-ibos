@@ -7,7 +7,14 @@
   "plugins": [
     "add-module-exports",
     "transform-runtime",
-    ["import", { "libraryName": "antd", "libarayDirectory": "lib"}]
+    ["module-resolver", {
+      "root": ["./src/components"],
+      "alias": {
+        "antd": "./src/components",
+        "ibos":"./src/components/ibos"
+      }
+    }],
+    ["import", { "libraryName": "antd", "libraryDirectory": "antd"}]
   ],
   "env": {
     "test": {

@@ -11,7 +11,7 @@ var config = require('../config')
 var utils = require('./utils')
 
 // 由于 babelrc 中的key是加了引号的，直接用require 会报错
-var babelOption = fs.readJsonSync('../.babelrc')
+var babelOption = fs.readJsonSync(path.resolve(__dirname,'../.babelrc'))
 
 // 先删除生成目录  fs.remove() 等同于 rimraf 模块
 fs.remove(config.build.assetsRoot, err => {

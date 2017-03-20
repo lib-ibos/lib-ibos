@@ -3,7 +3,7 @@ import {render}  from 'react-dom';
 import { Tabs  } from 'antd';
 import classnames  from 'classnames';
 
-import Panel from 'ibos/Panel'
+import Panel from 'ibos/panel'
 //style
 import './settingBar.less';
 

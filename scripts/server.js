@@ -7,7 +7,10 @@ const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const chalk = require('chalk');
 const historyApiFallback = require('connect-history-api-fallback');
 
-var config = require('../webpack.config.js');
+var webpackConfig11 = require('../webpack.config.js');
+var webpackConfig = process.env.NODE_ENV === 'testing'
+    ? require('../build/webpack.prod.conf')
+    : require('../build/webpack.dev.conf')
 
 let compiler;
 
@@ -18,13 +21,13 @@ const hotUpdate =  process.argv.indexOf('--ie8') === -1
 function setupCompiler(host, port, protocol) {
 
   if (hotUpdate) {
-    const entry = config.entry
+    const entry = webpackConfig.entry
     Object.keys(entry).forEach(function(key){
       entry[key].unshift(require.resolve('react-dev-utils/webpackHotDevClient'));
     })
   } else {
     // ie8 不使用热加载, 但需配置es3ify
-    config.module.postLoaders = [
+      webpackConfig.module.postLoaders = [
       {
         test: /\.(js|jsx)$/,
         include: [/node_modules/,/src/],
@@ -33,7 +36,7 @@ function setupCompiler(host, port, protocol) {
     ]
   }
   
-  compiler = webpack(config);
+  compiler = webpack(webpackConfig);
 
   compiler.plugin('invalid', function() {
     if (isInteractive) {
@@ -128,7 +131,7 @@ function runDevServer(host, port, protocol) {
 
 function run(port) {
   const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
-  const host = process.env.HOST || 'localhost';
+  const host = require('quick-local-ip').getLocalIP4();
   setupCompiler(host, port, protocol);
   runDevServer(host, port, protocol);
 }

@@ -1,7 +1,4 @@
-/**
- * Created by Administrator on 2016/11/1 0001.
- */
-import 'ibos/styles/framework.less';
+// import 'ibos/styles/framework.less';
 import React, {Component} from 'react'
 import {render}  from 'react-dom';
 import { Router, Route, browserHistory,IndexRoute } from 'react-router';
@@ -12,16 +9,16 @@ import { Router, Route, browserHistory,IndexRoute } from 'react-router';
 // require('fetch-ie8');
 
 import Frame from './widgets/layout/frame'
-import Home from './pages/home'
+import Home from './pages/Home'
 import Detail from './pages/detail'
 import Crm from './pages/crm'
 import CrmHome from './pages/crmHome'
-import CrmDetail from './pages/CrmDetail'
+import CrmDetail from './pages/crmDetail'
 import Footer from './widgets/footer/footer'
 
 
-import mock from 'mockjs'
-const data = mock.mock({
+import Mock from 'mockjs'
+const data = Mock.mock({
     // 属性 list 的值是一个数组，其中含有 1 到 10 个元素
     'list|1-10': [{
         // 属性 id 是一个自增数，起始值为 1，每次增 1
@@ -36,6 +33,12 @@ const data = mock.mock({
 })
 // 输出结果
 console.log(JSON.stringify(data,null,4))
+//
+//
+// Mock.mock('http://g.cn', {
+//     'list|3-8': [{'id|+3': 1}]
+// })
+
 
 render(
     <Router history={browserHistory}>

@@ -16,7 +16,7 @@ exports.cssLoaders = function (options) {
   options = options || {}
 
   var cssLoader = {
-    loader: 'css-loader',
+    loader: 'css',
     options: {
       minimize: process.env.NODE_ENV === 'production',
       sourceMap: options.sourceMap
@@ -28,7 +28,7 @@ exports.cssLoaders = function (options) {
     var loaders = [cssLoader]
     if (loader) {
       loaders.push({
-        loader: loader + '-loader',
+        loader: loader,
         options: Object.assign({}, loaderOptions, {
           sourceMap: options.sourceMap
         })
@@ -40,37 +40,36 @@ exports.cssLoaders = function (options) {
       //服务端渲染使用
     if (options.extract) {
       return ExtractTextPlugin.extract({
-        use: loaders,
-        fallback: 'style-loader'
+        loader: loaders,
+        fallback: 'style'
       })
     } else {
-      return ['style-loader'].concat(loaders)
+      return ['style'].concat(loaders)
     }
   }
 
   // http://vuejs.github.io/vue-loader/en/configurations/extract-css.html
-  return {
-    css: generateLoaders(),
-    postcss: generateLoaders(),
-    less: generateLoaders('less'),
-    sass: generateLoaders('sass', { indentedSyntax: true }),
-    scss: generateLoaders('sass'),
-    stylus: generateLoaders('stylus'),
-    styl: generateLoaders('stylus')
-  }
+  // return {
+  //   css: generateLoaders(),
+  //   postcss: generateLoaders(),
+  //   less: generateLoaders('less'),
+  //   sass: generateLoaders('sass', { indentedSyntax: true }),
+  //   scss: generateLoaders('sass'),
+  //   stylus: generateLoaders('stylus'),
+  //   styl: generateLoaders('stylus')
+  // }
+    return 'style!css!postcss!less'
 }
 
 // Generate loaders for standalone style files (outside of .vue)
 exports.styleLoaders = function (options) {
-  var output = []
   var loaders = exports.cssLoaders(options)
-  for (var extension in loaders) {
-    var loader = loaders[extension]
-    output.push({
-      test: new RegExp('\\.' + extension + '$'),
-      use: loader
-    })
-  }
+
+    var output = [{
+      test: config.dev.cssExtension,
+      loader: loaders
+    }]
+
   return output
 }
 

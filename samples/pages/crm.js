@@ -5,7 +5,7 @@ import React, {Component} from 'react'
 import {render}  from 'react-dom';
 
 import {Row, Col, Form, Input,Button, Select,Icon ,Menu,Table} from 'antd';
-import Panel from 'ibos/Panel'
+import Panel from 'ibos/panel'
 import FormLayout from 'ibos/FormLayout'
 const FormItem = FormLayout.FormItem;
 import Text from 'ibos/text'

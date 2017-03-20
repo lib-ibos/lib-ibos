@@ -5,7 +5,7 @@ import 'ibos/styles/framework.less';
 import React, {Component} from 'react'
 import {render}  from 'react-dom';
 
-import Panel from 'ibos/Panel'
+import Panel from 'ibos/panel'
 // import router from './router'
 
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
         speak async your
 
         <Panel noPadding title="我是 Panel 标题">
-        11111111111111
+        111111111111111111112221
     </Panel>
         <Panel noPadding>
             222222

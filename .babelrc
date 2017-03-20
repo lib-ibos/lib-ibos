@@ -11,7 +11,8 @@
       "root": ["./src/components"],
       "alias": {
         "antd": "./src/components",
-        "ibos":"./src/components/ibos"
+        "ibos":"./src/components/ibos",
+        "samples":"./samples"
       }
     }],
     ["import", { "libraryName": "antd", "libraryDirectory": "antd"}]

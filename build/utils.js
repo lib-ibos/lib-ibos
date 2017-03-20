@@ -136,6 +136,7 @@ exports.babelCompile = function (sourceDir,outputDir,option) {
     })
 }
 
+//复制文件
 exports.copyFiles = function (sourceDir, outputDir, fileType) {
     const len = sourceDir.length;
     exports.dealFiles(sourceDir,fileType,function (file) {

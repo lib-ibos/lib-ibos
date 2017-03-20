@@ -9,7 +9,7 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    vendor: ['react','react-dom','./src/reactRouter.js'],
+    // vendor: ['react','react-dom','./src/reactRouter.js'],
     app: './samples/main.js'
   },
   output: {
@@ -44,7 +44,7 @@ module.exports = {
       // },
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
+        loader: ['es3ify-loader','babel-loader'],
         include: [ resolve('samples'),resolve('src'), resolve('test')]
       },
 

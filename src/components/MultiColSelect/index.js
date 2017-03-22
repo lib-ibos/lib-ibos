@@ -25,7 +25,8 @@ class MultiColSelect extends Component {
     static propTypes = {
         dataBody: React.PropTypes.array,
         dataHead: React.PropTypes.object,
-        dropdwonMaxRows: React.PropTypes.number
+        dropdwonMaxRows: React.PropTypes.number,
+        onBlur:React.PropTypes.func
 
     }
 
@@ -125,7 +126,7 @@ class MultiColSelect extends Component {
             this.setState({
                 open: false,
                 selectKeys: [String(currentKey)]
-            },()=>this.onSearch())
+            })
             this.props.onChange && this.props.onChange(_obj[currentKey][_key])
             this.props.onSelect && this.props.onSelect(_obj[_key]);
             event.preventDefault();
@@ -142,21 +143,12 @@ class MultiColSelect extends Component {
 
     handleChange = (e) => {
         this.props.onChange && this.props.onChange(e.target.value);
-        this.props.dataBody && this.props.dataBody.length > 0 && this.setOpenState(true)
+        this.props.dataBody.length > 0 && this.setOpenState(true)
         this.setState({
             selectKeys: ['-1'],
-        },()=>this.onSearch())
-
+        })
     }
 
-    onSearch = (e)=>{
-        const onSearch = this.props.onSearch;
-        const _key = this.state.selectKeys[0];
-        let _obj = this.props.dataBody && this.props.dataBody[_key]
-        //如果没有命中选项，则返回空对象
-        !_obj && (_obj={})
-        onSearch && onSearch(this.refs.input.props.value,_obj)
-    }
 
 
     onMenuSelect = (value) => {
@@ -166,18 +158,17 @@ class MultiColSelect extends Component {
         this.setState({
             open: false,
             selectKeys: [String(value.key)]
-        },()=>this.onSearch())
+        })
         this.setActiveState(value.key)
         this.props.onChange && this.props.onChange(currentKey)
         this.props.onSelect && this.props.onSelect(_obj);
-
-
     }
 
     //失焦
-    handleBlur = () => {
+    handleBlur = (cb) => {
         const _value = this.refs.input.props.value;
 
+        cb && cb()
 
         if(this.state.canMenuHide){
             this.setOpenState(false);
@@ -191,11 +182,8 @@ class MultiColSelect extends Component {
 
 
     handleClick = (e) => {
-        const isDisabled = this.props.disabled
-        if(!isDisabled){
-            this.props.onChange && this.props.onChange(e.target.value);
-            this.setOpenState(true)
-        }
+        this.props.onChange && this.props.onChange(e.target.value);
+        this.setOpenState(true)
     }
 
     handleMenuMouseEnter = () => {
@@ -214,7 +202,7 @@ class MultiColSelect extends Component {
 
 
     render() {
-        const {dataHeader, disabled, dataBody, type, rows, autosize, ...props} = this.props;
+        const {dataHeader, dataBody, type, rows,onBlur, autosize, ...props} = this.props;
         const hasDataBody = dataBody && dataBody.length > 0;
         const dropdownHeadData = dataHeader,
             dropdownBodyData = hasDataBody ? dataBody : "not found";
@@ -275,8 +263,7 @@ class MultiColSelect extends Component {
                     onClick={this.handleClick}
                     onChange={this.handleChange}
                     onKeyDown={this.onKeyDown}
-                    onBlur={this.handleBlur}
-                    disabled ={disabled}
+                    onBlur={() => this.handleBlur(onBlur)}
                 />
             </Dropdown>
         );

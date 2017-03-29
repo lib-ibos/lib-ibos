@@ -8,3 +8,7 @@ components
 npm-debug.log
 webpack.*
 .babelrc
+/build
+/config
+.eslintignore
+.eslintrc.js

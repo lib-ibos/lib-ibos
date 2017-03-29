@@ -8,14 +8,12 @@
     "add-module-exports",
     "transform-runtime",
     ["module-resolver", {
-      "root": ["./src/components"],
-      "alias": {
-        "antd": "./src/components",
-        "ibos":"./src/components/ibos",
-        "samples":"./samples"
-      }
+      "root": ["./src/components"]
     }],
-    ["import", { "libraryName": "antd", "libraryDirectory": "antd"}]
+    ["import", [
+      { "libraryName": "antd", "libraryDirectory": "./"},
+      { "libraryName": "ibos", "libraryDirectory": "./"}
+    ]]
   ],
   "env": {
     "test": {

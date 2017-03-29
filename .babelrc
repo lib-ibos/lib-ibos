@@ -6,21 +6,71 @@
   ],
   "plugins": [
     "add-module-exports",
-    "transform-runtime",
-    ["module-resolver", {
-      "root": ["./src/components"]
-    }],
-    ["import", [
-      { "libraryName": "antd", "libraryDirectory": "./"},
-      { "libraryName": "ibos", "libraryDirectory": "./"}
-    ]]
+    "transform-runtime"
   ],
   "env": {
     "test": {
-      "plugins": [ "istanbul" ]
+      "plugins": [
+        "istanbul"
+      ]
     },
-    "build":{
-      "plugins": ["transform-remove-console"]
+    "development": {
+      "plugins": [
+        [
+          "module-resolver",
+          {
+            "root": [
+              "./src/components/"
+            ],
+            "alias": {
+              "samples": "./samples"
+            }
+          }
+        ],
+        [
+          "import",
+          [
+            {
+              "libraryName": "antd",
+              "libraryDirectory": "./"
+            },
+            {
+              "libraryName": "ibos",
+              "libraryDirectory": "./"
+            }
+          ]
+        ]
+      ]
+    },
+    "build": {
+      "plugins": [
+        "transform-remove-console",
+        [
+          "module-resolver",
+          {
+            "root": [
+              "./src/components/"
+            ],
+            "alias": {
+              "antd": "./src/components/antd",
+              "ibos": "./src/components/ibos"
+            }
+          }
+        ],
+        [
+          "import",
+          [
+            {
+              "libraryName": "antd",
+              "libraryDirectory": "antd"
+            },
+            {
+              "libraryName": "ibos",
+              "libraryDirectory": "ibos"
+            }
+          ]
+        ]
+      ]
     }
   }
 }

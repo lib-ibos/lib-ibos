@@ -23,7 +23,7 @@ module.exports = {
   },
     build:{
         env: require('./build.env'),
-        assetsRoot: path.resolve(__dirname, '../libs'),
+        assetsRoot: path.resolve(__dirname, '../lib'),
         sourceRoot: path.resolve(__dirname, '../src/components'),
     },
   dev: {

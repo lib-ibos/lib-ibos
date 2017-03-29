@@ -10,5 +10,9 @@ webpack.*
 .babelrc
 /build
 /config
+/samples
+/static
+/.idea
+.postcssrc.js
 .eslintignore
 .eslintrc.js

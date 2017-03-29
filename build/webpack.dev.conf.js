@@ -16,12 +16,12 @@ module.exports = merge(baseWebpackConfig, {
   module: {
     loaders: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap }),
 
-      postLoaders: [
-          {
-              test: /\.(js|jsx)$/,
-              loaders: ['es3ify-loader'],
-          },
-      ],
+      // postLoaders: [
+      //     {
+      //         test: /\.(js|jsx)$/,
+      //         loaders: ['es3ify-loader'],
+      //     },
+      // ],
   },
     postcss: [
         autoprefixer({

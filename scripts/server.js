@@ -7,8 +7,8 @@ const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const chalk = require('chalk');
 const historyApiFallback = require('connect-history-api-fallback');
 
-var webpackConfig11 = require('../webpack.config.js');
-var webpackConfig = process.env.NODE_ENV === 'testing'
+var webpackConfig = require('../webpack.config.js');
+var webpackConfig11 = process.env.NODE_ENV === 'testing'
     ? require('../build/webpack.prod.conf')
     : require('../build/webpack.dev.conf')
 
@@ -30,7 +30,7 @@ function setupCompiler(host, port, protocol) {
       webpackConfig.module.postLoaders = [
       {
         test: /\.(js|jsx)$/,
-        include: [/node_modules/,/src/],
+        include: [/node_modules/,/src/,/samples/],
         loaders: ['es3ify'],
       },
     ]

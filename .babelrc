@@ -20,11 +20,8 @@
           "module-resolver",
           {
             "root": [
-              "./src/components/"
-            ],
-            "alias": {
-              "samples": "./samples"
-            }
+              "./src/components"
+            ]
           }
         ],
         [

@@ -5,20 +5,14 @@ import React, {Component} from 'react'
 import {render}  from 'react-dom';
 
 import {Row, Col, Form, Input,Button, Select,Icon,Collapse ,Menu,Table,Radio} from 'antd';
-import Panel from 'ibos/Panel/'
-import FormLayout from 'ibos/FormLayout/'
+
+import {Panel,FormLayout,MultiColSelect as RichSelect,Split,Tabs,ScrollContainer,Steps} from 'ibos'
 const FormItem = FormLayout.FormItem;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 import Tag from 'ibos/tag'
 
 
-import RichSelect from 'ibos/MultiColSelect/'
-import Split from 'ibos/Split/'
-import Tabs from 'ibos/Tabs/'
-import ScrollContainer from 'ibos/ScrollContainer/'
-import Dropdown from 'ibos/Dropdown/'
-import Steps from 'ibos/Steps/'
 const Step = Steps.Step;
 const TabPane = Tabs.TabPane;
 

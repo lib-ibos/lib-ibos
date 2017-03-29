@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ReactDOM, {render}  from 'react-dom';
 import classnames  from 'classnames';
 import {Affix} from 'antd'
-import Tabs from '../Tabs'
+import Tabs from '../tabs'
 const TabPane = Tabs.TabPane
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 //style

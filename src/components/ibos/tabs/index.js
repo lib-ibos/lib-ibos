@@ -5,7 +5,7 @@ import classnames  from 'classnames';
 // import TabContent from 'rc-tabs/lib/TabContent';
 // import ScrollableInkTabBar from 'rc-tabs/lib/ScrollableInkTabBar';
 import {Tabs, Button} from 'antd'
-import Dropdown from '../Dropdown/'
+import Dropdown from '../dropdown'
 const TabPane = Tabs.TabPane
 import Menu, {MenuItem, Divider} from 'rc-menu';
 //style

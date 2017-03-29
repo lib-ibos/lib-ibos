@@ -7,7 +7,8 @@ import { Router, Route, browserHistory,IndexRoute } from 'react-router';
 // require('es5-shim/es5-sham');
 // require('console-polyfill');
 // require('fetch-ie8');
-
+import {Input} from "antd"
+import {FormLayout} from 'ibos'
 import Frame from './widgets/layout/frame'
 import Home from './pages/Home'
 import Detail from './pages/detail'
@@ -49,7 +50,7 @@ render(
             <Route path="/crmHome" component={CrmHome} />
             <Route path="/crmDetail" component={CrmDetail} />
             <Route path="/footer" component={Footer} />
-         </Route>
+        </Route>
     </Router>,
     document.getElementById("app")
 );

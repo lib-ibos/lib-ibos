@@ -1,22 +1,14 @@
 // import 'ibos/styles/framework.less';
 import React, {Component} from 'react'
 import {render}  from 'react-dom';
-import { Router, Route, browserHistory,IndexRoute } from 'react-router';
+import { Router, Route,IndexRoute,hashHistory } from '../src/reactRouter';
 
 // require('es5-shim');
 // require('es5-shim/es5-sham');
 // require('console-polyfill');
 // require('fetch-ie8');
-import {Input} from "antd"
-import {FormLayout} from 'ibos'
 import Frame from './widgets/layout/frame'
 import Home from './pages/Home'
-import Detail from './pages/detail'
-import Crm from './pages/crm'
-import CrmHome from './pages/crmHome'
-import CrmDetail from './pages/crmDetail'
-import Footer from './widgets/footer/footer'
-
 
 import Mock from 'mockjs'
 const data = Mock.mock({
@@ -39,17 +31,16 @@ console.log(JSON.stringify(data,null,4))
 // Mock.mock('http://g.cn', {
 //     'list|3-8': [{'id|+3': 1}]
 // })
-
+function getDemo(nextState, cb) {
+    const {component} = nextState.params;
+    cb(null, require(`./pages/${component}`));
+}
 
 render(
-    <Router history={browserHistory}>
+    <Router history={hashHistory}>
         <Route path="/" component={Frame} >
-            <IndexRoute component={Home}/>
-            <Route path="/detail" component={Detail} />
-            <Route path="/crm" component={Crm} />
-            <Route path="/crmHome" component={CrmHome} />
-            <Route path="/crmDetail" component={CrmDetail} />
-            <Route path="/footer" component={Footer} />
+            <IndexRoute component={Home}/>e
+            <Route path=":component" getComponent={getDemo} />
         </Route>
     </Router>,
     document.getElementById("app")

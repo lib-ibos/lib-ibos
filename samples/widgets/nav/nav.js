@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {render}  from 'react-dom';
 import classnames  from 'classnames';
+import { Link} from '../../../src/reactRouter';
+
 
 import {Icon,Badge} from 'antd';
 //style
@@ -28,7 +30,9 @@ class Nav extends Component{
                                 {item.children &&
                                     <ol className="subnav">
                                     {item.children.map(item =>
-                                        <li className="subnav__item" key={item.label.toString()}><a href={item.href} className="subnav__link">{item.label}</a></li>
+                                        <li className="subnav__item" key={item.label.toString()}>
+                                            <Link to={item.href} className="subnav__link">{item.label}</Link>
+                                        </li>
                                 )}
                                     </ol>
                                 }

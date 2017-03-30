@@ -39,7 +39,7 @@ function getDemo(nextState, cb) {
 render(
     <Router history={hashHistory}>
         <Route path="/" component={Frame} >
-            <IndexRoute component={Home}/>e
+            <IndexRoute component={Home}/>
             <Route path=":component" getComponent={getDemo} />
         </Route>
     </Router>,

@@ -7,8 +7,8 @@ const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const chalk = require('chalk');
 const historyApiFallback = require('connect-history-api-fallback');
 
-var webpackConfig = require('../webpack.config.js');
-var webpackConfig11 = process.env.NODE_ENV === 'testing'
+var webpackConfig11 = require('../webpack.config.js');
+var webpackConfig = process.env.NODE_ENV === 'testing'
     ? require('../build/webpack.prod.conf')
     : require('../build/webpack.dev.conf')
 

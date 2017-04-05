@@ -86,7 +86,7 @@ class crmDetail extends Component {
                 <Split space/>
                 <Tabs type="card" defaultActiveKey="3">
                     <TabPane tab="基础资料" key='1'>
-                        <Button className="mr6" onClick={this.editForm}>修改资料</Button>
+                        <Button onClick={this.editForm}>修改资料</Button>
                         <Button onClick={this.editForm}>评审</Button>
                         <Split space/>
                         <Row gutter={48}>
@@ -177,8 +177,20 @@ class crmDetail extends Component {
                         </FormLayout>
                         <Split dashed/>
 
-                        <Button className="mr6" type="primary">新增</Button>
+                        <Button  type="primary" size="large">新增</Button>
+                        <Button size="large">删除</Button>
+                        <Button type='danger' size="large">删除</Button>
+                        <Button type='text' size="large">删除</Button>
+                        <Split space/>
+                        <Button  type="primary">新增</Button>
                         <Button>删除</Button>
+                        <Button type='danger'>删除</Button>
+                        <Button type='text'>删除</Button>
+                        <Split space/>
+                        <Button  type="primary" size='small'>新增</Button>
+                        <Button size='small'>删除</Button>
+                        <Button type='danger' size='small'>删除</Button>
+                        <Button type='text' size='small'>删除</Button>
                         <Split space/>
                         <Table columns={columns} dataSource={data} pagination={pagination} size="middle" />
                     </TabPane>

@@ -8,7 +8,7 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    // vendor: ['react','react-dom','./src/reactRouter.js'],
+    vendor: ['react','react-dom',resolve('src/reactRouter.js')],
     index: [resolve('samples/main.js')]
   },
   output: {

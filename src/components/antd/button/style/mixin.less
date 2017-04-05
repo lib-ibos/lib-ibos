@@ -109,6 +109,11 @@
     outline: 0;
   }
 
+  // add by FEN 按钮之间间距 8px
+  &+&{
+    margin-left: 8px;
+  }
+
   &:not([disabled]):hover {
     text-decoration: none;
   }
@@ -132,6 +137,11 @@
 
   &-sm {
     .button-size(@btn-padding-sm; @font-size-base; @border-radius-sm);
+
+    // add by FEN
+    &+&{
+      margin-left: 6px;
+    }
   }
 }
 
@@ -260,4 +270,13 @@
     border-top-left-radius: 0;
     padding-left: 8px;
   }
+}
+
+// add by FEN 增加文字类型按钮
+.btn-text(){
+  padding-left: 0;
+  padding-right:0;
+  border:none;
+  color: @primary-color;
+  background: transparent;
 }

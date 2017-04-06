@@ -5,7 +5,7 @@ var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-const autoprefixer = require('autoprefixer') ;
+
 
 // add hot-reload related code to entry chunks
 // Object.keys(baseWebpackConfig.entry).forEach(function (name) {
@@ -13,38 +13,29 @@ const autoprefixer = require('autoprefixer') ;
 // })
 
 module.exports = merge(baseWebpackConfig, {
-  module: {
-    loaders: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap }),
+    module: {
+        loaders: [utils.styleLoaders({sourceMap: config.dev.cssSourceMap})],
+    },
 
-      // postLoaders: [
-      //     {
-      //         test: /\.(js|jsx)$/,
-      //         loaders: ['es3ify-loader'],
-      //     },
-      // ],
-  },
-    postcss: [
-        autoprefixer({
-            browsers: ['last 2 versions', 'Firefox ESR', '> 1%', 'ie >= 8', 'iOS >= 8', 'Android >= 4'],
+
+    // cheap-module-eval-source-map is faster for development
+    devtool: '#cheap-module-eval-source-map',
+    // devtool: 'source-map',
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env': config.dev.env
         }),
-    ],
+        // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
+        new webpack.HotModuleReplacementPlugin(),
+        // new webpack.NoEmitOnErrorsPlugin(),
+        // https://github.com/ampedandwired/html-webpack-plugin
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: config.dev.htmlTemplate,
+            title: config.common.htmlTile,
+            inject: true
+        }),
+        new FriendlyErrorsPlugin(),
 
-  // cheap-module-eval-source-map is faster for development
-  // devtool: '#cheap-module-eval-source-map',
-  devtool: 'source-map',
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': config.dev.env
-    }),
-    // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
-    new webpack.HotModuleReplacementPlugin(),
-    // new webpack.NoEmitOnErrorsPlugin(),
-    // https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: config.dev.htmlTemplate,
-      inject: true
-    }),
-    new FriendlyErrorsPlugin()
-  ]
+    ]
 })

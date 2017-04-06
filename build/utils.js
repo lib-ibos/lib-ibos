@@ -6,71 +6,42 @@ var chalk = require('chalk')
 var babel = require('babel-core')
 
 exports.assetsPath = function (_path) {
-  var assetsSubDirectory = process.env.NODE_ENV === 'production'
-    ? config.build.assetsSubDirectory
-    : config.dev.assetsSubDirectory
-  return path.posix.join(assetsSubDirectory, _path)
+    var assetsSubDirectory = process.env.NODE_ENV === 'production'
+        ? config.build.assetsSubDirectory
+        : config.dev.assetsSubDirectory
+    return path.posix.join(assetsSubDirectory, _path)
 }
 
 exports.cssLoaders = function (options) {
-  options = options || {}
+    options = options || {}
 
-  var cssLoader = {
-    loader: 'css',
-    options: {
-      minimize: process.env.NODE_ENV === 'production',
-      sourceMap: options.sourceMap
-    }
-  }
-
-  // generate loader string to be used with extract text plugin
-  function generateLoaders (loader, loaderOptions) {
-    var loaders = [cssLoader]
-    if (loader) {
-      loaders.push({
-        loader: loader,
-        options: Object.assign({}, loaderOptions, {
-          sourceMap: options.sourceMap
-        })
-      })
+    var cssLoader = {
+        loader: 'css',
+        options: {
+            minimize: process.env.NODE_ENV === 'production',
+            sourceMap: options.sourceMap
+        }
     }
 
-    // Extract CSS when that option is specified
-    // (which is the case during production build)
-      //服务端渲染使用
+    let loaders = 'css!postcss!less';
+
     if (options.extract) {
-      return ExtractTextPlugin.extract({
-        loader: loaders,
-        fallback: 'style'
-      })
-    } else {
-      return ['style'].concat(loaders)
+        return ExtractTextPlugin.extract('style', loaders)
+    }else{
+        return 'style!'+loaders
     }
-  }
-
-  // http://vuejs.github.io/vue-loader/en/configurations/extract-css.html
-  // return {
-  //   css: generateLoaders(),
-  //   postcss: generateLoaders(),
-  //   less: generateLoaders('less'),
-  //   sass: generateLoaders('sass', { indentedSyntax: true }),
-  //   scss: generateLoaders('sass'),
-  //   stylus: generateLoaders('stylus'),
-  //   styl: generateLoaders('stylus')
-  // }
-    return 'style!css!postcss!less'
 }
 
 // Generate loaders for standalone style files (outside of .vue)
 exports.styleLoaders = function (options) {
-  var loaders = exports.cssLoaders(options)
+    var loaders = exports.cssLoaders(options)
 
     var output = [{
-      test: config.dev.cssExtension,
-      loader: loaders
+        test: config.common.cssExtension,
+        loader: loaders
     }]
 
-  return output
+    return output
 }
 
 //处理对应的文件

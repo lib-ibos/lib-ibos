@@ -2,6 +2,10 @@
 var path = require('path')
 
 module.exports = {
+    common: {
+        htmlTile: "testapp",
+        cssExtension: /\.less$/,
+    },
   prod: {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),
@@ -42,6 +46,5 @@ module.exports = {
     cssSourceMap: false,
     cssExtension:/\.less$/,
       htmlTemplate:path.resolve(__dirname,'../samples/index.html')
-
   }
 }

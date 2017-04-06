@@ -9,8 +9,8 @@
     "patch": "npm run build && npm version patch",
     "beta": "npm run build && npm publish --tag=beta",
     "start": "node scripts/server.js",
-    "ie8": "node scripts/server.js --ie8",
-    "dev": "node build/dev-server.js"
+    "ie8": "node build/server.js --ie8",
+    "dev": "node build/server.js"
   },
   "author": "codering",
   "license": "MIT",

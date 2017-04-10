@@ -4,6 +4,13 @@ import classNames from 'classnames';
 import './style/index'
 
 export default class Select extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isFirstFocus: true,
+        };
+    }
+
   static Option = Option;
   static OptGroup = OptGroup;
 
@@ -11,7 +18,7 @@ export default class Select extends React.Component {
     prefixCls: 'ant-select',
     transitionName: 'slide-up',
     choiceTransitionName: 'zoom',
-    showSearch: false,
+    showSearch: false
   }
 
   static contextTypes = {
@@ -20,7 +27,7 @@ export default class Select extends React.Component {
 
   render() {
     let {
-      size, className, combobox, notFoundContent, prefixCls, showSearch, optionLabelProp,
+      size, className, combobox, notFoundContent, prefixCls, showSearch, optionLabelProp,onFirstFocus
     } = this.props;
 
     const cls = classNames({
@@ -46,7 +53,17 @@ export default class Select extends React.Component {
         className={cls}
         optionLabelProp={optionLabelProp || 'children'}
         notFoundContent={notFoundContent}
+        onFocus = {()=>this.handlerfirstClick()} // by FEN 为了解决第一次点击的时候不出数据
       />
     );
+  }
+
+  handlerfirstClick(){
+    if(this.state.isFirstFocus){
+        this.props.onFirstFocus && this.props.onFirstFocus();
+        this.setState({
+            isFirstFocus:false
+        })
+    }
   }
 }

@@ -7,10 +7,10 @@
 .@{table-prefix-cls} {
   font-size: @font-size-base;
   color: @text-color;
-  overflow: hidden;
+  //overflow: hidden; //TODO ① 当table中有输入框，又有验证的时候，会把浮出来的验证信息遮掉,但是影响其他功能，需要改造验证显示信息
   position: relative;
   border-radius: @border-radius-base @border-radius-base 0 0;
-  overflow: hidden;
+  //overflow: hidden; //TODO 如 ①
 
   &-body {
     transition: opacity 0.3s ease;
@@ -22,7 +22,7 @@
     border-spacing: 0;
     text-align: left;
     border-radius: @border-radius-base @border-radius-base 0 0;
-    overflow: hidden;
+    //overflow: hidden; //TODO 如 ①
   }
 
   &-thead > tr > th {

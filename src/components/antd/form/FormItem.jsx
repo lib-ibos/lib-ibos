@@ -19,6 +19,7 @@ export default class FormItem extends React.Component {
     validateStatus: React.PropTypes.oneOf(['', 'success', 'warning', 'error', 'validating']),
     hasFeedback: React.PropTypes.bool,
     wrapperCol: React.PropTypes.object,
+    wrapperCol: React.PropTypes.object,
     className: React.PropTypes.string,
     id: React.PropTypes.string,
     children: React.PropTypes.node,

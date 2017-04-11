@@ -26,12 +26,12 @@ class Nav extends Component{
                             item.isCat ?
                             <li className="nav__cat" key={item.label.toString()}>{item.label}</li> :
                             <li className="nav__item" key={item.label.toString()}>
-                                <a href={item.href} className={classnames('nav__link',{'has-subnav':item.children})} onClick={this.slideToggle}><Icon type={item.icon} />{item.label}</a>
+                                <Link to={item.href} activeClassName="nav__link--active" className={classnames('nav__link',{'has-subnav':item.children})} onClick={this.slideToggle}><Icon type={item.icon} />{item.label}</Link>
                                 {item.children &&
                                     <ol className="subnav">
                                     {item.children.map(item =>
                                         <li className="subnav__item" key={item.label.toString()}>
-                                            <Link to={item.href} className="subnav__link">{item.label}</Link>
+                                            <Link to={item.href} className="subnav__link" activeClassName="nav__link--active">{item.label}</Link>
                                         </li>
                                 )}
                                     </ol>
@@ -57,7 +57,8 @@ Nav.defaultProps = {
         },
         {
             label: '查询结果页 List',
-            icon: 'laptop'
+            icon: 'laptop',
+            href:'list'
         },
         {
             label: '表单页 Form',
@@ -75,7 +76,8 @@ Nav.defaultProps = {
         },
         {
             label: '按钮 Button',
-            icon: 'laptop'
+            icon: 'laptop',
+            href:"/components/button"
         },
         {
             label: '面板 Panel',

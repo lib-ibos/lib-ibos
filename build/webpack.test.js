@@ -27,10 +27,7 @@ module.exports = {
         extensions: ['', '.js', '.jsx', '.json']
     },
     resolveLoader: {
-        modulesDirectories: [resolve("node_modules"),resolve('build')],
-        alias: {
-            "remote-loader":  path.join(__dirname,"remote-loader")
-        },
+        root: [resolve("node_modules")],
         moduleTemplates: ['*-loader'],
     },
     module: {
@@ -59,18 +56,15 @@ module.exports = {
                     name: utils.assetsPath('images/[name].[hash:7].[ext]')
                 }
             },
-            // {
-            //     test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-            //     loader: 'url',
-            //     query: {
-            //         limit: 10000,
-            //         name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
-            //     }
-            // },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-                loader: 'remote-loader'
+                loader: 'url!remote-assets',
+                query: {
+                    limit: 10000,
+                    name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+                }
             },
+
         ],
 
     },

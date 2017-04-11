@@ -15,8 +15,8 @@ function resolve(relativePath) {
 
 module.exports = {
     entry: {
-        // vendor: ['react','react-dom','./src/reactRouter.js','echarts'],
-        index: [resolve("samples/main.js")],
+        vendor: ['react','react-dom','./src/reactRouter.js','echarts'],
+        index: [resolve("samples/main.jsx")],
     },
     output: {
         path: resolve("dist"),//打包后的文件存放的地方
@@ -72,20 +72,20 @@ module.exports = {
             }
         ],
     },
-    // babel: {
-    //   babelrc: true,
-    //   // presets: [
-    //   //   require.resolve('babel-preset-es2015'),
-    //   //   require.resolve('babel-preset-react'),
-    //   //   require.resolve('babel-preset-stage-0'),
-    //   // ],
-    //   // plugins: [
-    //   //   require.resolve('babel-plugin-add-module-exports'),
-    //   //   require.resolve('babel-plugin-transform-runtime'),
-    //   //   [require.resolve('babel-plugin-import'), {"libraryName": "antd", style: 'css'}],
-    //   // ],
-    //   cacheDirectory: true,
-    // },
+    babel: {
+      babelrc: true,
+      presets: [
+        require.resolve('babel-preset-es2015'),
+        require.resolve('babel-preset-react'),
+        require.resolve('babel-preset-stage-0'),
+      ],
+      plugins: [
+        require.resolve('babel-plugin-add-module-exports'),
+        require.resolve('babel-plugin-transform-runtime'),
+        [require.resolve('babel-plugin-import'), {"libraryName": "antd", style: 'css'}],
+      ],
+      cacheDirectory: true,
+    },
     postcss: function() {
         return [
             autoprefixer({

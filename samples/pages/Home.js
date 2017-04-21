@@ -4,12 +4,17 @@
 import 'ibos/styles/framework.less';
 import React, {Component} from 'react'
 
-import {Panel} from 'ibos'
-import {Select} from 'antd'
+import {Panel,FormLayout} from 'ibos'
+import {Select,Row,Col,Input} from 'antd'
 // import router from './router'
+const FormItem = FormLayout.FormItem
 
 function test(a, b) {
     console.log(a,b)
+}
+
+function selectAfter() {
+    
 }
 
 export default function Home() {
@@ -17,7 +22,7 @@ export default function Home() {
         <Select onFirstFocus={test}/>
 
         <Panel noPadding title="我是 Panel 标题">
-        123123
+
     </Panel>
         <Panel noPadding>
             13123123111sdfsa

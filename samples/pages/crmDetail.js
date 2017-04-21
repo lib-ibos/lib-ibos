@@ -38,6 +38,12 @@ const columns = [{
     dataIndex: 'address',
 }];
 
+const selectAfter = (
+    <Select defaultValue=".com" style={{ width: 70 }}>
+        <Option value="CTNS">CTNS</Option>
+    </Select>
+);
+
 const data = [];
 for (let i = 0; i < 46; i++) {
     data.push({
@@ -175,6 +181,57 @@ class crmDetail extends Component {
                             </FormItem>
                                 <Button size="small" >搜索</Button>
                         </FormLayout>
+                        <Split dashed/>
+
+
+                        <FormLayout inputSize="small" labelWidth="2em">
+                            <Row gutter={8}>
+
+                                <Col span={2}>
+                                    <FormItem>
+                                        主票：
+                                    </FormItem>
+                                </Col>
+                                <Col span={6}>
+                                    <FormItem label="件数">
+                                        <Input  addonAfter={selectAfter}/>
+                                    </FormItem>
+                                </Col>
+                                <Col span={5}>
+                                    <FormItem label="毛重">
+                                        <Input addonAfter="KGS"/>
+                                    </FormItem>
+                                </Col>
+                                <Col span={5}>
+                                    <FormItem label="体积">
+                                        <Input addonAfter="CBM"/>
+                                    </FormItem>
+                                </Col>
+                                <Col span={6}>
+                                    <Button size='small' type='primary'>自动求和</Button>
+                                </Col>
+                            </Row>
+                            <Row gutter={8}>
+
+                                <Col span={4}>
+                                    <FormItem >
+                                        <Checkbox>自动生成分票号</Checkbox>
+                                    </FormItem>
+                                </Col>
+                                <Col span={4}>
+                                    <FormItem label="按" labelWidth="1">
+                                        <Select></Select>
+                                    </FormItem>
+                                </Col>
+                                <Col span={5}>
+                                    <FormItem >
+                                        <Select></Select>
+                                    </FormItem>
+                                </Col>
+                            </Row>
+
+                        </FormLayout>
+
                         <Split dashed/>
 
                         <Button  type="primary" size="large">新增</Button>

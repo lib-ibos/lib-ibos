@@ -223,6 +223,7 @@ class Detail extends Component {
 
             <Panel>
 
+
                 <FormLayout inputSize="small"  labelWidth="4em" inputType="text">
                     <Row>
                         <Col span={8}>

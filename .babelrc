@@ -27,16 +27,13 @@
       "plugins": [
         "transform-remove-console",
         ["module-resolver", {
-          "root": ["./src/components/"],
-          "alias": {
-              "antd": "./src/components/antd",
-              "ibos": "./src/components/ibos"
-            }
+          "root": ["./src/components"]
+
           }
         ],
         ["import", [
-          {"libraryName": "antd", "libraryDirectory": "antd"},
-          {"libraryName": "ibos", "libraryDirectory": "ibos"}
+          {"libraryName": "antd", "libraryDirectory": "../../../antd"},
+          {"libraryName": "ibos", "libraryDirectory": "../../../ibos"}
           ]]
       ]
     }

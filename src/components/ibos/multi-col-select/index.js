@@ -176,13 +176,14 @@ class MultiColSelect extends Component {
     }
 
     //失焦
-    handleBlur = () => {
+    handleBlur = (propBlur) => {
         const _value = this.refs.input.props.value;
 
 
         if(this.state.canMenuHide){
             this.setOpenState(false);
-
+            // 调用外部的失焦事件
+            propBlur()
             // 失焦的时候如果input 中被back 清掉了值，则把select
             !_value && this.setState({
                 selectKeys: ['-1'],
@@ -215,11 +216,11 @@ class MultiColSelect extends Component {
 
 
     render() {
-        const {dataHeader, disabled, dataBody, type, rows, autosize, ...props} = this.props;
+        const {dataHeader, disabled, dataBody,onBlur, type, rows, autosize, ...props} = this.props;
         const hasDataBody = dataBody && dataBody.length > 0;
         const dropdownHeadData = dataHeader,
             dropdownBodyData = hasDataBody ? dataBody : "not found";
-
+console.log(onBlur)
         // 拼接下拉框header部分结构
         const dropdownHeadElement = dropdownHeadData ? <MenuItem key="title" disabled>{dropdownHeadData.map(val => <p
             key={val.dataIndex}>{val.title}</p>)}</MenuItem> : '';
@@ -276,7 +277,7 @@ class MultiColSelect extends Component {
                     onClick={this.handleClick}
                     onChange={this.handleChange}
                     onKeyDown={this.onKeyDown}
-                    onBlur={this.handleBlur}
+                    onBlur={() => this.handleBlur(onBlur)}
                     disabled ={disabled}
                 />
             </Dropdown>

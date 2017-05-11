@@ -228,7 +228,9 @@ class Detail extends Component {
                     <Row>
                         <Col span={8}>
                             <FormItem label="工作编号">
-                                <RichSelect dropdwonMaxRows={6}  onSelect={this.wokao}  rows={4} autosize={{ minRows: 2, maxRows: 6 }} dataHeader={data.head} dataBody={data.body} {...this.props.form.getFieldProps("abc",{initialValue:"213123" ,onChange: v => console.log(v)})}/>
+                                <RichSelect dropdwonMaxRows={6} onBlur={function () {
+                                    alert(1)
+                                }}  onSelect={this.wokao}  rows={4} autosize={{ minRows: 2, maxRows: 6 }} dataHeader={data.head} dataBody={data.body} {...this.props.form.getFieldProps("abc",{initialValue:"213123" ,onChange: v => console.log(v)})}/>
                             </FormItem>
                         </Col>
                     </Row>

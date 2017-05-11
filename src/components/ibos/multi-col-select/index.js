@@ -183,7 +183,7 @@ class MultiColSelect extends Component {
         if(this.state.canMenuHide){
             this.setOpenState(false);
             // 调用外部的失焦事件
-            propBlur()
+            propBlur && propBlur()
             // 失焦的时候如果input 中被back 清掉了值，则把select
             !_value && this.setState({
                 selectKeys: ['-1'],

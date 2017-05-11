@@ -168,11 +168,11 @@ class MultiColSelect extends Component {
     handleBlur = (cb) => {
         const _value = this.refs.input.props.value;
 
-        cb && cb()
 
         if(this.state.canMenuHide){
             this.setOpenState(false);
 
+            cb && cb()
             // 失焦的时候如果input 中被back 清掉了值，则把select
             !_value && this.setState({
                 selectKeys: ['-1'],

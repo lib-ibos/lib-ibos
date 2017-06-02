@@ -4,7 +4,7 @@ import classnames  from 'classnames';
 import './styles/';
 
 
-function split({type,dashed,space,vertical,style,...props}) {
+function split({type,small,dashed,space,vertical,style,...props}) {
     // console.log(type)
     const prifix = 'hr';
     const _class = classnames(
@@ -13,6 +13,7 @@ function split({type,dashed,space,vertical,style,...props}) {
             [prifix+"--dashed"]: dashed,
             [prifix+"--space"]: space,
             [prifix+"--vertical"]: vertical,
+            [prifix+"--small"]: small,
         }
     )
     return <hr className={_class} style={style} />

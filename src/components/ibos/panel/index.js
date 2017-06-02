@@ -4,7 +4,7 @@ import classnames  from 'classnames';
 import './styles/';
 
 
-function Panel({transparent, gray, fnInline,miniTitle,line, style, bodyStyle, noMargin, noHeaderBorder, noPadding, title, children, ...props}) {
+function Panel({transparent,small, gray, fnInline,miniTitle,line, style, bodyStyle, noMargin, noHeaderBorder, noPadding, title, children, ...props}) {
     const prifix = 'panel';
     let panelClass = classnames(
         prifix,
@@ -16,6 +16,7 @@ function Panel({transparent, gray, fnInline,miniTitle,line, style, bodyStyle, no
             [prifix + "--mini-title"]: miniTitle,
             [prifix + "--line"]: line,
             [prifix + "--gray"]: gray,
+            [prifix + "--small"]: small,
         }
     )
 

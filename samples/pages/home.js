@@ -5,7 +5,7 @@ import 'ibos/styles/framework.less';
 import React, {Component} from 'react'
 
 import {Panel,FormLayout} from 'ibos'
-import {Select,Row,Col,Input} from 'antd'
+import {Select,Row,Col,Input,Step} from 'antd'
 // import router from './router'
 const FormItem = FormLayout.FormItem
 

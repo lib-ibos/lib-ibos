@@ -7,13 +7,13 @@
   &__item{
     //border-bottom:1px solid #000;
     &.active{
-      background: #2C3E50;
+      background: shade(@theme-color,20%);
     }
   }
 
   &__cat{
     font-size: 12px;
-    color: #7b99b7;
+    color: tint(@theme-color,40%);
     padding:12px 0 4px 16px;
   }
 
@@ -29,11 +29,13 @@
     
     &:hover{
       color: #fff;
-      background-color: #2C3E50;
+      background-color: shade(@theme-color,15%);
     }
 
     &--active{
-      background: #2C3E50;
+      &,&:hover{
+        background: shade(@theme-color,25%);
+      }
     }
   }
 

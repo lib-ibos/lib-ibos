@@ -19,7 +19,6 @@ function getDemo(nextState, cb) {
     }else {
         cb(null, require(`./pages/${component}`));
     }
-
 }
 
 render(

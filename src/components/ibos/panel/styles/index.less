@@ -2,7 +2,10 @@
 
 .panel {
   background: #fff;
-  margin-bottom: 16px;
+
+  &~&{
+    margin-top: 16px;
+  }
 
   & > &__header {
     padding-top: @panel-padding;
@@ -115,6 +118,12 @@
   &--small{
     & > .panel__body{
       padding:@panel-padding-small
+    }
+  }
+
+  &--large{
+    & > .panel__body{
+      padding:@panel-padding-large
     }
   }
 }

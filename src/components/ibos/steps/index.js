@@ -3,6 +3,9 @@ import ReactDOM, {render}  from 'react-dom';
 import classnames  from 'classnames';
 // import RcSteps from 'rc-steps'
 import {Steps as RcSteps} from 'antd'
+import SideStep from './side-step'
+// import Step from './step'
+// RcSteps.Step = Step;
 
 //style
 import './styles/';
@@ -15,17 +18,20 @@ class Steps extends Component {
         prefixCls: 'ant-steps',
         iconPrefix: 'ant',
         current: 0,
-        className:'test'
-    }
+        className:'test',
+        hasSide:false
+    };
 
 
     render() {
-        const {className,transparent} = this.props
+        const {className,transparent,hasSide} = this.props
 
         const _class = classnames(
             className,
-            {'o-steps':transparent}
-        )
+            {
+                'o-steps':transparent,
+                'o-steps--has-side':hasSide
+            });
 
         return (
             <RcSteps {...this.props} className={_class} />
@@ -33,5 +39,6 @@ class Steps extends Component {
     }
 }
 
+Steps.SideStep = SideStep;
 
 export default Steps

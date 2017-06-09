@@ -5,6 +5,33 @@
   .ant-steps-title{
     background: transparent;
   }
+
+  &--has-side.ant-steps-vertical {
+    padding-left:80px;
+
+    .ant-steps-main{
+      min-height: 56px;
+
+    }
+  }
+
+  &__side-item {
+    position: absolute;
+    left: -80px;
+    top:0;
+    width: 80px;
+    padding-right:16px;
+    text-align: right;
+    line-height: 1;
+
+    h3{
+      line-height:1.5;
+    }
+  }
+
+  &__item{
+    position: relative;
+  }
 }
 
 
@@ -39,4 +66,9 @@
       text-align: left;
     }
   }
+}
+
+.ant-steps-vertical .ant-steps-main{
+  overflow: visible;
+  padding-left: 40px;
 }

@@ -4,15 +4,14 @@
 import 'ibos/styles/framework.less';
 import React, {Component} from 'react'
 
-import {Panel, FormLayout, Steps, SplitContainer, Split} from 'ibos'
-import {Select, Row, Col, Input, Button, Icon} from 'antd'
+import {Panel, FormLayout, Steps, SplitContainer, Split,Tag,Upload,Icon} from 'ibos'
+import {Select, Row, Col, Input, Button} from 'antd'
 const Step = Steps.Step;
 const SideStep = Steps.SideStep;
 const FormItem = FormLayout.FormItem;
 
 export default function Home() {
     return <div>
-
         <Panel>
             <FormLayout inputSize="large">
                 <Row gutter={16}>
@@ -32,11 +31,23 @@ export default function Home() {
                         </FormItem>
                     </Col>
                 </Row>
+                <Row gutter={16}>
+                    <Col span={24}>
+                        <FormItem>
+                            <Upload disabled></Upload>
+
+                        </FormItem>
+                    </Col>
+                </Row>
             </FormLayout>
         </Panel>
 
 
         <Panel large>
+            <Icon lib='ibos' type="dot" size="20" color="gray"/>
+            <Icon lib="ibos" type="dot-o" size="20" color="success"/>
+            <Icon lib='ibos' type="close" size="16" color="error"/>
+
             <SplitContainer >
                 <Row gutter={16}>
                     <Col span={24}><Button type="primary">催一下</Button><Button disabled>预约取单</Button><Button
@@ -51,8 +62,8 @@ export default function Home() {
             </SplitContainer>
 
             <Panel noPadding>
-                <Steps direction="vertical" hasSide={true}>
-                    <Step status="finish" description={
+                <Steps direction="vertical"  hasSide={true}>
+                    <Step  title="&nbsp;" status="finish" description={
                         <div>
                             我是备注内容
                             <SideStep><h3>已接待</h3>2017-12-12<br/>12:34</SideStep>

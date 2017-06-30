@@ -6,8 +6,6 @@ import { Tag as AntTag} from 'antd';
 import './styles/index'
 
 
-
-//props selectKey 指定一个key的值填入input中
 class Tag extends Component {
 
     static defaultProps ={

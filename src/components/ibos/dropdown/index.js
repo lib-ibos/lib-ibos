@@ -140,5 +140,5 @@ class Dropdown extends Component {
         );
     }
 }
-
+Dropdown.Button = AntDropdown.Button;
 export default Dropdown;

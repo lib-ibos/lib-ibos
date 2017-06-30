@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import {Transfer as AntdTransfer, Checkbox} from 'antd'
 import Animate from 'rc-animate'
-import Search from 'antd/transfer/search'
+import Search from '../../antd/transfer/search'
 
 export function isRenderResultPlainObject(result) {
   return result && !React.isValidElement(result) &&

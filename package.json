@@ -1,6 +1,6 @@
 {
   "name": "lib-ibos",
-  "version": "0.1.30",
+  "version": "0.1.39",
   "description": "ibos前端设计依赖的组件",
   "main": "lib/index.js",
   "scripts": {
@@ -8,7 +8,6 @@
     "build": "node build/build.js",
     "patch": "npm run build && npm version patch",
     "beta": "npm run build && npm publish --tag=beta",
-    "start": "node scripts/server.js",
     "ie8": "node build/server.js --ie8",
     "dev": "node build/server.js"
   },
@@ -61,9 +60,11 @@
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.10",
     "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-component": "^0.9.1",
     "babel-plugin-import": "^1.1.1",
     "babel-plugin-istanbul": "^3.1.2",
     "babel-plugin-module-resolver": "^2.6.1",
+    "babel-plugin-single-import": "0.0.3",
     "babel-plugin-transform-remove-console": "^6.8.1",
     "babel-plugin-transform-runtime": "^6.22.0",
     "babel-preset-env": "^1.2.1",

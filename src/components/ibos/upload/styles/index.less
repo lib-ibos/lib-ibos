@@ -1,4 +1,7 @@
 .o-upload{
+  display: inline-block;
+  width: 100%;
+
   .ant-upload-drag{
     padding:8px;
     text-align: left;
@@ -38,6 +41,19 @@
   &--large{
     .ant-upload-drag{
       padding:16px;
+    }
+  }
+
+  &--disabled{
+    .anticon-cross{
+      display: none;
+    }
+    .ant-upload-list-item{
+      &:hover{
+        .ant-upload-list-item-info{
+          background: transparent;
+        }
+      }
     }
   }
 }

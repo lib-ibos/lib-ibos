@@ -487,9 +487,17 @@ babel-plugin-check-es2015-constants@^6.22.0:
   dependencies:
     babel-runtime "^6.22.0"
 
+babel-plugin-component@^0.9.1:
+  version "0.9.1"
+  resolved "http://registry.npm.taobao.org/babel-plugin-component/download/babel-plugin-component-0.9.1.tgz#17b74ce8025256d52bb24fac0a4d4185ad01813f"
+
 babel-plugin-import@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-import/-/babel-plugin-import-1.1.1.tgz#98977e6e9cef92bffef04bb1f291c44039fe21c6"
+
+babel-plugin-import@^1.2.1:
+  version "1.2.1"
+  resolved "http://registry.npm.taobao.org/babel-plugin-import/download/babel-plugin-import-1.2.1.tgz#7726aa1b0f780e68d50f9d38e38b714edd9e7b0f"
 
 babel-plugin-istanbul@^3.1.2:
   version "3.1.2"
@@ -507,6 +515,12 @@ babel-plugin-module-resolver@^2.6.1:
     find-babel-config "^1.0.1"
     glob "^7.1.1"
     resolve "^1.2.0"
+
+babel-plugin-single-import@0.0.3:
+  version "0.0.3"
+  resolved "http://registry.npm.taobao.org/babel-plugin-single-import/download/babel-plugin-single-import-0.0.3.tgz#c41ddb81a79db1af7701a05dd623293915f6788d"
+  dependencies:
+    babel-plugin-import "^1.2.1"
 
 babel-plugin-syntax-async-functions@^6.8.0:
   version "6.13.0"
@@ -4355,9 +4369,9 @@ lowercase-keys@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/lowercase-keys/-/lowercase-keys-1.0.0.tgz#4e3366b39e7f5457e35f1324bdf6f88d0bfc7306"
 
-lru-cache@2:
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-2.7.3.tgz#6d4524e8b955f95d4f5b58851ce21dd72fb4e952"
+lru-cache@2, lru-cache@~2.6.5:
+  version "2.6.5"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-2.6.5.tgz#e56d6354148ede8d7707b58d143220fd08df0fd5"
 
 lru-cache@2.2.x:
   version "2.2.4"
@@ -4369,10 +4383,6 @@ lru-cache@^4.0.1:
   dependencies:
     pseudomap "^1.0.1"
     yallist "^2.0.0"
-
-lru-cache@~2.6.5:
-  version "2.6.5"
-  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-2.6.5.tgz#e56d6354148ede8d7707b58d143220fd08df0fd5"
 
 macaddress@^0.2.8:
   version "0.2.8"

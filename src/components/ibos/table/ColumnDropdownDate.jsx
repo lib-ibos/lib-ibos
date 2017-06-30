@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import 'antd/date-picker/style'
+import '../../antd/date-picker/style'
 import {noop} from '../share'
 import DateTimeFormat from 'gregorian-calendar-format';
-import locale from 'antd/date-picker/locale/zh_CN'
+import locale from '../../antd/date-picker/locale/zh_CN'
 import GregorianCalendar from 'gregorian-calendar';
 import RangeCalendar from 'rc-calendar/lib/RangeCalendar'
 

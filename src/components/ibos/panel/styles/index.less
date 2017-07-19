@@ -7,6 +7,10 @@
     margin-top: 16px;
   }
 
+  &~&--small{
+    margin-top: 8px;
+  }
+
   & > &__header {
     padding-top: @panel-padding;
     padding-bottom: 4px;
@@ -43,8 +47,16 @@
   &--no-header-bd {
     & > .panel {
       &__header {
-        margin-bottom: -18px;
+        margin-bottom: -8px;
         border: transparent;
+      }
+    }
+  }
+
+  &--no-header-bd&--small{
+    & > .panel {
+      &__header {
+        margin-bottom: -4px;
       }
     }
   }
@@ -118,6 +130,12 @@
   &--small{
     & > .panel__body{
       padding:@panel-padding-small
+    }
+
+    & > .panel__header{
+      padding-top:@panel-padding-small;
+      margin-left:@panel-padding-small;
+      margin-right:@panel-padding-small;
     }
   }
 

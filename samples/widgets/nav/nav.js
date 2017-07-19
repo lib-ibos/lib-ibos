@@ -91,6 +91,7 @@ Nav.defaultProps = {
         {
             label: 'CRM',
             icon: 'laptop',
+          href:'/crm',
             children: [
                 {
                     label: 'Home',
@@ -99,7 +100,10 @@ Nav.defaultProps = {
                 {
                     label:"detail",
                     href:'/crmDetail'
-                }
+                }, {
+                label:"合同执行管理",
+                href:'/contractManage'
+              }
             ]
         }
 

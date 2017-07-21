@@ -4,7 +4,7 @@
 import 'ibos/styles/framework.less';
 import React, {Component} from 'react'
 
-import {Panel, FormLayout, Steps, SplitContainer, Split,Tag,Upload,Icon} from 'ibos'
+import {Panel, FormLayout, Steps, SplitContainer, Split,Tag,Upload,Icon,Text} from 'ibos'
 import {Select, Row, Col, Input, Button} from 'antd'
 const Step = Steps.Step;
 const SideStep = Steps.SideStep;
@@ -13,6 +13,7 @@ const FormItem = FormLayout.FormItem;
 export default function Home() {
     return <div>
         <Panel>
+            <Text width="80px" class="dpib">爱上的叫法开始的放假啊可视对讲奥斯卡打飞机阿克苏打飞机萨克的</Text>
             <FormLayout inputSize="large">
                 <Row gutter={16}>
                     <Col span={10}>

@@ -32,7 +32,7 @@ function getMargin(margin) {
 
 function text({color,weight,style,width,height,align,margin,children,className}) {
     // 暂时不开放style 属性,style只支持 width 和 height
-    const {...styles} = {width,height};
+    const {...styles} = {width,height,color};
     const alignOptin ={
         left:'tal',
         right:'tar dpb',

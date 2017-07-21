@@ -13,7 +13,7 @@ const FormItem = FormLayout.FormItem;
 export default function Home() {
     return <div>
         <Panel>
-            <Text width="80px" class="dpib">爱上的叫法开始的放假啊可视对讲奥斯卡打飞机阿克苏打飞机萨克的</Text>
+            <Text width="80px">爱上的叫法开始的放假啊可视对讲奥斯卡打飞机阿克苏打飞机萨克的</Text>
             <FormLayout inputSize="large">
                 <Row gutter={16}>
                     <Col span={10}>

@@ -30,17 +30,16 @@ function getMargin(margin) {
 }
 
 
-function text({color,weight,style,width,height,align,margin,children}) {
+function text({color,weight,style,width,height,align,margin,children,className}) {
     // 暂时不开放style 属性,style只支持 width 和 height
     const {...styles} = {width,height};
-
     const alignOptin ={
         left:'tal',
         right:'tar dpb',
         center:'tac dpb'
     }
 
-    const _class = classnames(
+    let _class = classnames(
         {
             ["color-"+color]: color,
             ["fwb"]: weight === 'bold',
@@ -49,6 +48,7 @@ function text({color,weight,style,width,height,align,margin,children}) {
             [getMargin(margin)+' dpib']: margin,
         }
     )
+    _class +=className||"";
     return <span className={_class} style={{...styles}} >{children}</span>
 }
 
